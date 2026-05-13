@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚗️ CATALYST LAB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c14;--card:#0d1421;--alt:#111d2e;--border:#1e3a5f;--blue:#0ea5e9;--purple:#a855f7;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--orange:#f97316;--tp:#e2e8f0;--tm:#64748b;--tc:#7dd3fc;--mono:'JetBrains Mono',monospace;--body:'Inter',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tp);font-family:var(--body);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(8,12,20,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:0 18px;height:52px}
+.wordmark{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--blue);white-space:nowrap;letter-spacing:.05em}
+.tape-wrap{overflow:hidden;position:relative;height:52px;display:flex;align-items:center}
+.tape-wrap::before,.tape-wrap::after{content:'';position:absolute;top:0;bottom:0;width:36px;z-index:1;pointer-events:none}
+.tape-wrap::before{left:0;background:linear-gradient(to right,rgba(8,12,20,1),transparent)}
+.tape-wrap::after{right:0;background:linear-gradient(to left,rgba(8,12,20,1),transparent)}
+.tape{display:flex;gap:7px;animation:scroll 50s linear infinite;white-space:nowrap}
+.tape:hover{animation-play-state:paused}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:4px;font-family:var(--mono);font-size:10px;border:1px solid;cursor:default;white-space:nowrap}
+.pill-pos{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.07)}
+.pill-neg{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.07)}
+.pill-hot{border-color:rgba(234,179,8,.5);background:rgba(234,179,8,.1);animation:blink-border 1.5s ease-in-out infinite}
+@keyframes blink-border{0%,100%{border-color:rgba(234,179,8,.5)}50%{border-color:rgba(234,179,8,1)}}
+.pill .sym{font-weight:700;color:var(--tc)}
+.pill .chg-pos{color:var(--green)}
+.pill .chg-neg{color:var(--red)}
+.pill .dim{color:var(--tm);font-size:9px}
+.nav-r{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.clock{font-family:var(--mono);font-size:10px;color:var(--tm)}
+.live{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;font-weight:600;color:var(--green)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.icon-btn{background:none;border:1px solid var(--border);color:var(--tm);cursor:pointer;padding:4px 8px;border-radius:4px;font-size:13px;transition:all .2s}
+.icon-btn:hover{color:var(--tp);border-color:var(--blue)}
+
+/* LAYOUT */
+.wrap{padding:18px;max-width:1600px;margin:0 auto}
+.sec{margin-bottom:22px}
+.sec-hd{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.sec-dot{width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.sec-title{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tm)}
+
+/* COMMAND CENTER */
+.stat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+.stat.urgent{border-color:var(--red);animation:urge 2s ease-in-out infinite}
+@keyframes urge{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}50%{box-shadow:0 0 0 4px rgba(239,68,68,.12)}}
+.stat-icon{font-size:13px;margin-bottom:7px;opacity:.7}
+.stat-val{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--tp);line-height:1;margin-bottom:3px}
+.stat-lbl{font-family:var(--mono);font-size:8px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--tm)}
+
+/* TIMELINE */
+.tl-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px;overflow-x:auto}
+
+/* POSITIONS GRID */
+.pos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:8px;border-left:3px solid var(--green);overflow:hidden;transition:transform .2s,box-shadow .2s;scroll-margin-top:70px}
+.pcard:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.pcard.urg-green{border-left-color:var(--green)}
+.pcard.urg-yellow{border-left-color:var(--yellow)}
+.pcard.urg-orange{border-left-color:var(--orange)}
+.pcard.urg-red{border-left-color:var(--red)}
+.pcard.urg-past{border-left-color:var(--tm)}
+
+/* CARD HEADER */
+.ch{padding:12px 14px 9px;border-bottom:1px solid var(--border)}
+.ch-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3px}
+.ticker{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--tc);letter-spacing:.04em}
+.co-name{font-size:10px;color:var(--tm);margin-top:1px}
+.drug-line{font-family:var(--mono);font-size:10px;color:var(--tp);margin-top:5px;opacity:.8}
+.badge{padding:3px 9px;border-radius:10px;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}
+.bp{background:rgba(14,165,233,.15);color:var(--blue);border:1px solid rgba(14,165,233,.3)}
+.bph{background:rgba(168,85,247,.15);color:var(--purple);border:1px solid rgba(168,85,247,.3)}
+.ba{background:rgba(249,115,22,.15);color:var(--orange);border:1px solid rgba(249,115,22,.3)}
+.be{background:rgba(234,179,8,.15);color:var(--yellow);border:1px solid rgba(234,179,8,.3)}
+.bo{background:rgba(100,116,139,.15);color:var(--tm);border:1px solid rgba(100,116,139,.3)}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--border)}
+.tab{padding:7px 14px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--tm);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;flex:1}
+.tab:hover{color:var(--tp)}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.tcon{display:none;padding:13px 14px}
+.tcon.active{display:block}
+
+/* DATA CELLS */
+.dg{display:grid;gap:7px;margin-bottom:9px}
+.dg4{grid-template-columns:repeat(4,1fr)}
+.dg3{grid-template-columns:repeat(3,1fr)}
+.dg2{grid-template-columns:repeat(2,1fr)}
+.dc{background:var(--alt);border:1px solid var(--border);border-radius:5px;padding:7px 9px}
+.dc-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);margin-bottom:3px}
+.dc-val{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--tp)}
+.pos{color:var(--green)}.neg{color:var(--red)}
+.act{display:inline-block;padding:3px 10px;border-radius:4px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:7px}
+.act-run{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.act-trail{background:rgba(234,179,8,.15);color:var(--yellow);border:1px solid rgba(234,179,8,.3)}
+.act-hold{background:rgba(14,165,233,.15);color:var(--blue);border:1px solid rgba(14,165,233,.3)}
+.act-rev{background:rgba(249,115,22,.15);color:var(--orange);border:1px solid rgba(249,115,22,.3)}
+.act-cut{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.prog{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-top:3px}
+.prog-fill{height:100%;border-radius:2px;transition:width .4s ease}
+
+/* CATALYST TAB */
+.cdate-box{text-align:center;padding:12px;background:var(--alt);border-radius:7px;border:1px solid var(--border);margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:16px}
+.cdate-info{}
+.cdate-main{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--tp)}
+.cdown{font-family:var(--mono);font-size:22px;font-weight:700}
+.cdown-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--tm);margin-top:2px}
+.pathway-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-family:var(--mono);font-size:9px;background:rgba(14,165,233,.1);color:var(--blue);border:1px solid rgba(14,165,233,.25);margin-top:4px}
+
+/* PROBABILITY PANEL */
+.prob-panel{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;background:var(--alt);border-radius:7px;border:1px solid var(--border);padding:12px;margin-bottom:12px}
+.ev-num{font-family:var(--mono);font-size:22px;font-weight:700;margin-bottom:3px}
+.ev-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--tm);margin-bottom:8px}
+.tgt-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:8px}
+.tgt-item .lbl{font-family:var(--mono);font-size:8px;color:var(--tm);display:block;margin-bottom:2px}
+.tgt-item .val{font-family:var(--mono);font-size:12px;font-weight:600}
+.pencil-btn{background:none;border:1px solid var(--border);color:var(--tm);cursor:pointer;padding:2px 7px;border-radius:3px;font-size:10px;font-family:var(--mono);transition:all .2s}
+.pencil-btn:hover{color:var(--blue);border-color:var(--blue)}
+.rr-badge{display:inline-block;padding:2px 7px;border-radius:3px;font-family:var(--mono);font-size:10px;font-weight:700}
+.rr-good{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.rr-ok{background:rgba(234,179,8,.15);color:var(--yellow);border:1px solid rgba(234,179,8,.3)}
+.rr-poor{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+
+/* SCENARIO */
+.scen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}
+.scen{border-radius:6px;padding:9px;border:1px solid}
+.scen-bull{background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.25)}
+.scen-base{background:rgba(234,179,8,.07);border-color:rgba(234,179,8,.25)}
+.scen-bear{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.25)}
+.scen-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;font-weight:600}
+.scen-bull .scen-lbl{color:var(--green)}.scen-base .scen-lbl{color:var(--yellow)}.scen-bear .scen-lbl{color:var(--red)}
+.scen-prob{font-family:var(--mono);font-size:9px;color:var(--tm);margin-bottom:3px}
+.scen-price{font-family:var(--mono);font-size:13px;font-weight:700;margin-bottom:1px}
+.scen-pnl{font-family:var(--mono);font-size:10px;font-weight:600}
+
+/* REVIEW STATUS */
+.rev-box{background:var(--alt);border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:10px}
+.rev-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:3px}
+.rev-txt{font-family:var(--mono);font-size:10px;color:var(--tp);line-height:1.5}
+
+/* KEY DATES */
+.kd-list{margin-bottom:12px}
+.kd-item{display:flex;align-items:flex-start;gap:9px;padding:5px 0;border-bottom:1px solid rgba(30,58,95,.4);font-family:var(--mono);font-size:10px}
+.kd-item:last-child{border-bottom:none}
+.kd-icon{flex-shrink:0;font-size:11px;margin-top:1px}
+.kd-date{color:var(--tm);min-width:85px}
+.kd-label{color:var(--tp)}
+
+/* PROB EDITOR */
+.ped{background:var(--alt);border:1px solid var(--blue);border-radius:7px;padding:12px;margin-bottom:12px;display:none}
+.ped.open{display:block}
+.ped-title{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.sl-row{margin-bottom:10px}
+.sl-lbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--tm);margin-bottom:3px}
+.sl-val{color:var(--tp);font-weight:600}
+input[type=range]{width:100%;height:3px;background:var(--border);border-radius:2px;outline:none;-webkit-appearance:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--blue);cursor:pointer;box-shadow:0 0 0 2px rgba(14,165,233,.3)}
+.ped-actions{display:flex;gap:7px;margin-top:10px}
+
+/* THESIS TAB */
+.thesis-lbl{font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:5px}
+.thesis-txt{font-size:11px;line-height:1.6;color:var(--tp);background:var(--alt);padding:9px 11px;border-radius:6px;border-left:2px solid var(--blue);margin-bottom:10px}
+.risks-txt{border-left-color:var(--red)}
+.chk-title{font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);margin-bottom:7px;margin-top:10px}
+.chk-item{display:flex;align-items:center;gap:7px;padding:4px 0;font-family:var(--mono);font-size:10px;color:var(--tm);cursor:pointer;user-select:none}
+.chk-item input{width:13px;height:13px;accent-color:var(--blue);cursor:pointer}
+.chk-item.done{color:var(--green);text-decoration:line-through}
+.jrnl-area textarea{width:100%;background:var(--alt);border:1px solid var(--border);border-radius:5px;padding:7px 9px;color:var(--tp);font-family:var(--mono);font-size:10px;resize:vertical;min-height:55px;outline:none;transition:border-color .2s}
+.jrnl-area textarea:focus{border-color:var(--blue)}
+.jrnl-entries{margin-top:9px}
+.jrnl-entry{background:var(--alt);border:1px solid var(--border);border-radius:5px;padding:7px 9px;margin-bottom:6px}
+.jrnl-time{font-family:var(--mono);font-size:8px;color:var(--tm);margin-bottom:2px}
+.jrnl-txt{font-size:11px;color:var(--tp);line-height:1.5}
+
+/* CARD FOOTER */
+.cfoot{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-top:1px solid var(--border);background:rgba(0,0,0,.18)}
+.cfoot-ts{font-family:var(--mono);font-size:8px;color:var(--tm)}
+.cfoot-acts{display:flex;gap:5px}
+.decision-note{font-family:var(--mono);font-size:8px;color:var(--tm);margin-top:2px}
+
+/* BUTTONS */
+.btn{padding:5px 12px;border-radius:4px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.04em;cursor:pointer;border:none;transition:all .2s}
+.btn-p{background:var(--blue);color:#000}
+.btn-p:hover{opacity:.85}
+.btn-s{background:var(--card);border:1px solid var(--border);color:var(--tm)}
+.btn-s:hover{color:var(--tp);border-color:var(--tm)}
+.btn-d{background:rgba(239,68,68,.15);border:1px solid var(--red);color:var(--red)}
+.btn-d:hover{background:rgba(239,68,68,.25)}
+.btn-o{background:rgba(249,115,22,.15);border:1px solid var(--orange);color:var(--orange)}
+
+/* PERF LOG */
+.coll-hd{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:11px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;user-select:none}
+.coll-hd.open{border-radius:8px 8px 0 0}
+.coll-arrow{font-family:var(--mono);font-size:10px;color:var(--tm);transition:transform .2s}
+.coll-hd.open .coll-arrow{transform:rotate(90deg)}
+.coll-body{background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;padding:14px;display:none}
+.coll-hd.open+.coll-body{display:block}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:10px;margin-bottom:14px}
+th{text-align:left;padding:5px 9px;color:var(--tm);font-size:8px;letter-spacing:.09em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+td{padding:7px 9px;border-bottom:1px solid rgba(30,58,95,.3);color:var(--tp)}
+tr:last-child td{border-bottom:none}
+
+/* BOTTOM PANELS */
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.panel-hd{padding:10px 14px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.18)}
+.panel-title{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tm)}
+.panel-body{padding:13px 14px}
+.wl-card{background:var(--alt);border:1px solid var(--border);border-radius:6px;padding:9px 11px;margin-bottom:8px}
+.wl-ticker{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--tc)}
+.wl-co{font-size:10px;color:var(--tm);margin-bottom:5px}
+.wl-notes{font-size:10px;color:var(--tp);line-height:1.5}
+.risk-bar-row{margin-bottom:9px}
+.rb-lbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--tm);margin-bottom:3px}
+.rb{height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.rb-fill{height:100%;border-radius:3px;transition:width .4s}
+.corr-warn{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:6px;padding:9px 11px;font-family:var(--mono);font-size:10px;color:var(--red);margin-bottom:8px}
+
+/* MODALS */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-ov.hidden{display:none}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;max-width:540px;width:90%;max-height:85vh;overflow-y:auto;position:relative}
+.modal-title{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--tp);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.modal-close{position:absolute;top:14px;right:14px;background:none;border:1px solid var(--border);color:var(--tm);cursor:pointer;width:26px;height:26px;border-radius:4px;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close:hover{color:var(--tp);border-color:var(--tm)}
+.dstep{margin-bottom:16px;padding:12px;background:var(--alt);border-radius:7px;border:1px solid var(--border)}
+.dstep-num{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:3px}
+.dstep-q{font-size:12px;font-weight:500;color:var(--tp);margin-bottom:8px}
+.d-input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:5px;padding:7px 9px;color:var(--tp);font-family:var(--mono);font-size:11px;outline:none}
+.d-input:focus{border-color:var(--blue)}
+.d-warn{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:4px;padding:7px 9px;font-size:10px;color:var(--red);margin-top:7px;font-family:var(--mono)}
+.d-info{background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.2);border-radius:4px;padding:7px 9px;font-size:10px;color:var(--tc);margin-top:7px;font-family:var(--mono)}
+.choice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.choice-btn{padding:7px;border-radius:5px;font-family:var(--mono);font-size:10px;font-weight:600;cursor:pointer;text-align:center;border:1px solid;transition:all .2s;background:none}
+.choice-btn:hover{opacity:.8}
+.choice-btn.chosen{opacity:1!important;box-shadow:0 0 0 2px currentColor}
+.toggle-row{display:flex;gap:8px}
+.tog-btn{padding:5px 12px;border-radius:4px;font-family:var(--mono);font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:none;color:var(--tm);transition:all .2s}
+.tog-btn.active{background:rgba(14,165,233,.15);color:var(--blue);border-color:var(--blue)}
+
+/* SETTINGS PANEL */
+.sett-panel{position:fixed;top:0;right:0;width:300px;height:100vh;background:var(--card);border-left:1px solid var(--border);z-index:150;transform:translateX(100%);transition:transform .3s ease;overflow-y:auto;padding:18px}
+.sett-panel.open{transform:translateX(0)}
+.sett-title{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tp);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.sett-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--tm);cursor:pointer;font-size:16px}
+.sett-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(30,58,95,.3)}
+.sett-row:last-of-type{border-bottom:none}
+.sett-lbl{font-family:var(--mono);font-size:10px;color:var(--tp)}
+.sett-desc{font-family:var(--mono);font-size:8px;color:var(--tm);margin-top:1px}
+.tog{position:relative;width:34px;height:18px;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0}
+.tog-sl{position:absolute;inset:0;background:var(--border);border-radius:9px;cursor:pointer;transition:background .2s}
+.tog-sl::before{content:'';position:absolute;height:12px;width:12px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:transform .2s}
+.tog input:checked+.tog-sl{background:var(--blue)}
+.tog input:checked+.tog-sl::before{transform:translateX(16px)}
+select.sett-sel{background:var(--alt);border:1px solid var(--border);color:var(--tp);font-family:var(--mono);font-size:10px;padding:4px 7px;border-radius:4px;outline:none;cursor:pointer}
+.sett-version{font-family:var(--mono);font-size:9px;color:var(--tm);margin-top:14px;padding-top:10px;border-top:1px solid var(--border)}
+.sett-actions{display:flex;flex-direction:column;gap:7px;margin-top:14px}
+#import-file{display:none}
+
+/* SHORTCUTS */
+.shorts-ov{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:300;display:flex;align-items:center;justify-content:center}
+.shorts-ov.hidden{display:none}
+.shorts-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px;width:380px;max-width:90%}
+.shorts-title{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tp);margin-bottom:14px;text-align:center}
+.sk-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(30,58,95,.3);font-family:var(--mono);font-size:11px}
+.sk-row:last-child{border-bottom:none}
+.key{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 7px;background:var(--alt);border:1px solid var(--border);border-radius:4px;font-size:10px;color:var(--tc)}
+
+/* ANIMATIONS */
+@keyframes flash{0%{background:rgba(14,165,233,.2)}100%{background:transparent}}
+.flash{animation:flash .5s ease-out}
+@keyframes ring-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.ring-pulse{animation:ring-pulse 1s ease-in-out infinite}
+.stale{background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.25);border-radius:4px;padding:3px 9px;font-family:var(--mono);font-size:9px;color:var(--yellow);display:inline-flex;align-items:center;gap:5px}
+
+/* PRIVACY */
+body.privacy .blur-it{filter:blur(6px);user-select:none}
+
+/* RESPONSIVE */
+@media(max-width:1200px){.stat-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){
+  .wrap{padding:10px}.nav{padding:0 10px;gap:6px}.wordmark{font-size:11px}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .pos-grid{grid-template-columns:1fr}
+  .panels{grid-template-columns:1fr}
+  .dg4{grid-template-columns:repeat(2,1fr)}
+  .scen-grid{grid-template-columns:1fr}
+  .prob-panel{grid-template-columns:1fr}
+  .tgt-row{grid-template-columns:1fr}
+  .sett-panel{width:100%}
+}
+</style>
+</head>
+<body>
+<div id="nav-root"></div>
+<div class="wrap">
+  <div id="cmd-root" class="sec"></div>
+  <div id="tl-root" class="sec"></div>
+  <div id="pos-root" class="sec"></div>
+  <div id="perf-root" class="sec"></div>
+  <div id="panels-root"></div>
+</div>
+<div id="modal-ov" class="modal-ov hidden"></div>
+<div id="sett-panel" class="sett-panel"></div>
+<div id="shorts-ov" class="shorts-ov hidden"></div>
+<div id="toast" style="position:fixed;bottom:20px;right:20px;z-index:400;font-family:var(--mono);font-size:11px;background:var(--card);border:1px solid var(--border);padding:8px 14px;border-radius:6px;display:none"></div>
+
+<script>
+// =============================================
+// CONFIG BLOCK
+// =============================================
+const CONFIG = {
+  positions: [
+    {
+      ticker:"CING",company:"Cingulate Inc.",drug:"CTx-1301 (dexmethylphenidate)",indication:"ADHD — adults and pediatrics",
+      catalystType:"PDUFA",catalystDate:"2026-05-31",pathway:"505(b)(2)",myProbability:0.68,upside:260,downside:65,
+      shares:4.04,avgCost:4.96,stopPct:0.60,
+      reviewStatus:"Manufacturing/CMC review only — no safety or efficacy concerns raised",
+      thesis:"Phase 3 met primary endpoints in both adult and pediatric studies. Positive pre-NDA meeting confirmed data package adequacy. FDA review limited to CMC — best possible pre-PDUFA status. 505(b)(2) pathway leverages established dexmethylphenidate safety data.",
+      risks:"CMC/manufacturing CRL possible. Tight cash ($23M). Sub-$1 stock before run-up. DEA scheduling required post-approval. Small commercial team.",
+      keyDates:[{date:"2026-05-31",label:"PDUFA Decision"}],
+      analystTarget:36.00,marketCap:"~$20M",cashRunway:"Late 2026",
+    },
+    {
+      ticker:"NMRA",company:"Neumora Therapeutics",drug:"Navacaprant (NMRA-140)",indication:"Major Depressive Disorder (MDD) — monotherapy",
+      catalystType:"PhaseData",catalystDate:"2026-06-30",pathway:"Phase 3 topline readout",myProbability:0.30,upside:390,downside:60,
+      shares:13.19,avgCost:1.90,stopPct:0.50,
+      reviewStatus:"KOASTAL-2 and KOASTAL-3 fully enrolled (400+ patients each). Joint readout Q2 2026.",
+      thesis:"Novel KOR antagonist mechanism for MDD. KOASTAL-1 failed but company made targeted protocol fixes: better site selection, enhanced medical monitoring, stricter patient criteria. Cash funded into Q3 2027 — no financial pressure. $147M cash. Strong scientific rationale.",
+      risks:"KOASTAL-1 already failed primary endpoint. MDD has high placebo response. Need BOTH studies to succeed for strong NDA. Two-strike situation increases FDA scrutiny.",
+      keyDates:[{date:"2026-06-30",label:"KOASTAL-2 & -3 Joint Topline Readout (Q2 2026 deadline)"}],
+      analystTarget:9.14,marketCap:"~$280M",cashRunway:"Q3 2027",
+    },
+    {
+      ticker:"VTGN",company:"Vistagen Therapeutics",drug:"Fasedienol (PH94B)",indication:"Social Anxiety Disorder (SAD) — acute treatment",
+      catalystType:"PhaseData",catalystDate:"2026-06-15",pathway:"Phase 3 topline readout",myProbability:0.25,upside:470,downside:70,
+      shares:48,avgCost:0.625,stopPct:0.55,
+      reviewStatus:"Last patient visit completed May 8, 2026. Topline data imminent — Q2 2026.",
+      thesis:"Intranasal pherine with novel nose-to-brain mechanism. PALISADE-2 was positive. FDA Fast Track designation. Would be first acute treatment for 30M+ SAD patients in US.",
+      risks:"PALISADE-3 FAILED its primary endpoint (Dec 2025). PALISADE-1 also failed. Two Phase 3 misses — only PALISADE-2 was positive. Open-label extension data is encouraging but primary endpoint hit rate is 1 out of 3. Sub-$1 stock, thin liquidity.",
+      keyDates:[
+        {date:"2025-08-01",label:"PALISADE-2 Positive Results"},
+        {date:"2025-12-01",label:"PALISADE-3 FAILED Primary Endpoint"},
+        {date:"2026-05-08",label:"Last Patient Visit PALISADE-4 Completed"},
+        {date:"2026-06-15",label:"PALISADE-4 Topline Data Expected (Q2 2026)"},
+      ],
+      analystTarget:null,marketCap:"~$30M",cashRunway:"Unknown",
+    },
+    {
+      ticker:"MNKD",company:"MannKind Corporation",drug:"Afrezza (inhaled insulin)",indication:"Pediatric Type 1 and Type 2 Diabetes (ages 4-17)",
+      catalystType:"PDUFA",catalystDate:"2026-05-29",pathway:"sBLA",myProbability:0.65,upside:40,downside:35,
+      shares:3.00,avgCost:3.34,stopPct:0.30,
+      reviewStatus:"FDA review in progress. PDUFA May 29, 2026.",
+      thesis:"Afrezza already approved in adults for 10+ years — extensive safety data. Pediatric extension via INHALE-1 Phase 3. Would be first needle-free insulin for children. Massive unmet need and commercial opportunity.",
+      risks:"A1c noninferiority not achieved in INHALE-1. Q1 2026 earnings missed. R/R of 0.47 is structurally poor. Stock has already run up pre-PDUFA — sell-the-news risk.",
+      keyDates:[
+        {date:"2026-05-29",label:"Afrezza Pediatric PDUFA Decision"},
+        {date:"2026-07-26",label:"Furoscix ReadyFlow Autoinjector PDUFA"},
+      ],
+      analystTarget:null,marketCap:"~$1.1B",cashRunway:"$134M",
+    },
+    {
+      ticker:"CAPR",company:"Capricor Therapeutics",drug:"Deramiocel",indication:"Duchenne Muscular Dystrophy (DMD) Cardiomyopathy",
+      catalystType:"PDUFA",catalystDate:"2026-08-22",pathway:"BLA (Class 2 Resubmission)",myProbability:0.65,upside:75,downside:55,
+      shares:0.48216,avgCost:31.11,stopPct:0.20,
+      reviewStatus:"BLA under active FDA review. HOPE-3 Phase 3 met primary and key secondary endpoints. No review issues identified. Labeling discussions expected near-term.",
+      thesis:"FDA lifted CRL and resumed review after HOPE-3 Phase 3 data exceeded requirements. Company told FDA 'we gave them not only what they wanted, but more.' $279M cash runway into Q4 2027. No financial pressure. Priority Review Voucher eligible on approval.",
+      risks:"Lawsuit against NS Pharma (distribution partner) — commercial execution risk even if approved. Need to win lawsuit or find new partner before launch. 101 days to PDUFA — long hold. Distribution rights dispute adds uncertainty.",
+      keyDates:[
+        {date:"2026-05-07",label:"Lawsuit filed vs NS Pharma over distribution rights"},
+        {date:"2026-08-22",label:"Deramiocel PDUFA Decision"},
+        {date:"2026-09-30",label:"Priority Review Voucher eligibility deadline"},
+      ],
+      analystTarget:null,marketCap:"~$500M",cashRunway:"$279M into Q4 2027",
+    },
+    {
+      ticker:"NVAX",company:"Novavax Inc.",drug:"Nuvaxovid / Matrix-M",indication:"COVID-19 vaccine + Matrix-M adjuvant licensing",
+      catalystType:"Other",catalystDate:"2026-09-01",pathway:"Licensing / Strategic",myProbability:0.45,upside:54,downside:35,
+      shares:1.55,avgCost:9.66,stopPct:0.20,
+      reviewStatus:"Q1 2026 earnings beat strongly. Pfizer deal for Matrix-M adjuvant. Activist investor Shah Capital (9% stake) pushing for restructuring.",
+      thesis:"Original catalyst (VRBPAC AdCom) has passed. New thesis: Matrix-M adjuvant licensing to Pfizer and others creates royalty stream. Activist pressure could force cost cuts or strategic review/sale. $140M Q1 revenue beat consensus by large margin.",
+      risks:"Original catalyst thesis expired — this is now a fundamental hold. COVID vaccine market shrinking. No clear near-term binary catalyst. Must reassess whether this fits catalyst bet framework.",
+      keyDates:[
+        {date:"2026-05-06",label:"Q1 2026 Earnings Beat — Original Catalyst Passed"},
+        {date:"2026-09-01",label:"Annual Meeting / Activist Vote (estimated)"},
+      ],
+      analystTarget:14.25,marketCap:"~$1.5B",cashRunway:"Into 2028",
+    },
+  ],
+  watchlist:[
+    {ticker:"PRCT",company:"PROCEPT BioRobotics",catalystType:"Earnings",catalystDate:"2026-07-31",notes:"Aquabeam robotic system — strong commercial growth. Watch for earnings beat and guidance raise."},
+  ],
+  closedPositions:[],
+  timezone:"America/Chicago",
+  refreshInterval:300,
+};
+
+// =============================================
+// STATE
+// =============================================
+const S = {
+  prices:{},staleData:false,lastFetch:null,
+  overrides:{},settings:{showClosed:false,privacyMode:false,showWatchlist:true,defaultTab:'position'},
+  decisions:{},activeTabs:{},editorOpen:new Set(),
+  refreshTid:null,clockTid:null,nextRefreshAt:null,
+};
+const CHK_ITEMS=['Read latest earnings call transcript','Checked FDA review status update','Defined exit price on approval','Defined exit price on rejection','Sized position appropriately for risk','Set price alert'];
+
+// =============================================
+// UTILITIES
+// =============================================
+const ctNow=()=>new Date(new Date().toLocaleString('en-US',{timeZone:CONFIG.timezone}));
+function daysTo(dateStr){const n=ctNow();n.setHours(0,0,0,0);return Math.round((new Date(dateStr+'T00:00:00')-n)/86400000);}
+function fmtDate(d){const[y,m,dy]=d.split('-');return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]+' '+parseInt(dy)+', '+y;}
+function fmtUSD(n,d=2){if(n==null||isNaN(n))return'N/A';return(n<0?'-$':'$')+Math.abs(n).toFixed(d);}
+function fmtPct(n,d=1){if(n==null||isNaN(n))return'N/A';return(n>=0?'+':'')+n.toFixed(d)+'%';}
+function effPos(pos){const ov=S.overrides[pos.ticker]||{};return{...pos,myProbability:ov.myProbability??pos.myProbability,upside:ov.upside??pos.upside,downside:ov.downside??pos.downside};}
+function calcEV(p){return(p.myProbability*p.upside)-((1-p.myProbability)*p.downside);}
+function price(t){return S.prices[t]?.price??null;}
+function posVal(pos){const p=price(pos.ticker);return p?p*pos.shares:pos.avgCost*pos.shares;}
+function totalCap(){return CONFIG.positions.reduce((s,p)=>s+posVal(p),0);}
+function urg(days){if(days<0)return'past';if(days<=2)return'red';if(days<=7)return'orange';if(days<=30)return'yellow';return'green';}
+function cdDisp(days){
+  if(days<0)return{t:'⏰ PAST',lbl:'AWAITING RESOLUTION',c:'var(--tm)'};
+  if(days===0)return{t:'🚨 TODAY',lbl:'CATALYST DAY',c:'var(--red)'};
+  if(days===1)return{t:'🚨 TOMORROW',lbl:'1 DAY',c:'var(--red)'};
+  if(days<=2)return{t:`🚨 ${days}d`,lbl:'IMMINENT',c:'var(--red)'};
+  if(days<=7)return{t:`🔥 ${days}d`,lbl:'IMMINENT',c:'var(--orange)'};
+  if(days<=30)return{t:`⚡ ${days}d`,lbl:'APPROACHING',c:'var(--yellow)'};
+  return{t:`${days}d`,lbl:'DAYS TO CATALYST',c:'var(--green)'};
+}
+function badgeCls(t){return{PDUFA:'bp',PhaseData:'bph',AdCom:'ba',Earnings:'be'}[t]||'bo';}
+function badgeLbl(t){return{PDUFA:'PDUFA',PhaseData:'PHASE DATA',AdCom:'AD COM',Earnings:'EARNINGS',Other:'OTHER'}[t]||t;}
+function actionBadge(pos,p){
+  if(!p)return{t:'HOLD',c:'act-hold'};
+  const stop=pos.avgCost*(1-pos.stopPct),dist=(p-stop)/p,ret=(p-pos.avgCost)/pos.avgCost,d=daysTo(pos.catalystDate);
+  if(p<=stop)return{t:'CUT',c:'act-cut'};
+  if(dist<0.05)return{t:'REVIEW',c:'act-rev'};
+  if(ret>0.5)return{t:'TRAIL STOP',c:'act-trail'};
+  if(d>=0&&d<=7)return{t:'HOLD',c:'act-hold'};
+  if(ret>0.1)return{t:'LET RUN',c:'act-run'};
+  return{t:'HOLD',c:'act-hold'};
+}
+function showToast(msg,ms=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',ms);}
+
+// =============================================
+// LOCALSTORAGE
+// =============================================
+function loadLS(){
+  try{
+    Object.keys(localStorage).filter(k=>k.startsWith('catalystlab_override_')).forEach(k=>{
+      try{S.overrides[k.replace('catalystlab_override_','')]=JSON.parse(localStorage.getItem(k));}catch{}
+    });
+    const ss=localStorage.getItem('catalystlab_settings');if(ss)Object.assign(S.settings,JSON.parse(ss));
+    Object.keys(localStorage).filter(k=>k.startsWith('catalystlab_decision_')).forEach(k=>{
+      try{S.decisions[k.replace('catalystlab_decision_','')]=JSON.parse(localStorage.getItem(k));}catch{}
+    });
+  }catch{}
+  CONFIG.positions.forEach(p=>{S.activeTabs[p.ticker]=S.settings.defaultTab||'position';});
+}
+function saveOverride(t,d){S.overrides[t]=d;try{localStorage.setItem('catalystlab_override_'+t,JSON.stringify(d));}catch{}}
+function saveSettings(){try{localStorage.setItem('catalystlab_settings',JSON.stringify(S.settings));}catch{}}
+function getJournal(t){try{return JSON.parse(localStorage.getItem('catalystlab_journal_'+t)||'[]');}catch{return[];}}
+function addJournal(t,txt){const e=getJournal(t);e.unshift({txt,time:new Date().toISOString()});try{localStorage.setItem('catalystlab_journal_'+t,JSON.stringify(e));}catch{}return e;}
+function getChk(t){try{return JSON.parse(localStorage.getItem('catalystlab_checklist_'+t)||JSON.stringify(new Array(6).fill(false)));}catch{return new Array(6).fill(false);}}
+function saveChk(t,s){try{localStorage.setItem('catalystlab_checklist_'+t,JSON.stringify(s));}catch{}}
+function saveDecision(t,d){S.decisions[t]={...S.decisions[t],...d,updatedAt:new Date().toISOString()};try{localStorage.setItem('catalystlab_decision_'+t,JSON.stringify(S.decisions[t]));}catch{}}
+function exportData(){
+  const obj={version:'1.0',exportedAt:new Date().toISOString(),data:{}};
+  Object.keys(localStorage).filter(k=>k.startsWith('catalystlab_')).forEach(k=>{try{obj.data[k]=JSON.parse(localStorage.getItem(k));}catch{obj.data[k]=localStorage.getItem(k);}});
+  const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='catalyst-lab-'+new Date().toISOString().split('T')[0]+'.json';a.click();
+}
+function importData(json){
+  try{
+    const obj=JSON.parse(json),data=obj.data||obj;
+    Object.entries(data).forEach(([k,v])=>{if(k.startsWith('catalystlab_'))try{localStorage.setItem(k,typeof v==='string'?v:JSON.stringify(v));}catch{}});
+    loadLS();renderAll();showToast('✅ Data imported successfully');return true;
+  }catch{showToast('❌ Import failed — invalid JSON');return false;}
+}
+
+// =============================================
+// PRICE FETCHING
+// =============================================
+async function fetchPrices(){
+  const syms=CONFIG.positions.map(p=>p.ticker).join(',');
+  const url=`https://query2.finance.yahoo.com/v7/finance/quote?symbols=${syms}`;
+  const proxy=`https://corsproxy.io/?${encodeURIComponent(url)}`;
+  for(const u of[url,proxy]){
+    try{
+      const r=await fetch(u,{headers:{'Accept':'application/json'},signal:AbortSignal.timeout(8000)});
+      if(!r.ok)continue;
+      const d=await r.json();
+      const qs=d?.quoteResponse?.result||[];
+      if(!qs.length)continue;
+      qs.forEach(q=>{S.prices[q.symbol]={price:q.regularMarketPrice,change:q.regularMarketChange,changePct:q.regularMarketChangePercent,prevClose:q.regularMarketPreviousClose};});
+      S.staleData=false;S.lastFetch=new Date();
+      try{localStorage.setItem('catalystlab_prices',JSON.stringify({prices:S.prices,ts:S.lastFetch.toISOString()}));}catch{}
+      return true;
+    }catch{}
+  }
+  try{const c=JSON.parse(localStorage.getItem('catalystlab_prices')||'null');if(c?.prices){S.prices=c.prices;S.staleData=true;S.lastFetch=new Date(c.ts);}}catch{}
+  return false;
+}
+function scheduleRefresh(){
+  S.nextRefreshAt=Date.now()+CONFIG.refreshInterval*1000;
+  if(S.refreshTid)clearInterval(S.refreshTid);
+  S.refreshTid=setInterval(async()=>{await fetchPrices();S.nextRefreshAt=Date.now()+CONFIG.refreshInterval*1000;renderAll();},CONFIG.refreshInterval*1000);
+}
+
+// =============================================
+// SVG GENERATORS
+// =============================================
+function probGaugeSVG(prob){
+  const cx=100,cy=100,r=78,sw=13;
+  const col=prob>=.55?'#22c55e':prob>=.35?'#eab308':'#ef4444';
+  const bg=`M ${cx-r} ${cy} A ${r} ${r} 0 0 0 ${cx+r} ${cy}`;
+  let fill='';
+  if(prob>=.01){const p=Math.min(prob,.9995),a=Math.PI*(1-p),ex=(cx+r*Math.cos(a)).toFixed(2),ey=(cy-r*Math.sin(a)).toFixed(2);fill=`<path d="M ${cx-r} ${cy} A ${r} ${r} 0 0 0 ${ex} ${ey}" fill="none" stroke="${col}" stroke-width="${sw}" stroke-linecap="round"/>`;}
+  return`<svg viewBox="0 0 200 108" style="width:170px;display:block;margin:0 auto"><path d="${bg}" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="${sw}" stroke-linecap="round"/>${fill}<text x="${cx}" y="${cy-18}" text-anchor="middle" fill="${col}" font-family="JetBrains Mono,monospace" font-size="28" font-weight="700">${Math.round(prob*100)}%</text><text x="${cx}" y="${cy-3}" text-anchor="middle" fill="rgba(100,116,139,.85)" font-family="JetBrains Mono,monospace" font-size="7.5" letter-spacing="2">MY PROBABILITY</text></svg>`;
+}
+function ringsSVG(days){
+  const ratio=days<=0?0:Math.min(days,90)/90,r=38,cx=50,cy=50,circ=2*Math.PI*r;
+  const col=days<=0?'#475569':days<=7?'#ef4444':days<=30?'#eab308':'#22c55e';
+  const pulse=days>0&&days<=3?'class="ring-pulse"':'';
+  return`<svg viewBox="0 0 100 100" style="width:74px;height:74px" ${pulse}><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="9"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${col}" stroke-width="9" stroke-dasharray="${circ.toFixed(1)}" stroke-dashoffset="${(circ*(1-ratio)).toFixed(1)}" stroke-linecap="round" transform="rotate(-90 ${cx} ${cy})"/><text x="${cx}" y="${cy+5}" text-anchor="middle" fill="${col}" font-family="JetBrains Mono,monospace" font-size="15" font-weight="700">${days<=0?'—':days}</text><text x="${cx}" y="${cy+16}" text-anchor="middle" fill="rgba(100,116,139,.8)" font-family="JetBrains Mono,monospace" font-size="6.5" letter-spacing="1">DAYS</text></svg>`;
+}
+function timelineSVG(){
+  const W=900,H=138,lp=70,rp=30,midY=H/2,drawW=W-lp-rp,maxD=120;
+  const xOf=d=>d<0?Math.max(10,lp+d*1.2):lp+(Math.min(d,maxD)/maxD)*drawW;
+  const tCol={PDUFA:'#0ea5e9',PhaseData:'#a855f7',AdCom:'#f97316',Earnings:'#eab308',Other:'#64748b'};
+  const tc=totalCap();
+  let s=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:600px">`;
+  for(const d of[30,60,90,120]){const x=xOf(d);s+=`<line x1="${x}" y1="18" x2="${x}" y2="${H-22}" stroke="rgba(30,58,95,.35)" stroke-width="1" stroke-dasharray="3,3"/><text x="${x}" y="${H-8}" text-anchor="middle" fill="#475569" font-family="JetBrains Mono,monospace" font-size="8">${d}d</text>`;}
+  s+=`<line x1="8" y1="${midY}" x2="${W-rp}" y2="${midY}" stroke="rgba(30,58,95,.5)" stroke-width="1"/>`;
+  s+=`<line x1="${lp}" y1="10" x2="${lp}" y2="${H-18}" stroke="#ef4444" stroke-width="2"/><text x="${lp}" y="7" text-anchor="middle" fill="#ef4444" font-family="JetBrains Mono,monospace" font-size="7.5" font-weight="700">TODAY</text>`;
+  s+=`<text x="35" y="${H-8}" text-anchor="middle" fill="#475569" font-family="JetBrains Mono,monospace" font-size="7.5">PAST</text>`;
+  CONFIG.positions.forEach((pos,i)=>{
+    const ep=effPos(pos),days=daysTo(pos.catalystDate),pv=posVal(pos),pct=tc>0?pv/tc:.1;
+    const nr=Math.max(8,Math.min(18,7+pct*55)),x=xOf(days),col=tCol[pos.catalystType]||'#64748b';
+    const lY=i%2===0?midY-nr-16:midY+nr+22,dlY=i%2===0?midY-nr-5:midY+nr+32;
+    s+=`<g data-tl="${pos.ticker}" style="cursor:pointer" onclick="scrollToCard('${pos.ticker}')">`;
+    s+=`<circle cx="${x}" cy="${midY}" r="${nr+5}" fill="${col}" opacity=".1"/>`;
+    s+=`<circle cx="${x}" cy="${midY}" r="${nr}" fill="${col}" opacity=".2" stroke="${col}" stroke-width="1.5"/>`;
+    s+=`<circle cx="${x}" cy="${midY}" r="${nr*.42}" fill="${col}"/>`;
+    s+=`<text x="${x}" y="${lY}" text-anchor="middle" fill="${col}" font-family="JetBrains Mono,monospace" font-size="9.5" font-weight="700">${pos.ticker}</text>`;
+    s+=`<text x="${x}" y="${dlY}" text-anchor="middle" fill="rgba(100,116,139,.8)" font-family="JetBrains Mono,monospace" font-size="7.5">${days<0?'PAST':days+'d'}</text>`;
+    s+=`</g>`;
+  });
+  s+=`</svg>`;return s;
+}
+function scrollToCard(t){document.getElementById('card-'+t)?.scrollIntoView({behavior:'smooth',block:'center'});}
+
+// =============================================
+// RENDERING — NAV
+// =============================================
+function renderNav(){
+  const now=new Date();
+  const ct=new Intl.DateTimeFormat('en-US',{timeZone:CONFIG.timezone,month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true}).format(now);
+  const secs=S.nextRefreshAt?Math.max(0,Math.round((S.nextRefreshAt-Date.now())/1000)):CONFIG.refreshInterval;
+  const staleHtml=S.staleData?`<span class="stale">⚠ STALE</span>`:'';
+  const pills=CONFIG.positions.map(pos=>{
+    const ep=effPos(pos),ev=calcEV(ep),p=price(pos.ticker),days=daysTo(pos.catalystDate);
+    const chg=S.prices[pos.ticker]?.changePct??null;
+    const hotCls=days>=0&&days<=7?'pill-hot':ev>=0?'pill-pos':'pill-neg';
+    const chgHtml=chg!=null?`<span class="${chg>=0?'chg-pos':'chg-neg'}">${fmtPct(chg)}</span>`:'<span class="dim">—</span>';
+    const priceHtml=p?`<span>${fmtUSD(p)}</span>`:`<span class="dim">${fmtUSD(pos.avgCost)} *</span>`;
+    return`<span class="pill ${hotCls}" title="${pos.drug}"><span class="sym">${pos.ticker}</span>${priceHtml}${chgHtml}<span class="dim">${days<0?'PAST':days+'d'}</span></span>`;
+  }).join('');
+  const doubled=pills+pills;
+  document.getElementById('nav-root').innerHTML=`<nav class="nav"><div class="wordmark">⚗️ CATALYST LAB</div><div class="tape-wrap"><div class="tape">${doubled}</div></div><div class="nav-r">${staleHtml}<span class="clock">${ct} CT · ↺${secs}s</span><span class="live"><span class="live-dot"></span>LIVE</span><button class="icon-btn" onclick="toggleSettings()" title="Settings">⚙</button></div></nav>`;
+}
+
+// =============================================
+// RENDERING — COMMAND CENTER
+// =============================================
+function renderCmd(){
+  const positions=CONFIG.positions;const closed=CONFIG.closedPositions;
+  const tc=totalCap();
+  const weightedEV=positions.reduce((s,pos)=>{const ep=effPos(pos),pv=posVal(pos);return s+calcEV(ep)*(pv/tc);},[0])[0]??positions.reduce((s,pos)=>{const ep=effPos(pos),pv=posVal(pos);return s+calcEV(ep)*(pv/tc);},0);
+  const evVal=positions.reduce((s,pos)=>{const ep=effPos(pos),pv=posVal(pos);return s+calcEV(ep)*(tc>0?pv/tc:1/positions.length);},0);
+  const nearest=positions.filter(p=>daysTo(p.catalystDate)>=0).sort((a,b)=>daysTo(a.catalystDate)-daysTo(b.catalystDate))[0];
+  const nearDays=nearest?daysTo(nearest.catalystDate):null;
+  const wins=closed.filter(c=>c.outcome==='Win').length,total=closed.length;
+  const todayPnl=positions.reduce((s,pos)=>{const pData=S.prices[pos.ticker];return s+(pData?pData.change*pos.shares:0);},0);
+  const nearUrgent=nearDays!=null&&nearDays<=7;
+  document.getElementById('cmd-root').innerHTML=`
+<div class="sec-hd"><span class="sec-dot"></span><span class="sec-title">Command Center</span></div>
+<div class="stat-grid">
+  <div class="stat"><div class="stat-icon">📊</div><div class="stat-val">${positions.length}</div><div class="stat-lbl">Active Positions</div></div>
+  <div class="stat"><div class="stat-icon">⚡</div><div class="stat-val" style="color:${evVal>=0?'var(--green)':'var(--red)'}">${fmtPct(evVal)}</div><div class="stat-lbl">Weighted Avg EV</div></div>
+  <div class="stat"><div class="stat-icon">💰</div><div class="stat-val blur-it">${fmtUSD(tc,0)}</div><div class="stat-lbl">Capital at Risk</div></div>
+  <div class="stat ${nearUrgent?'urgent':''}"><div class="stat-icon">🎯</div><div class="stat-val" style="color:${nearUrgent?'var(--red)':nearDays<=30?'var(--yellow)':'var(--green)'}">${nearest?nearest.ticker+' '+nearDays+'d':'—'}</div><div class="stat-lbl">Nearest Catalyst</div></div>
+  <div class="stat"><div class="stat-icon">🏆</div><div class="stat-val">${total>0?wins+'/'+total:'0/0'}</div><div class="stat-lbl">Win Rate (Closed)</div></div>
+  <div class="stat"><div class="stat-icon">📈</div><div class="stat-val blur-it" style="color:${todayPnl>=0?'var(--green)':'var(--red)'}">${S.lastFetch?fmtUSD(todayPnl):'—'}</div><div class="stat-lbl">Basket P&L Today</div></div>
+</div>`;
+}
+
+// =============================================
+// RENDERING — TIMELINE
+// =============================================
+function renderTimeline(){
+  document.getElementById('tl-root').innerHTML=`<div class="sec-hd"><span class="sec-dot"></span><span class="sec-title">Catalyst Timeline</span></div><div class="tl-box">${timelineSVG()}</div>`;
+}
+
+// =============================================
+// RENDERING — POSITION CARDS
+// =============================================
+function renderCards(){
+  const html=CONFIG.positions.map((pos,i)=>renderCard(pos,i)).join('');
+  document.getElementById('pos-root').innerHTML=`<div class="sec-hd"><span class="sec-dot"></span><span class="sec-title">Active Positions</span></div><div class="pos-grid">${html}</div>`;
+  CONFIG.positions.forEach(pos=>attachCardEvents(pos));
+}
+function renderCard(pos,idx){
+  const ep=effPos(pos),days=daysTo(pos.catalystDate),urgCls='urg-'+urg(days),activeTab=S.activeTabs[pos.ticker]||'position';
+  return`<div class="pcard ${urgCls}" id="card-${pos.ticker}" data-card="${pos.ticker}">
+${cardHeader(pos)}
+<div class="tabs">
+  <button class="tab${activeTab==='position'?' active':''}" data-tab-btn="${pos.ticker}" data-tab="position">Position</button>
+  <button class="tab${activeTab==='catalyst'?' active':''}" data-tab-btn="${pos.ticker}" data-tab="catalyst">Catalyst</button>
+  <button class="tab${activeTab==='thesis'?' active':''}" data-tab-btn="${pos.ticker}" data-tab="thesis">Thesis</button>
+</div>
+<div class="tcon${activeTab==='position'?' active':''}" data-tab-con="${pos.ticker}" data-tab="position">${posTab(pos)}</div>
+<div class="tcon${activeTab==='catalyst'?' active':''}" data-tab-con="${pos.ticker}" data-tab="catalyst">${catTab(pos)}</div>
+<div class="tcon${activeTab==='thesis'?' active':''}" data-tab-con="${pos.ticker}" data-tab="thesis">${thesisTab(pos)}</div>
+${cardFooter(pos)}
+</div>`;
+}
+function cardHeader(pos){
+  return`<div class="ch"><div class="ch-top"><div><div class="ticker">${pos.ticker}</div><div class="co-name">${pos.company}</div></div><span class="badge ${badgeCls(pos.catalystType)}">${badgeLbl(pos.catalystType)}</span></div><div class="drug-line">${pos.drug} — <span style="color:var(--tm)">${pos.indication}</span></div></div>`;
+}
+function posTab(pos){
+  const ep=effPos(pos),p=price(pos.ticker),stop=pos.avgCost*(1-pos.stopPct);
+  const posValue=p?p*pos.shares:null,todayPnl=p?S.prices[pos.ticker]?.change*pos.shares:null;
+  const todayPct=S.prices[pos.ticker]?.changePct??null;
+  const totalRet=p?(p-pos.avgCost)/pos.avgCost*100:null;
+  const stopDist=p?(p-stop)/p*100:null;
+  const rr=(ep.upside/ep.downside).toFixed(2);
+  const rrCls=ep.upside/ep.downside>=2?'rr-good':ep.upside/ep.downside>=1.2?'rr-ok':'rr-poor';
+  const ab=actionBadge(pos,p);
+  const entryDate=S.decisions[pos.ticker]?.entryDate;
+  const daysHeld=entryDate?Math.round((Date.now()-new Date(entryDate))/(86400000)):'—';
+  const stopPct2=p?Math.min(100,Math.max(0,(p-stop)/(pos.avgCost-stop)*100)):50;
+  const stopColor=stopPct2<20?'var(--red)':stopPct2<40?'var(--orange)':'var(--green)';
+  return`<div class="dg dg4"><div class="dc"><div class="dc-lbl">Current Price</div><div class="dc-val blur-it">${p?fmtUSD(p):'<span style="color:var(--tm)">Loading…</span>'}</div></div><div class="dc"><div class="dc-lbl">Avg Cost</div><div class="dc-val blur-it">${fmtUSD(pos.avgCost)}</div></div><div class="dc"><div class="dc-lbl">Shares</div><div class="dc-val">${pos.shares}</div></div><div class="dc"><div class="dc-lbl">Position Value</div><div class="dc-val blur-it">${posValue?fmtUSD(posValue):'—'}</div></div></div>
+<div class="dg dg4"><div class="dc"><div class="dc-lbl">Today P&L $</div><div class="dc-val ${todayPnl!=null?(todayPnl>=0?'pos':'neg'):''} blur-it">${todayPnl!=null?fmtUSD(todayPnl):'—'}</div></div><div class="dc"><div class="dc-lbl">Today P&L %</div><div class="dc-val ${todayPct!=null?(todayPct>=0?'pos':'neg'):''}">${todayPct!=null?fmtPct(todayPct):'—'}</div></div><div class="dc"><div class="dc-lbl">Total Return</div><div class="dc-val ${totalRet!=null?(totalRet>=0?'pos':'neg'):''}">${totalRet!=null?fmtPct(totalRet):'—'}</div></div><div class="dc"><div class="dc-lbl">Stop Price</div><div class="dc-val blur-it">${fmtUSD(stop)}</div></div></div>
+<div class="dg dg3"><div class="dc"><div class="dc-lbl">Days Held</div><div class="dc-val">${daysHeld}</div></div><div class="dc"><div class="dc-lbl">Stop Distance</div><div class="dc-val ${stopDist!=null?(stopDist<10?'neg':stopDist<25?'':''): ''}">${stopDist!=null?fmtPct(stopDist):'—'}</div><div class="prog"><div class="prog-fill" style="width:${stopPct2}%;background:${stopColor}"></div></div></div><div class="dc"><div class="dc-lbl">R/R Ratio</div><div class="dc-val"><span class="rr-badge ${rrCls}">${rr}x</span></div></div></div>
+<span class="act ${ab.c}">${ab.t}</span>`;
+}
+function catTab(pos){
+  const ep=effPos(pos),days=daysTo(pos.catalystDate),cd=cdDisp(days),ev=calcEV(ep);
+  const upsidePrice=pos.avgCost*(1+ep.upside/100),downPrice=pos.avgCost*(1-ep.downside/100);
+  const rrVal=(ep.upside/ep.downside).toFixed(2),rrCls=ep.upside/ep.downside>=2?'rr-good':ep.upside/ep.downside>=1.2?'rr-ok':'rr-poor';
+  const bullPnl=(upsidePrice-pos.avgCost)*pos.shares,bearPnl=(downPrice-pos.avgCost)*pos.shares;
+  const basePct=(days>0&&days<=7)?-10:-20,basePrice=pos.avgCost*(1+basePct/100),basePnl=(basePrice-pos.avgCost)*pos.shares;
+  const baseProb=(1-ep.myProbability)*0.4,bearProb=(1-ep.myProbability)*0.6;
+  const editorOpen=S.editorOpen.has(pos.ticker);
+  const kdHtml=pos.keyDates.map(kd=>{const past=daysTo(kd.date)<0;return`<li class="kd-item"><span class="kd-icon">${past?'✅':'○'}</span><span class="kd-date">${fmtDate(kd.date)}</span><span class="kd-label">${kd.label}</span></li>`;}).join('');
+  const decNote=S.decisions[pos.ticker]?.finalDecision?`<div class="decision-note">📋 Last: ${S.decisions[pos.ticker].finalDecision} (${new Date(S.decisions[pos.ticker].updatedAt).toLocaleDateString()})</div>`:'';
+  return`<div class="cdate-box">${ringsSVG(days)}<div class="cdate-info"><div class="cdate-main">${fmtDate(pos.catalystDate)}</div><div class="cdown" style="color:${cd.c}">${cd.t}</div><div class="cdown-lbl">${cd.lbl}</div><span class="pathway-badge">${pos.pathway}</span></div></div>
+<div class="rev-box"><div class="rev-lbl">FDA / Trial Status</div><div class="rev-txt">${pos.reviewStatus}</div></div>
+<div class="kd-list"><ul style="list-style:none">${kdHtml}</ul></div>
+<div class="prob-panel"><div id="gauge-${pos.ticker}">${probGaugeSVG(ep.myProbability)}</div><div><div id="ev-${pos.ticker}" class="ev-num ${ev>=0?'pos':'neg'}">${fmtPct(ev)}</div><div class="ev-lbl">Expected Value</div><div class="tgt-row"><div class="tgt-item"><span class="lbl">Upside Target</span><span class="val pos">${fmtUSD(upsidePrice)}</span></div><div class="tgt-item"><span class="lbl">Downside Target</span><span class="val neg">${fmtUSD(downPrice)}</span></div><div class="tgt-item"><span class="lbl">R/R</span><span class="val"><span class="rr-badge ${rrCls}">${rrVal}x</span></span></div><div class="tgt-item"><span class="lbl">Edit</span><span class="val"><button class="pencil-btn" onclick="toggleEditor('${pos.ticker}')">✏ Edit Prob</button></span></div></div></div></div>
+<div class="ped${editorOpen?' open':''}" id="ped-${pos.ticker}"><div class="ped-title">✏ Edit Probability &amp; Targets</div>${editorHTML(pos,ep)}</div>
+<div class="scen-grid" id="scen-${pos.ticker}"><div class="scen scen-bull"><div class="scen-lbl">BULL (Approval)</div><div class="scen-prob">${Math.round(ep.myProbability*100)}% prob</div><div class="scen-price pos">${fmtUSD(upsidePrice)}</div><div class="scen-pnl pos blur-it">${fmtUSD(bullPnl)} P&L</div></div><div class="scen scen-base"><div class="scen-lbl">BASE (Mixed)</div><div class="scen-prob">${Math.round(baseProb*100)}% prob</div><div class="scen-price" style="color:var(--yellow)">${fmtUSD(basePrice)}</div><div class="scen-pnl blur-it" style="color:${basePnl>=0?'var(--green)':'var(--red)'}">${fmtUSD(basePnl)} P&L</div></div><div class="scen scen-bear"><div class="scen-lbl">BEAR (Rejection)</div><div class="scen-prob">${Math.round(bearProb*100)}% prob</div><div class="scen-price neg">${fmtUSD(downPrice)}</div><div class="scen-pnl neg blur-it">${fmtUSD(bearPnl)} P&L</div></div></div>
+${decNote}`;
+}
+function editorHTML(pos,ep){
+  return`<div class="sl-row"><div class="sl-lbl"><span>My Probability</span><span class="sl-val" id="slv-prob-${pos.ticker}">${Math.round(ep.myProbability*100)}%</span></div><input type="range" min="0" max="100" step="5" value="${Math.round(ep.myProbability*100)}" id="sl-prob-${pos.ticker}" oninput="onSlider('${pos.ticker}')"></div><div class="sl-row"><div class="sl-lbl"><span>Upside %</span><span class="sl-val" id="slv-up-${pos.ticker}">${ep.upside}%</span></div><input type="range" min="5" max="500" step="5" value="${ep.upside}" id="sl-up-${pos.ticker}" oninput="onSlider('${pos.ticker}')"></div><div class="sl-row"><div class="sl-lbl"><span>Downside %</span><span class="sl-val" id="slv-dn-${pos.ticker}">${ep.downside}%</span></div><input type="range" min="5" max="100" step="5" value="${ep.downside}" id="sl-dn-${pos.ticker}" oninput="onSlider('${pos.ticker}')"></div><div class="ped-actions"><button class="btn btn-p" onclick="saveProb('${pos.ticker}')">Save</button><button class="btn btn-s" onclick="toggleEditor('${pos.ticker}')">Cancel</button><button class="btn btn-d" onclick="resetProb('${pos.ticker}')">Reset to Default</button></div>`;
+}
+function toggleEditor(t){
+  S.editorOpen.has(t)?S.editorOpen.delete(t):S.editorOpen.add(t);
+  const ped=document.getElementById('ped-'+t);if(ped)ped.classList.toggle('open',S.editorOpen.has(t));
+}
+function onSlider(t){
+  const prob=parseInt(document.getElementById('sl-prob-'+t)?.value||0)/100;
+  const up=parseInt(document.getElementById('sl-up-'+t)?.value||0);
+  const dn=parseInt(document.getElementById('sl-dn-'+t)?.value||0);
+  const slvP=document.getElementById('slv-prob-'+t);if(slvP)slvP.textContent=Math.round(prob*100)+'%';
+  const slvU=document.getElementById('slv-up-'+t);if(slvU)slvU.textContent=up+'%';
+  const slvD=document.getElementById('slv-dn-'+t);if(slvD)slvD.textContent=dn+'%';
+  const pos=CONFIG.positions.find(p=>p.ticker===t);if(!pos)return;
+  const ep={...pos,myProbability:prob,upside:up,downside:dn};
+  updateProbDisplay(t,ep);
+}
+function saveProb(t){
+  const prob=parseInt(document.getElementById('sl-prob-'+t)?.value||0)/100;
+  const up=parseInt(document.getElementById('sl-up-'+t)?.value||0);
+  const dn=parseInt(document.getElementById('sl-dn-'+t)?.value||0);
+  saveOverride(t,{myProbability:prob,upside:up,downside:dn});
+  S.editorOpen.delete(t);
+  const pos=CONFIG.positions.find(p=>p.ticker===t);if(!pos)return;
+  const ep=effPos(pos);
+  updateProbDisplay(t,ep);
+  const ped=document.getElementById('ped-'+t);if(ped)ped.classList.remove('open');
+  showToast('✅ Probability saved for '+t);
+}
+function resetProb(t){
+  delete S.overrides[t];try{localStorage.removeItem('catalystlab_override_'+t);}catch{}
+  const pos=CONFIG.positions.find(p=>p.ticker===t);if(!pos)return;
+  updateProbDisplay(t,pos);
+  const ped=document.getElementById('ped-'+t);
+  if(ped){const ep=pos;ped.innerHTML='<div class="ped-title">✏ Edit Probability &amp; Targets</div>'+editorHTML(pos,ep);}
+  showToast('↩ Reset to default for '+t);
+}
+function updateProbDisplay(t,ep){
+  const ev=calcEV(ep);
+  const gEl=document.getElementById('gauge-'+t);if(gEl)gEl.innerHTML=probGaugeSVG(ep.myProbability);
+  const evEl=document.getElementById('ev-'+t);if(evEl){evEl.textContent=fmtPct(ev);evEl.className='ev-num '+(ev>=0?'pos':'neg');}
+  const scEl=document.getElementById('scen-'+t);if(scEl){
+    const pos=CONFIG.positions.find(p=>p.ticker===t);if(!pos)return;
+    const uP=pos.avgCost*(1+ep.upside/100),dP=pos.avgCost*(1-ep.downside/100);
+    const basePct=-20,bP=pos.avgCost*(1+basePct/100);
+    const bullPnl=(uP-pos.avgCost)*pos.shares,bearPnl=(dP-pos.avgCost)*pos.shares,basePnl=(bP-pos.avgCost)*pos.shares;
+    const baseProb=(1-ep.myProbability)*0.4,bearProb=(1-ep.myProbability)*0.6;
+    scEl.innerHTML=`<div class="scen scen-bull"><div class="scen-lbl">BULL (Approval)</div><div class="scen-prob">${Math.round(ep.myProbability*100)}% prob</div><div class="scen-price pos">${fmtUSD(uP)}</div><div class="scen-pnl pos blur-it">${fmtUSD(bullPnl)} P&L</div></div><div class="scen scen-base"><div class="scen-lbl">BASE (Mixed)</div><div class="scen-prob">${Math.round(baseProb*100)}% prob</div><div class="scen-price" style="color:var(--yellow)">${fmtUSD(bP)}</div><div class="scen-pnl blur-it" style="color:${basePnl>=0?'var(--green)':'var(--red)'}">${fmtUSD(basePnl)} P&L</div></div><div class="scen scen-bear"><div class="scen-lbl">BEAR (Rejection)</div><div class="scen-prob">${Math.round(bearProb*100)}% prob</div><div class="scen-price neg">${fmtUSD(dP)}</div><div class="scen-pnl neg blur-it">${fmtUSD(bearPnl)} P&L</div></div>`;
+  }
+}
+function thesisTab(pos){
+  const chk=getChk(pos.ticker);
+  const chkHtml=CHK_ITEMS.map((item,i)=>`<label class="chk-item${chk[i]?' done':''}"><input type="checkbox" ${chk[i]?'checked':''} onchange="toggleChk('${pos.ticker}',${i},this.checked)">${item}</label>`).join('');
+  const entries=getJournal(pos.ticker);
+  const jHtml=entries.length?entries.map(e=>`<div class="jrnl-entry"><div class="jrnl-time">${new Date(e.time).toLocaleString('en-US',{timeZone:CONFIG.timezone,month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}</div><div class="jrnl-txt">${e.txt}</div></div>`).join(''):'<div style="font-family:var(--mono);font-size:9px;color:var(--tm)">No entries yet</div>';
+  return`<div class="thesis-lbl">My Thesis</div><div class="thesis-txt">${pos.thesis}</div><div class="thesis-lbl">Key Risks</div><div class="thesis-txt risks-txt">${pos.risks}</div><div class="chk-title">Pre-Catalyst Checklist</div>${chkHtml}<div class="chk-title" style="margin-top:12px">Trade Journal</div><div class="jrnl-area"><textarea placeholder="Add a note about this position…" id="jrnl-${pos.ticker}" rows="3"></textarea><button class="btn btn-p" style="margin-top:6px;font-size:9px" onclick="addNote('${pos.ticker}')">Add Note</button></div><div class="jrnl-entries" id="jrnl-entries-${pos.ticker}">${jHtml}</div>`;
+}
+function cardFooter(pos){
+  const ts=S.lastFetch?new Intl.DateTimeFormat('en-US',{timeZone:CONFIG.timezone,hour:'2-digit',minute:'2-digit',hour12:true}).format(S.lastFetch)+' CT':'Not yet fetched';
+  return`<div class="cfoot"><div><div class="cfoot-ts">Updated: ${ts}</div></div><div class="cfoot-acts"><button class="icon-btn" title="Decision Framework" onclick="openDecision('${pos.ticker}')">📋 Decision</button><button class="icon-btn" onclick="openClose('${pos.ticker}')" title="Mark Closed">✅ Close</button></div></div>`;
+}
+function attachCardEvents(pos){
+  document.querySelectorAll(`[data-tab-btn="${pos.ticker}"]`).forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const tab=btn.dataset.tab;S.activeTabs[pos.ticker]=tab;
+      document.querySelectorAll(`[data-tab-btn="${pos.ticker}"]`).forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+      document.querySelectorAll(`[data-tab-con="${pos.ticker}"]`).forEach(c=>c.classList.toggle('active',c.dataset.tab===tab));
+    });
+  });
+}
+function toggleChk(t,i,val){const s=getChk(t);s[i]=val;saveChk(t,s);const lbl=document.querySelector(`#card-${t} .tcon[data-tab="thesis"] .chk-item:nth-child(${i+1})`);if(lbl)lbl.classList.toggle('done',val);}
+function addNote(t){const ta=document.getElementById('jrnl-'+t);if(!ta||!ta.value.trim())return;const entries=addJournal(t,ta.value.trim());ta.value='';const container=document.getElementById('jrnl-entries-'+t);if(container){container.innerHTML=entries.map(e=>`<div class="jrnl-entry"><div class="jrnl-time">${new Date(e.time).toLocaleString('en-US',{timeZone:CONFIG.timezone,month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}</div><div class="jrnl-txt">${e.txt}</div></div>`).join('');}showToast('📝 Note added');}
+
+// =============================================
+// RENDERING — PERFORMANCE LOG
+// =============================================
+function renderPerf(){
+  const closed=CONFIG.closedPositions;
+  const wins=closed.filter(c=>c.outcome==='Win');const losses=closed.filter(c=>c.outcome!=='Win'&&c.outcome!=='Mixed');
+  const avgWin=wins.length?wins.reduce((s,c)=>s+((c.exitPrice-c.entryPrice)/c.entryPrice*100),0)/wins.length:null;
+  const avgLoss=losses.length?losses.reduce((s,c)=>s+((c.exitPrice-c.entryPrice)/c.entryPrice*100),0)/losses.length:null;
+  const totalPnl=closed.reduce((s,c)=>(c.exitPrice-c.entryPrice)*c.shares+s,0);
+  const rows=closed.length?closed.map(c=>{const ret=(c.exitPrice-c.entryPrice)/c.entryPrice*100;const held=c.entryDate&&c.exitDate?Math.round((new Date(c.exitDate)-new Date(c.entryDate))/86400000):'—';return`<tr><td style="color:var(--tc);font-weight:700">${c.ticker}</td><td>${c.entryDate||'—'}</td><td>${c.exitDate||'—'}</td><td class="${ret>=0?'pos':'neg'}">${fmtPct(ret)}</td><td style="color:${c.outcome==='Win'?'var(--green)':c.outcome==='Loss'?'var(--red)':'var(--yellow)'}">${c.outcome}</td><td>${held}</td><td style="font-size:9px;max-width:150px">${c.notes||'—'}</td></tr>`;}).join(''):`<tr><td colspan="7" style="text-align:center;color:var(--tm);font-size:10px;padding:16px">No closed positions yet. Close your first trade to see performance data here.</td></tr>`;
+  const show=S.settings.showClosed;
+  document.getElementById('perf-root').innerHTML=`<div class="coll-hd${show?' open':''}" onclick="this.classList.toggle('open');S.settings.showClosed=this.classList.contains('open');saveSettings()"><div class="sec-hd" style="margin:0;padding:0;border:none"><span class="sec-dot"></span><span class="sec-title">Performance Log</span></div><span class="coll-arrow">▶</span></div><div class="coll-body"><table><thead><tr><th>Ticker</th><th>Entry</th><th>Exit</th><th>Return</th><th>Outcome</th><th>Days Held</th><th>Notes</th></tr></thead><tbody>${rows}</tbody></table><div class="stat-grid" style="margin-bottom:14px"><div class="stat"><div class="stat-icon">🏆</div><div class="stat-val">${closed.length>0?Math.round(wins.length/closed.length*100)+'%':'—'}</div><div class="stat-lbl">Win Rate</div></div><div class="stat"><div class="stat-icon">📈</div><div class="stat-val ${avgWin!=null?'pos':''}"">${avgWin!=null?fmtPct(avgWin):'—'}</div><div class="stat-lbl">Avg Win</div></div><div class="stat"><div class="stat-icon">📉</div><div class="stat-val ${avgLoss!=null?'neg':''}"">${avgLoss!=null?fmtPct(avgLoss):'—'}</div><div class="stat-lbl">Avg Loss</div></div><div class="stat"><div class="stat-icon">💵</div><div class="stat-val blur-it ${totalPnl>=0?'pos':'neg'}">${closed.length?fmtUSD(totalPnl):'—'}</div><div class="stat-lbl">Total P&L</div></div></div>${closed.length?evCalibChart(closed):'<div style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--tm);padding:12px">EV calibration chart will appear after first closed trade</div>'}</div>`;
+}
+function evCalibChart(closed){
+  if(!closed.length)return'';
+  const W=500,H=80,pad=40,barW=Math.min(40,(W-pad*2)/closed.length-6);
+  let s=`<div style="font-family:var(--mono);font-size:9px;color:var(--tm);margin-bottom:6px;letter-spacing:.08em;text-transform:uppercase">Are Your Probability Estimates Accurate?</div><svg viewBox="0 0 ${W} ${H+30}" style="width:100%;max-width:${W}px">`;
+  closed.forEach((c,i)=>{
+    const x=pad+i*(W-pad*2)/closed.length+(W-pad*2)/closed.length/2-barW/2;
+    const probH=(c.myProbability||.5)*(H-10),outH=(c.outcome==='Win'?1:0)*(H-10);
+    s+=`<rect x="${x}" y="${H-probH}" width="${barW/2-1}" height="${probH}" fill="rgba(14,165,233,.6)" rx="2"/>`;
+    s+=`<rect x="${x+barW/2+1}" y="${H-outH}" width="${barW/2-1}" height="${outH||3}" fill="${c.outcome==='Win'?'rgba(34,197,94,.7)':'rgba(239,68,68,.5)'}" rx="2"/>`;
+    s+=`<text x="${x+barW/2}" y="${H+12}" text-anchor="middle" fill="#64748b" font-family="JetBrains Mono,monospace" font-size="7">${c.ticker}</text>`;
+  });
+  s+=`<text x="5" y="12" fill="#64748b" font-family="JetBrains Mono,monospace" font-size="7">■ Estimated</text><text x="55" y="12" fill="${closed.some(c=>c.outcome==='Win')?'#22c55e':'#ef4444'}" font-family="JetBrains Mono,monospace" font-size="7">■ Actual</text>`;
+  s+=`</svg>`;return s;
+}
+
+// =============================================
+// RENDERING — RESEARCH PANEL
+// =============================================
+function renderPanels(){
+  const tc=totalCap();
+  // Risk by type
+  const byType={};CONFIG.positions.forEach(p=>{const k=p.catalystType;byType[k]=(byType[k]||0)+posVal(p);});
+  // Risk by time
+  const byTime={lt30:0,lt60:0,lt90:0,gt90:0};
+  CONFIG.positions.forEach(p=>{const d=daysTo(p.catalystDate),v=posVal(p);if(d<0)return;if(d<30)byTime.lt30+=v;else if(d<60)byTime.lt60+=v;else if(d<90)byTime.lt90+=v;else byTime.gt90+=v;});
+  // Largest pos
+  const largest=CONFIG.positions.reduce((mx,p)=>posVal(p)>posVal(mx)?p:mx,CONFIG.positions[0]);
+  const largestPct=tc>0?(posVal(largest)/tc*100).toFixed(0):0;
+  // Correlation warnings
+  const sorted=CONFIG.positions.filter(p=>daysTo(p.catalystDate)>=0).sort((a,b)=>daysTo(a.catalystDate)-daysTo(b.catalystDate));
+  const warns=[];
+  for(let i=0;i<sorted.length-1;i++){const d1=daysTo(sorted[i].catalystDate),d2=daysTo(sorted[i+1].catalystDate);if(Math.abs(d2-d1)<=7)warns.push(`⚠️ ${sorted[i].ticker} and ${sorted[i+1].ticker} catalysts are ${Math.abs(d2-d1)} day(s) apart — concentrated binary risk`);}
+  const warnHtml=warns.map(w=>`<div class="corr-warn">${w}</div>`).join('');
+  const typeHtml=Object.entries(byType).map(([k,v])=>`<div class="risk-bar-row"><div class="rb-lbl"><span>${k}</span><span class="blur-it">${fmtUSD(v,0)} (${tc>0?(v/tc*100).toFixed(0):0}%)</span></div><div class="rb"><div class="rb-fill" style="width:${tc>0?Math.min(100,v/tc*100):0}%;background:${{PDUFA:'var(--blue)',PhaseData:'var(--purple)',Other:'var(--tm)',Earnings:'var(--yellow)'}[k]||'var(--tm)'}"></div></div></div>`).join('');
+  const timeHtml=[['< 30d',byTime.lt30,'var(--red)'],['30–60d',byTime.lt60,'var(--orange)'],['60–90d',byTime.lt90,'var(--yellow)'],['90d+',byTime.gt90,'var(--green)']].map(([lbl,v,col])=>`<div class="risk-bar-row"><div class="rb-lbl"><span>${lbl}</span><span class="blur-it">${fmtUSD(v,0)}</span></div><div class="rb"><div class="rb-fill" style="width:${tc>0?Math.min(100,v/tc*100):0}%;background:${col}"></div></div></div>`).join('');
+  const wlHtml=S.settings.showWatchlist?CONFIG.watchlist.map(w=>`<div class="wl-card"><div class="wl-ticker">${w.ticker}</div><div class="wl-co">${w.company} · <span class="badge ${badgeCls(w.catalystType)}">${badgeLbl(w.catalystType)}</span> · ${fmtDate(w.catalystDate)}</div><div class="wl-notes">${w.notes}</div></div>`).join(''):'<div style="font-family:var(--mono);font-size:9px;color:var(--tm)">Watchlist hidden in settings</div>';
+  document.getElementById('panels-root').innerHTML=`<div class="panels">
+<div class="panel"><div class="panel-hd"><div class="panel-title">Watchlist</div></div><div class="panel-body">${wlHtml}</div></div>
+<div class="panel"><div class="panel-hd"><div class="panel-title">Risk Exposure</div></div><div class="panel-body">${warnHtml}<div style="font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);margin-bottom:7px">By Catalyst Type</div>${typeHtml}<div style="font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);margin-bottom:7px;margin-top:10px">By Time Bucket</div>${timeHtml}<div style="font-family:var(--mono);font-size:9px;color:var(--tm);margin-top:10px">Largest position: <strong style="color:var(--tc)">${largest.ticker}</strong> at <strong class="blur-it">${largestPct}%</strong> of portfolio</div></div></div></div>`;
+}
+
+// =============================================
+// MODALS — DECISION FRAMEWORK
+// =============================================
+function openDecision(t){
+  const pos=CONFIG.positions.find(p=>p.ticker===t);if(!pos)return;
+  const ep=effPos(pos),p=price(t),d=S.decisions[t]||{};
+  const posV=p?p*pos.shares:pos.avgCost*pos.shares;const tc=totalCap();const pct=tc>0?(posV/tc*100).toFixed(1):0;
+  const riskSz=Math.round(pos.avgCost*(ep.myProbability*0.8+.1)*pos.shares*10)/10;
+  const bigWarn=pct>25?`<div class="d-warn">⚠️ This position is ${pct}% of your catalyst portfolio — exceeds 25% concentration guideline</div>`:'';
+  const runUp=p?(p-pos.avgCost)/pos.avgCost*100:null;
+  const runUpWarn=runUp!=null&&runUp>20?`<div class="d-warn">📈 Stock is up ${fmtPct(runUp)} from your avg cost — pre-catalyst run-up may have changed your R/R</div>`:'<div class="d-info">Price change from cost basis: '+(runUp!=null?fmtPct(runUp):'—')+'</div>';
+  const choices=['Hold Full','Reduce Size','Exit Before Event','Add'];
+  const choiceHtml=choices.map(c=>`<button class="choice-btn${d.finalDecision===c?' chosen':''}" style="color:${{['Hold Full']:'var(--blue)',['Reduce Size']:'var(--yellow)',['Exit Before Event']:'var(--red)',['Add']:'var(--green)'}[c]||'var(--tm)'};border-color:currentColor" onclick="selectDecision('${t}','${c}',this)">${c}</button>`).join('');
+  document.getElementById('modal-ov').innerHTML=`<div class="modal"><button class="modal-close" onclick="closeModal()">✕</button><div class="modal-title">📋 Decision Framework — ${t}</div>
+<div class="dstep"><div class="dstep-num">Step 1</div><div class="dstep-q">What is your exit price on approval / positive data?</div><input class="d-input" id="d-exit-up-${t}" value="${d.exitApproval||''}" placeholder="e.g. $12.00 or +150% target" oninput="saveDecision('${t}',{exitApproval:this.value})"></div>
+<div class="dstep"><div class="dstep-num">Step 2</div><div class="dstep-q">What is your exit price on rejection / negative data?</div><input class="d-input" id="d-exit-dn-${t}" value="${d.exitRejection||''}" placeholder="e.g. $1.50 or -40% stop" oninput="saveDecision('${t}',{exitRejection:this.value})"></div>
+<div class="dstep"><div class="dstep-num">Step 3</div><div class="dstep-q">Is your position size appropriate?</div><div class="d-info">Position: <strong class="blur-it">${fmtUSD(posV)}</strong> · ${pct}% of catalyst portfolio · Probability: ${Math.round(ep.myProbability*100)}%</div>${bigWarn}</div>
+<div class="dstep"><div class="dstep-num">Step 4</div><div class="dstep-q">Have you checked for FDA information requests or review flags in the last 7 days?</div><div class="toggle-row"><button class="tog-btn${d.fdaCheck==='Yes'?' active':''}" onclick="saveDecision('${t}',{fdaCheck:'Yes'});this.classList.add('active');this.nextElementSibling.classList.remove('active')">Yes</button><button class="tog-btn${d.fdaCheck==='No'?' active':''}" onclick="saveDecision('${t}',{fdaCheck:'No'});this.classList.add('active');this.previousElementSibling.classList.remove('active')">No</button></div></div>
+<div class="dstep"><div class="dstep-num">Step 5</div><div class="dstep-q">Pre-catalyst run-up check</div>${runUpWarn}</div>
+<div class="dstep"><div class="dstep-num">Step 6 — Final Decision</div><div class="dstep-q">What is your decision going into this catalyst?</div><div class="choice-grid">${choiceHtml}</div>${d.finalDecision?`<div style="font-family:var(--mono);font-size:9px;color:var(--tm);margin-top:8px">Last saved: ${d.finalDecision} · ${d.updatedAt?new Date(d.updatedAt).toLocaleDateString():'—'}</div>`:''}</div>
+<div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-p" onclick="closeModal();showToast('✅ Decision saved for ${t}')">Done</button><button class="btn btn-s" onclick="closeModal()">Cancel</button></div></div>`;
+  document.getElementById('modal-ov').classList.remove('hidden');
+}
+function selectDecision(t,choice,btn){
+  saveDecision(t,{finalDecision:choice});
+  btn.closest('.choice-grid').querySelectorAll('.choice-btn').forEach(b=>b.classList.remove('chosen'));
+  btn.classList.add('chosen');
+}
+
+// =============================================
+// MODALS — CLOSE POSITION
+// =============================================
+function openClose(t){
+  const pos=CONFIG.positions.find(p=>p.ticker===t);if(!pos)return;
+  const p=price(t)||pos.avgCost;
+  document.getElementById('modal-ov').innerHTML=`<div class="modal"><button class="modal-close" onclick="closeModal()">✕</button><div class="modal-title">✅ Close Position — ${t}</div>
+<div class="dstep"><div class="dstep-num">Exit Details</div><div class="dstep-q">Exit Price</div><input class="d-input" id="close-price-${t}" value="${p.toFixed(2)}" type="number" step="0.01"></div>
+<div class="dstep"><div class="dstep-q">Outcome</div><div class="toggle-row">${['Win','Loss','Mixed'].map(o=>`<button class="tog-btn" onclick="this.parentElement.querySelectorAll('.tog-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');document.getElementById('close-outcome-${t}').value='${o}'">${o}</button>`).join('')}<input type="hidden" id="close-outcome-${t}" value=""></div></div>
+<div class="dstep"><div class="dstep-q">Final Notes</div><textarea class="d-input" id="close-notes-${t}" rows="3" placeholder="What happened? What did you learn?"></textarea></div>
+<div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-p" onclick="confirmClose('${t}')">Close Position</button><button class="btn btn-s" onclick="closeModal()">Cancel</button></div></div>`;
+  document.getElementById('modal-ov').classList.remove('hidden');
+}
+function confirmClose(t){
+  const ep=document.getElementById('close-price-'+t)?.value;
+  const outcome=document.getElementById('close-outcome-'+t)?.value;
+  const notes=document.getElementById('close-notes-'+t)?.value;
+  if(!ep){showToast('Enter an exit price');return;}
+  const pos=CONFIG.positions.find(p=>p.ticker===t);if(!pos)return;
+  const entry={ticker:t,entryDate:S.decisions[t]?.entryDate||null,exitDate:new Date().toISOString().split('T')[0],entryPrice:pos.avgCost,exitPrice:parseFloat(ep),shares:pos.shares,outcome:outcome||'—',notes:notes||'',myProbability:effPos(pos).myProbability};
+  CONFIG.closedPositions.push(entry);
+  CONFIG.positions.splice(CONFIG.positions.indexOf(pos),1);
+  closeModal();renderAll();showToast(`Position ${t} closed and logged`);
+}
+function closeModal(){document.getElementById('modal-ov').classList.add('hidden');document.getElementById('modal-ov').innerHTML='';}
+
+// =============================================
+// SETTINGS PANEL
+// =============================================
+function toggleSettings(){document.getElementById('sett-panel').classList.toggle('open');renderSettings();}
+function renderSettings(){
+  const ts=S.lastFetch?new Intl.DateTimeFormat('en-US',{timeZone:CONFIG.timezone,hour:'2-digit',minute:'2-digit',hour12:true}).format(S.lastFetch)+' CT':'Never';
+  document.getElementById('sett-panel').innerHTML=`<button class="sett-close" onclick="document.getElementById('sett-panel').classList.remove('open')">✕</button>
+<div class="sett-title">⚙ Settings</div>
+<div class="sett-row"><div><div class="sett-lbl">Show Closed Positions</div></div><label class="tog"><input type="checkbox" ${S.settings.showClosed?'checked':''} onchange="S.settings.showClosed=this.checked;saveSettings();renderPerf()"><span class="tog-sl"></span></label></div>
+<div class="sett-row"><div><div class="sett-lbl">Privacy Mode</div><div class="sett-desc">Blur dollar amounts</div></div><label class="tog"><input type="checkbox" ${S.settings.privacyMode?'checked':''} onchange="S.settings.privacyMode=this.checked;saveSettings();document.body.classList.toggle('privacy',this.checked)"><span class="tog-sl"></span></label></div>
+<div class="sett-row"><div><div class="sett-lbl">Show Watchlist</div></div><label class="tog"><input type="checkbox" ${S.settings.showWatchlist?'checked':''} onchange="S.settings.showWatchlist=this.checked;saveSettings();renderPanels()"><span class="tog-sl"></span></label></div>
+<div class="sett-row"><div class="sett-lbl">Default Tab</div><select class="sett-sel" onchange="S.settings.defaultTab=this.value;saveSettings()"><option value="position" ${S.settings.defaultTab==='position'?'selected':''}>Position</option><option value="catalyst" ${S.settings.defaultTab==='catalyst'?'selected':''}>Catalyst</option><option value="thesis" ${S.settings.defaultTab==='thesis'?'selected':''}>Thesis</option></select></div>
+<div class="sett-actions">
+<button class="btn btn-s" style="width:100%" onclick="exportData()">📤 Export Data (JSON)</button>
+<button class="btn btn-s" style="width:100%" onclick="document.getElementById('import-file').click()">📥 Import Data (JSON)</button>
+<input type="file" id="import-file" accept=".json" onchange="handleImport(this)">
+<button class="btn btn-s" style="width:100%" onclick="location.reload()">↺ Refresh Page</button>
+</div>
+<div class="sett-version">CATALYST LAB v1.0<br>Last data refresh: ${ts}<br>Positions: ${CONFIG.positions.length} active · ${CONFIG.closedPositions.length} closed</div>`;
+}
+function handleImport(input){const file=input.files[0];if(!file)return;const r=new FileReader();r.onload=e=>importData(e.target.result);r.readAsText(file);}
+
+// =============================================
+// KEYBOARD SHORTCUTS
+// =============================================
+function renderShortcuts(){
+  document.getElementById('shorts-ov').innerHTML=`<div class="shorts-box"><div class="shorts-title">Keyboard Shortcuts</div>${[['R','Refresh all prices'],['N','New watchlist position'],['?','Show this overlay'],['D','Decision framework (focused card)'],['1–6','Jump to position card'],['Esc','Close overlay / modal']].map(([k,d])=>`<div class="sk-row"><span class="key">${k}</span><span style="color:var(--tm)">${d}</span></div>`).join('')}<div style="text-align:center;margin-top:12px"><button class="btn btn-s" onclick="document.getElementById('shorts-ov').classList.add('hidden')">Close</button></div></div>`;
+}
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key==='Escape'){document.getElementById('shorts-ov').classList.add('hidden');closeModal();document.getElementById('sett-panel').classList.remove('open');return;}
+  if(e.key==='?'){renderShortcuts();document.getElementById('shorts-ov').classList.remove('hidden');return;}
+  if(e.key.toLowerCase()==='r'){fetchPrices().then(()=>{S.nextRefreshAt=Date.now()+CONFIG.refreshInterval*1000;renderAll();showToast('↺ Prices refreshed');});return;}
+  if(e.key>='1'&&e.key<='6'){const pos=CONFIG.positions[parseInt(e.key)-1];if(pos)scrollToCard(pos.ticker);return;}
+});
+
+// =============================================
+// MAIN RENDER + INIT
+// =============================================
+function renderAll(){
+  renderNav();
+  renderCmd();
+  renderTimeline();
+  renderCards();
+  renderPerf();
+  renderPanels();
+  if(S.settings.privacyMode)document.body.classList.add('privacy');
+}
+
+function startClock(){
+  S.clockTid=setInterval(()=>{
+    const navR=document.querySelector('.nav-r .clock');
+    if(navR){
+      const now=new Date();
+      const ct=new Intl.DateTimeFormat('en-US',{timeZone:CONFIG.timezone,month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true}).format(now);
+      const secs=S.nextRefreshAt?Math.max(0,Math.round((S.nextRefreshAt-Date.now())/1000)):0;
+      navR.textContent=ct+' CT · ↺'+secs+'s';
+    }
+  },1000);
+}
+
+async function init(){
+  loadLS();
+  renderAll();
+  await fetchPrices();
+  renderAll();
+  scheduleRefresh();
+  startClock();
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
