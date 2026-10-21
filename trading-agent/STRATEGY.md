@@ -25,6 +25,11 @@ SPY, DIA, QQQ, RSP. No shorting, options, margin, crypto, leveraged or inverse E
 
 **[Implementation note]** VIX9D is not available through the Robinhood tools (VIX is).
 
+## USER-APPROVED CLARIFICATIONS (2026-10-20)
+1. Regime signal 5 (VIX9D below VIX) scores 0 while VIX9D is unavailable; thresholds unchanged.
+2. Exits: if the limit-at-bid exit is rejected or unfilled after ~1 minute, sell at market (regular hours).
+3. Entries: limit at the ask; if fractional limits are rejected, use a market order (regular hours).
+
 ## LAYER 1: DAILY REGIME (9:00 ET)
 Score each +1 / −1:
 1. SPY above 20-day SMA
