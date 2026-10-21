@@ -157,3 +157,28 @@ Otherwise hold. Hard stop / target / 15:45 rules still apply. Message the user w
 
 **[User rule 2026-10-21 ~13:22 ET] Usage-saving cadence (option 3):** checks every **15 minutes** (in or out of a position), full scan each check.
 No 5-minute checks. Keep each check to the data the decision needs.
+
+---
+
+## [User rule 2026-10-21 ~15:30 ET] SETUP F — Exhausted-selloff dip buy / re-entry
+"If we think the selloff is used up and the market looks healthy, we should be buying."
+
+**When:** 10:30–15:00 ET, regime GREEN or YELLOW, any day type. Tradable universe only.
+Also serves as the **re-entry after a thesis exit** in the same ETF (overrides the 30-min no-re-entry rule for thesis exits; still applies after a hard stop-out).
+
+**1. Healthy market (all required):**
+- The ETF is up on the day and SPY is up on the day
+- VIX not up more than 3% since the selloff began, and below 20
+- HYG green or flat (not down more than 0.10%) on the day
+- At least 5/9 sectors green and at least 3/6 megacaps above VWAP
+
+**2. Selloff looks used up (all required):**
+- A sharp drop: one or two 5-min candles totaling ≥ 0.25% down, on volume ≥ 2× the prior 6-bar average (capitulation)
+- The low holds near session VWAP: no 5-min close more than 0.15% below VWAP
+- Selling stops: the next candle(s) make no new low, or volume falls to under half the capitulation bar
+
+**3. Trigger:** a 5-min candle closes above the prior candle's high **and** back above VWAP (preferably also above the 5-min 20 EMA).
+
+**Stop:** 0.10% below the selloff low, max 0.5% from entry. **Target:** the pre-selloff high, or 2R, whichever is closer. Need ≥ 1.5R.
+**Score:** standard 10-point score, need ≥ 6. Size per normal rules (half in YELLOW). Counts toward max 3 entries/day; max 1 Setup F per day.
+Earnings caution still applies (no QQQ/XLK after 14:30 ET on Oct 21–type days with megacap reports that night).
