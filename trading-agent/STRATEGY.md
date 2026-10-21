@@ -9,7 +9,7 @@ All times US Eastern. Trade approval in the Robinhood app is ON — every order 
 agent places waits for the user to approve it in the app.
 
 ## ONE-TIME TASK (first morning only — Wed 2026-10-21)
-- Sell half of the BRK.B position (0.2 sh → sell 0.1 sh) after 9:45 ET.
+- Sell 0.15 sh of the BRK.B position (0.2 sh → 0.05 sh remaining) after 9:45 ET. (Changed from 0.1 sh at the user's request on 2026-10-20.)
 - Limit order at the bid. If fractional limit orders aren't allowed, use a market order during regular hours only.
 - Confirm the fill and new buying power, then report.
 
