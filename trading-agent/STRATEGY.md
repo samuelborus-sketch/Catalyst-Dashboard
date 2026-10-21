@@ -128,7 +128,6 @@ Thu Oct 22: run the regime check but skip the day if META or TSLA moves more tha
 
 **Risk (addendum restates):** 0.5% risk (half in YELLOW), max 50% of equity per position; one position; max 3 entries/day;
 −2% daily / −5% weekly; flat by 15:45; limit orders, self-monitored stops, exit with limit at the bid.
-**[Open question]** The addendum's −2%/−5% conflicts with the user's chat changes earlier today (−$5 daily / −$25 weekly).
-Until the user answers, the stricter addendum values apply (−2% ≈ −$2.17 daily, −5% ≈ −$5.42 weekly).
+**[Resolved 2026-10-21 ~10:50 ET]** User set loss limits: **daily −$7.50, weekly −$25** (these replace the addendum's −2%/−5% and the earlier −$5 daily).
 
 **Before every order:** message the user "SETUP [X] in [ETF] | score [n]/10 | entry [x] | stop [x] | target [x] | R:R [x]", then submit.
