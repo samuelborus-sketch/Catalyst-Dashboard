@@ -142,3 +142,8 @@ Rotate (market-sell the current position, then enter the new one) only when ALL 
 3. The new setup fully qualifies (all gates, its own trigger, R:R rules) and **scores ≥ the current trade's score + 1**.
 4. An entry is still available (max 3/day; the rotation's new entry counts) and the new setup type hasn't been used today.
 Message the user before both orders ("ROTATE: exit X (+$ / +R, stagnant) → SETUP Y in Z | score | entry | stop | target | R:R").
+
+**[User update 2026-10-21 ~11:48 ET] Rotation thresholds (replace items 1–2 above):**
+- Rotation-eligible when the open trade is **up ≥ +$0.10** (unrealized), OR it has been **stagnant 30 min** (no new high since entry for 6 five-minute bars) **and is at or above breakeven**.
+- **Never rotate out of a red trade.** If stagnant in the red but the thesis still holds (setup structure intact, early-exit rules not triggered), stay in; the stop governs.
+- Items 3–4 unchanged: the new setup must fully qualify and score ≥ current + 1; an entry must be available.
