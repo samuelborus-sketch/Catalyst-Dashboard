@@ -131,3 +131,6 @@ Thu Oct 22: run the regime check but skip the day if META or TSLA moves more tha
 **[Resolved 2026-10-21 ~10:50 ET]** User set loss limits: **daily −$7.50, weekly −$25** (these replace the addendum's −2%/−5% and the earlier −$5 daily).
 
 **Before every order:** message the user "SETUP [X] in [ETF] | score [n]/10 | entry [x] | stop [x] | target [x] | R:R [x]", then submit.
+
+**[User rule 2026-10-21 11:35 ET] Order type:** all orders are **market orders, regular hours**. Entries are **dollar-based** (dollar_amount = position size).
+Exits sell the full share quantity held, at market. (The Robinhood app cannot approve fractional-share limit orders.)
