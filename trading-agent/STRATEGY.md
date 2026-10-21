@@ -196,6 +196,6 @@ Overrides the 3-entries/day rule and the per-trade sizing above.
 - If nothing qualifies by 11:30 ET → **no trade today** (that is a valid outcome).
 - After the trade closes (target, stop, thesis exit, or 15:45 ET) → done for the day. No re-entries, no second trade. Setup F only counts as *the* trade if no earlier entry was made.
 
-**Sizing (proposed with this rule — user can revert):** risk **1% of account equity** (≈ \$1.08) per trade; shares = (equity × 0.01) ÷ (entry − stop), positions may use up to **100% of cash** (no 50% cap). YELLOW regime still halves risk to 0.5%. Dollar-based market orders.
+**Sizing (confirmed by user 2026-10-21 EOD):** risk **1% of account equity** (≈ \$1.08) per trade; shares = (equity × 0.01) ÷ (entry − stop), positions may use up to **100% of cash** (no 50% cap). YELLOW regime still halves risk to 0.5%. Dollar-based market orders.
 
 **Check cadence (usage-friendly):** 09:00, 09:45, then every 15 min until entry or 11:30; every 15 min while in the trade; EOD report after exit or at 15:50.
