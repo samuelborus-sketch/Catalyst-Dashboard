@@ -96,3 +96,39 @@ YELLOW: halve. After 2 straight losses: halve until next win.
 - Each exit: fill, P&L $ / % / R, reason.
 - EOD: trades, skipped setups + scores, P&L, equity, weekly running P&L, one-line market note.
 - Friday: weekly summary — win rate, avg R, which setups/signals worked.
+
+---
+
+## ADDENDUM (2026-10-21 ~10:30 ET) — overrides the rules above where they conflict
+
+**Account:** one-time BRK.B task is void (user sold all manually). Account is all cash (~$108).
+**Heartbeat:** log one line at every check (time, regime, day type, setups watched, score, action). Status message to the user every 30 min, even with no trade.
+
+**Tradable universe (long only):** SPY, DIA, QQQ, RSP, XLK, XLF.
+
+**Loosened gates:** setup score threshold 6/10 · megacaps above VWAP ≥ 3/6 · sectors green ≥ 5/9 (unchanged) ·
+score item 10 = "no more than one megacap down 2%+" · Setup A window extended to 12:00 ET.
+
+**Day-type classifier** (10:30 ET, then every 30 min):
+- TREND: SPY above or below VWAP 45+ consecutive min AND outside its OR → Setups A, B, C
+- RANGE: SPY crossed VWAP 3+ times in the first hour AND inside/near its OR → Setups D and E only
+
+**Setup D — Range-day VWAP reversion** (RANGE only, 10:30–14:30; SPY or RSP; max 1/day):
+price ≥ 0.20% below session VWAP and at/near OR low, 5-min RSI(14) ≤ 35, then a green 5-min close above the prior candle's high.
+Target VWAP. Stop 0.20% below the pullback low, max 0.35% from entry. Need target ≥ 1.2R.
+
+**Setup E — Relative-strength leader pullback** (any day type, 10:30–14:30):
+strongest of QQQ/XLK/XLF by % on day; must be up ≥ 0.4% and beat SPY by ≥ 0.3%.
+Pulls back to within 0.10% of its VWAP or 5-min 20 EMA while staying above VWAP, then a 5-min close above the prior candle's high.
+Stop 0.15% below VWAP, max 0.5% from entry. Target 2R or day's high, whichever closer; need ≥ 1.5R.
+Skip if more than 1 of NVDA/AAPL/MSFT/META is red on the day.
+
+**Earnings caution:** META and TSLA report after the close today → no new QQQ/XLK entries after 14:30 ET today.
+Thu Oct 22: run the regime check but skip the day if META or TSLA moves more than ±5% pre-market.
+
+**Risk (addendum restates):** 0.5% risk (half in YELLOW), max 50% of equity per position; one position; max 3 entries/day;
+−2% daily / −5% weekly; flat by 15:45; limit orders, self-monitored stops, exit with limit at the bid.
+**[Open question]** The addendum's −2%/−5% conflicts with the user's chat changes earlier today (−$5 daily / −$25 weekly).
+Until the user answers, the stricter addendum values apply (−2% ≈ −$2.17 daily, −5% ≈ −$5.42 weekly).
+
+**Before every order:** message the user "SETUP [X] in [ETF] | score [n]/10 | entry [x] | stop [x] | target [x] | R:R [x]", then submit.
