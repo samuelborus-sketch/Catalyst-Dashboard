@@ -207,3 +207,12 @@ Lesson from the 10/21 QQQ trade: a weak afternoon entry, then a sell into a 5×-
 - **B. Structure + volatility stop placement.** Stop = setup structure level (VWAP, pullback low, or OR level per setup) **minus 1× 5-min ATR(14)**, capped at the 1.0% disaster stop. Size from the stop distance so dollar risk stays at the approved 1% (½ in YELLOW): dollars = (equity × risk%) ÷ (stop distance %) — capped at available cash. Targets and R-multiples are measured from this stop.
 - **C. No selling into a flush.** If an exit signal (thesis or working stop) comes on a 5-min candle with **≥ 2× the 20-bar average volume** and price is still above the disaster stop, wait **one more 5-min candle**. Exit only if the next candle makes a lower low or closes lower. If it holds or bounces, stay in and re-evaluate on the following candle. The disaster stop always overrides.
 - **D. Volume required at entry.** The trigger candle's volume must be **≥ the 20-bar average** (relvol ≥ 1.0). Below that → no entry, regardless of score.
+
+## LEVERAGED ETFs — approved by user 2026-10-21 EOD (effective Thu 2026-10-22)
+Overrides the earlier "no leveraged ETFs" rule, for these two only:
+1. **TQQQ** (3× QQQ) may replace QQQ/XLK signals; **UPRO** (3× S&P 500) may replace SPY/RSP/DIA signals. No other leveraged ETFs (TECL, FAS, etc.).
+2. **Signals, structure, stops and targets are all computed on the 1× underlying chart.** Only the order is placed in the 3× fund. Rules A–D apply on the underlying: working stop = structure − 1× 5-min ATR on the underlying, and the disaster stop = underlying −1.0% (≈ −3% in the 3× fund). Never set a stop as a % of the 3× fund's own price.
+3. Risk unchanged: 1% of equity (½ in YELLOW). Position $ = risk$ ÷ (3 × underlying stop distance %), capped at cash. Daily −$7.50 / weekly −$25 limits unchanged.
+4. **3× only when score ≥ 8 AND regime GREEN.** Otherwise trade the 1× ETF.
+5. Intraday only. Hard flat 15:45 ET, never held overnight.
+SETUP message must name the fund traded and the underlying levels, e.g. "SETUP A in QQQ→TQQQ | score 8/10 | entry/stop/target on QQQ …".
