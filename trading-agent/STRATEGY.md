@@ -199,3 +199,11 @@ Overrides the 3-entries/day rule and the per-trade sizing above.
 **Sizing (confirmed by user 2026-10-21 EOD):** risk **1% of account equity** (≈ \$1.08) per trade; shares = (equity × 0.01) ÷ (entry − stop), positions may use up to **100% of cash** (no 50% cap). YELLOW regime still halves risk to 0.5%. Dollar-based market orders.
 
 **Check cadence (usage-friendly):** 09:00, 09:45, then every 15 min until entry or 11:30; every 15 min while in the trade; EOD report after exit or at 15:50.
+
+## SMARTER STOPS & EXITS — approved by user 2026-10-21 EOD (effective Thu 2026-10-22)
+Lesson from the 10/21 QQQ trade: a weak afternoon entry, then a sell into a 5×-volume flush that reversed. These override the conflicting stop/exit rules above.
+
+- **A. Close-based stops.** The working stop triggers only when a **5-min candle closes** below it. A separate **disaster stop at entry −1.0%** triggers on any touch (live price), regardless of candle close.
+- **B. Structure + volatility stop placement.** Stop = setup structure level (VWAP, pullback low, or OR level per setup) **minus 1× 5-min ATR(14)**, capped at the 1.0% disaster stop. Size from the stop distance so dollar risk stays at the approved 1% (½ in YELLOW): dollars = (equity × risk%) ÷ (stop distance %) — capped at available cash. Targets and R-multiples are measured from this stop.
+- **C. No selling into a flush.** If an exit signal (thesis or working stop) comes on a 5-min candle with **≥ 2× the 20-bar average volume** and price is still above the disaster stop, wait **one more 5-min candle**. Exit only if the next candle makes a lower low or closes lower. If it holds or bounces, stay in and re-evaluate on the following candle. The disaster stop always overrides.
+- **D. Volume required at entry.** The trigger candle's volume must be **≥ the 20-bar average** (relvol ≥ 1.0). Below that → no entry, regardless of score.
