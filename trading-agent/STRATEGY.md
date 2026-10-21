@@ -147,3 +147,10 @@ Message the user before both orders ("ROTATE: exit X (+$ / +R, stagnant) → SET
 - Rotation-eligible when the open trade is **up ≥ +$0.10** (unrealized), OR it has been **stagnant 30 min** (no new high since entry for 6 five-minute bars) **and is at or above breakeven**.
 - **Never rotate out of a red trade.** If stagnant in the red but the thesis still holds (setup structure intact, early-exit rules not triggered), stay in; the stop governs.
 - Items 3–4 unchanged: the new setup must fully qualify and score ≥ current + 1; an entry must be available.
+
+**[User rule 2026-10-21 ~12:36 ET] Thesis-based exit on the open trade:** "If signs still show it should go up, hold; if not, sell."
+Each check, judge the bullish thesis. **Sell (market, full qty) if ANY of these break:**
+- 5-min close back below the breakout level (Setup A: OR high), or below the 5-min 20 EMA with 9 EMA crossing under 20 EMA;
+- 5-min close below VWAP;
+- any one early-exit warning (VIX ≥ +5% from entry level, sectors green < 4, HYG red) together with price below the 20 EMA.
+Otherwise hold. Hard stop / target / 15:45 rules still apply. Message the user with the reason before selling.
