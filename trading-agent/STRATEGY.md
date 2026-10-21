@@ -154,3 +154,6 @@ Each check, judge the bullish thesis. **Sell (market, full qty) if ANY of these 
 - 5-min close below VWAP;
 - any one early-exit warning (VIX ≥ +5% from entry level, sectors green < 4, HYG red) together with price below the 20 EMA.
 Otherwise hold. Hard stop / target / 15:45 rules still apply. Message the user with the reason before selling.
+
+**[User rule 2026-10-21 ~13:22 ET] Usage-saving cadence (option 3):** checks every **15 minutes** (in or out of a position), full scan each check.
+No 5-minute checks. Keep each check to the data the decision needs.
