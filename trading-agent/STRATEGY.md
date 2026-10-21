@@ -182,3 +182,20 @@ Also serves as the **re-entry after a thesis exit** in the same ETF (overrides t
 **Stop:** 0.10% below the selloff low, max 0.5% from entry. **Target:** the pre-selloff high, or 2R, whichever is closer. Need ≥ 1.5R.
 **Score:** standard 10-point score, need ≥ 6. Size per normal rules (half in YELLOW). Counts toward max 3 entries/day; max 1 Setup F per day.
 Earnings caution still applies (no QQQ/XLK after 14:30 ET on Oct 21–type days with megacap reports that night).
+
+---
+
+## [User rule 2026-10-21 ~16:00 ET] ONE SMART MORNING TRADE — effective Thu 2026-10-22
+Overrides the 3-entries/day rule and the per-trade sizing above.
+
+**One trade per day, taken in the morning.**
+- 09:00 ET — regime check + day filters (incl. Thu: skip the day if META or TSLA moves more than ±5% pre-market).
+- 09:30–10:00 ET — **assess only, no entries**: opening range, volume vs normal, VWAP behavior, sector/megacap breadth, VIX direction.
+- 10:00–11:30 ET — **entry window.** Take the single best qualifying setup (A, B, D, E or F per the day type). Requirements:
+  score **≥ 7/10**, or from 11:00 ET the best setup scoring ≥ 6 with all gates passing. Relative volume and trend must be explicitly checked and logged.
+- If nothing qualifies by 11:30 ET → **no trade today** (that is a valid outcome).
+- After the trade closes (target, stop, thesis exit, or 15:45 ET) → done for the day. No re-entries, no second trade. Setup F only counts as *the* trade if no earlier entry was made.
+
+**Sizing (proposed with this rule — user can revert):** risk **1% of account equity** (≈ \$1.08) per trade; shares = (equity × 0.01) ÷ (entry − stop), positions may use up to **100% of cash** (no 50% cap). YELLOW regime still halves risk to 0.5%. Dollar-based market orders.
+
+**Check cadence (usage-friendly):** 09:00, 09:45, then every 15 min until entry or 11:30; every 15 min while in the trade; EOD report after exit or at 15:50.
