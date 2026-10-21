@@ -134,3 +134,11 @@ Thu Oct 22: run the regime check but skip the day if META or TSLA moves more tha
 
 **[User rule 2026-10-21 11:35 ET] Order type:** all orders are **market orders, regular hours**. Entries are **dollar-based** (dollar_amount = position size).
 Exits sell the full share quantity held, at market. (The Robinhood app cannot approve fractional-share limit orders.)
+
+**[User rule 2026-10-21 ~11:42 ET] Rotation ("swap to a better trade"):** still one position at a time. While in a position, keep scanning all setups.
+Rotate (market-sell the current position, then enter the new one) only when ALL are true:
+1. Current trade is **up ≥ +0.5R** (unrealized).
+2. Current trade is **stagnant**: no new high since entry-high for the last 3 five-minute bars (15 min) AND it has not reached +1R.
+3. The new setup fully qualifies (all gates, its own trigger, R:R rules) and **scores ≥ the current trade's score + 1**.
+4. An entry is still available (max 3/day; the rotation's new entry counts) and the new setup type hasn't been used today.
+Message the user before both orders ("ROTATE: exit X (+$ / +R, stagnant) → SETUP Y in Z | score | entry | stop | target | R:R").
