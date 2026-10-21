@@ -86,7 +86,7 @@ YELLOW: halve. After 2 straight losses: halve until next win.
 ## HARD RISK LIMITS
 - One position at a time, max 3 entries/day, max 1 per setup type
 - Daily loss −$5 → stop for the day (changed from −2% at the user's request on 2026-10-21)
-- Weekly loss −5% → stop and wait for user go-ahead
+- Weekly loss −$25 → stop and wait for user go-ahead (changed from −5% at the user's request on 2026-10-21)
 - No re-entry in the same ETF within 30 min of a stop-out
 - Stop and message the user on: order rejected, day-trade/margin flag, stale data, anything unclear
 
