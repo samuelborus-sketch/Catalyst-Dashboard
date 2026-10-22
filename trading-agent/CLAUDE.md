@@ -34,7 +34,8 @@ PAIRS  (underlying : bull / bear)
 OPENING_RANGE         = 09:30–09:45 ET (the 9:30, 9:35, 9:40 five-minute bars)
 ENTRY_WINDOW          = signals on bars closing 09:50 … 11:00 ET
 HARD_EXIT             = 12:00 ET
-CHECK_INTERVAL        = 10 min   # Sam 2026-10-21: usage saver — wake at :00/:10/:20… (+10 s), not every bar
+SCAN_INTERVAL         = 8 min    # Sam 2026-10-21: flat, looking for the entry (9:50:10, 9:58:10, 10:06:10 … 11:02:10 ET)
+TRADE_INTERVAL        = 3 min    # Sam 2026-10-21: in a position (lean checks, §5.5)
 
 MAX_ENTRIES_PER_DAY   = 1        # any fill uses the day
 MAX_ENTRY_ATTEMPTS    = 2        # orders that didn't fill
@@ -114,7 +115,7 @@ ACCOUNT_FLOOR_USD     = in state.json → HALT below it
 - **Daily ATR(14) / EMA(20) / SMA(50):** same tool, `interval: "day"`, start ~120 days back, `output: "latest"`.
 - **Quotes:** `get_equity_quotes`. Older than 60 s during regular hours = stale.
 - **VIX:** `get_index_quotes` with the VIX id from `get_indexes` (`symbols: "VIX"`; last seen id `3b912aa2-88f9-4682-8ae3-e39520bdf4db`). Unavailable → web search; still unavailable → S5 scores 0 and the caution flag is on.
-- **Waiting:** checks run every `CHECK_INTERVAL` (10 min), timed 10 s after a 5-minute bar closes (9:50:10, 10:00:10, … ET). Between checks, stop working entirely — wait with `send_later`, a background `sleep`, or a monitor tool. Within a check, no more than one data refresh per 30 s.
+- **Waiting:** while flat in the entry window, check every `SCAN_INTERVAL` (8 min: 9:50:10, 9:58:10, … 11:02:10 ET — the last one covers the bar closing 11:00). While in a position, check every `TRADE_INTERVAL` (3 min) until flat. Between checks, stop working entirely — wait with a background `sleep` or a monitor tool (`send_later` has 1-minute granularity and can fire late, so prefer sleep for the 3-minute cadence). Within a check, no more than one data refresh per 30 s.
 - **Catch-up:** each check pulls every 5-minute bar completed since the previous check and evaluates them in order (so nothing between checks is skipped), but orders are only ever placed on current quotes.
 - **Bad data:** stale or missing data → no entry on that bar. Two bad fetches in a row while in a position → exit.
 
@@ -148,7 +149,7 @@ At 9:45:10 ET, pull the 9:30/9:35/9:40 bars for the 4 underlyings and every ETF 
 
 Append today's OR volume to `or_volume_history` (keep the last 10).
 
-### 5.3 Signals — every check, 9:50 → 11:00 ET (10-minute cadence)
+### 5.3 Signals — every check, 9:50 → 11:00 ET (8-minute cadence)
 
 Every candidate is a long breakout in an ETF: a bear ETF breaking above its own OR high *is* the underlying breaking down. For bear ETFs, mirror every underlying condition below. For each ETF in an active pair:
 
@@ -188,15 +189,15 @@ Nothing qualifies through the 11:00 bar → log "No trade" with the best candida
 6. Immediately review → place the stop: sell, `stop_market`, `stop_price`, `quantity` = filled shares, `time_in_force: gtc`. Confirm via `get_equity_orders` that it's live (`new` / `queued` / `confirmed`). Not live within 60 s of the fill (after one same-ref_id retry) → exit now (§5.6).
 7. Save `open_trade`; journal the entry.
 
-### 5.5 Managing (every 10-minute check, after the 5-minute bars since the last check are complete)
+### 5.5 Managing (every 3-minute check while in a position)
 
 At each check, first replay the bars since the last check: if any bar's low traded through the stop, the stop is treated as filled (live: confirm with `get_equity_orders`; SIM: fill per §10). The broker-side stop protects the position between checks.
 
 **Lean in-trade check (Sam 2026-10-21: usage saver).** While a position is open, a check fetches only what the exit rules below need, and nothing else:
 1. `get_equity_orders` for the held ETF only (stop still live / filled?). SIM: skip.
-2. `get_equity_historicals` for the held ETF only, 5-minute bars since the last check (stop-through, highest high, completed closes).
+2. `get_equity_historicals` for the held ETF only, 5-minute bars completed since the last check (stop-through, highest high, completed closes) — **skip this call if no new 5-minute bar has completed since the last check.**
 3. `get_equity_quotes` for the held ETF only (bid for R math, quote freshness).
-4. VWAP for the held ETF only, **and only while the trade has never reached +0.5R** (the VWAP-fail rule no longer applies after that).
+4. VWAP for the held ETF only, **only while the trade has never reached +0.5R** (the VWAP-fail rule no longer applies after that), and only when a new 5-minute bar has completed.
 
 5. **Market pulse (cheap).** Add QQQ, SPY, SOXX, IWM to the same `get_equity_quotes` call in step 3 (no extra call), plus one `get_index_quotes` for VIX. Compare each underlying's last price with its `OR_mid` from `today.levels`, and VIX with its reading at entry (save `vix_at_entry` in `open_trade`).
    - **Market flip** = at least 3 of the 4 underlyings back across their `OR_mid` *against* the trade (below for bull ETFs, above for bear ETFs) **and** VIX moved ≥ 3% against the trade since entry (up for bull, down for bear).
