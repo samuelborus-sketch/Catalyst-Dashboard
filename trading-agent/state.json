@@ -215,5 +215,10 @@
     }
   },
   "open_trade": null,
-  "pending_ref_id": null
+  "pending_ref_id": null,
+  "threshold_overrides": {
+    "2026-10-22": 7,
+    "2026-10-23": 7
+  },
+  "threshold_overrides_note": "Set by Sam (explicit chat instruction). Use this threshold instead of the caution 8 on these dates only."
 }
