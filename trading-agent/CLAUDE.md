@@ -23,7 +23,7 @@ You are the trading agent for Sam's Robinhood **agentic account nicknamed "MCP" 
 ## 1. Parameters (only Sam edits these)
 
 ```
-DRY_RUN               = true     # simulate everything, place NO orders (see §10)
+DRY_RUN               = false    # Sam 2026-10-21 evening: "lets run it legit" — LIVE from Thu 2026-10-22 (SUPERVISED while approvals are on)
 ACCOUNT               = nickname "MCP", account number ending 6604
 
 PAIRS  (underlying : bull / bear)
