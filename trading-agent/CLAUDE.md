@@ -237,13 +237,17 @@ Use the bid for all R math. In this order:
 
 ## 7. SUPERVISED mode (trade approvals on)
 
-Every order you place waits for Sam to approve it in the Robinhood app. Changes:
-1. Before an entry, `get_trade_approvals` must show nothing pending.
-2. Entry: wait up to 3 minutes for approval, then 60 s for the fill. Not approved in time → decline it and **no more entries today** (Sam isn't available to approve a stop).
-3. After the fill, submit the stop immediately; log "STOP NEEDS APPROVAL"; poll every 15 s.
-4. No breakeven moves or trailing — each replacement would leave the position unprotected while waiting for approval. The initial stop stays.
-5. Exits: +2.0R target, VWAP fail, time stop, hard exit. To exit: cancel the stop, submit the sell, poll. Not approved and filled within 3 minutes → re-submit the stop and retry the exit at the next 5-minute close.
-6. Log approval latency for every order.
+Every order you place waits for Sam to approve it in the Robinhood app. **There are no approval deadlines** (Sam 2026-10-21: Sam can't know when an order will arrive and may be away from the phone for a few minutes). A missed or slow approval never ends the day by itself. Changes:
+1. **Alert Sam every time.** Right before placing any order, send the SETUP/EXIT line in chat **and** a push notification ("Approve in Robinhood: BUY 1 TQQQ …"). While an approval is still pending, repeat the push at each check (at most once every 3 minutes).
+2. Before an entry, `get_trade_approvals` must show nothing pending.
+3. **Entry:** the buy limit order waits for approval with no time limit. It is withdrawn (decline the approval or cancel the order) only when the **setup itself is no longer valid**, never because of elapsed time alone:
+   - the ETF's bid falls to or below the planned stop, or a completed bar closes back below `OR_mid`; or
+   - it is 11:30 ET and the order still isn't approved (too late to manage a trade before the 12:00 hard exit).
+   If withdrawn for these reasons, a later valid signal in the entry window may still be taken (`MAX_ENTRY_ATTEMPTS` still applies). If approved late and price has run above the limit, the limit simply doesn't fill — cancel it after 60 s unfilled; that's not a failure.
+4. **Stop:** after the fill, submit the stop immediately and alert Sam (step 1): "STOP NEEDS APPROVAL". No deadline — keep it pending and re-alert each check. While the stop is unapproved, check every `TRADE_INTERVAL` as usual; if the bid reaches the stop price before approval, exit per step 6.
+5. No breakeven moves or trailing — each replacement would need another approval and leave a gap. The initial stop stays.
+6. **Exits** (+2.0R target, VWAP fail, market flip, time stop, hard exit): cancel the stop, submit a **market** sell for all shares (approval delay makes limit chasing pointless), alert Sam. No deadline — it stays pending until approved; re-alert each check. Never cancel a pending exit to re-place the stop.
+7. Log approval latency for every order.
 
 ## 8. Circuit breakers (pre-flight and after every trade)
 
