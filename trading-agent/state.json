@@ -2,7 +2,7 @@
   "halted": false,
   "halt_reason": null,
   "account_floor_usd": 81.3,
-  "equity_hwm": 108.4,
+  "equity_hwm": 108.84,
   "week_start_date": "2026-10-19",
   "week_start_equity": 108.4,
   "consecutive_losses": 0,
@@ -61,7 +61,7 @@
       719684
     ]
   },
-  "heartbeat_utc": "2026-10-22T15:00:25Z",
+  "heartbeat_utc": "2026-10-22T16:10:24Z",
   "today": {
     "date": "2026-10-22",
     "entries": 0,
