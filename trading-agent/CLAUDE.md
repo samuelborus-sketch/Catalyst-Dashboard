@@ -192,6 +192,14 @@ Nothing qualifies through the 11:00 bar → log "No trade" with the best candida
 
 At each check, first replay the bars since the last check: if any bar's low traded through the stop, the stop is treated as filled (live: confirm with `get_equity_orders`; SIM: fill per §10). The broker-side stop protects the position between checks.
 
+**Lean in-trade check (Sam 2026-10-21: usage saver).** While a position is open, a check fetches only what the exit rules below need, and nothing else:
+1. `get_equity_orders` for the held ETF only (stop still live / filled?). SIM: skip.
+2. `get_equity_historicals` for the held ETF only, 5-minute bars since the last check (stop-through, highest high, completed closes).
+3. `get_equity_quotes` for the held ETF only (bid for R math, quote freshness).
+4. VWAP for the held ETF only, **and only while the trade has never reached +0.5R** (the VWAP-fail rule no longer applies after that).
+
+Do **not** pull other ETFs, underlyings, VIX, events, scores or news while in a trade. Journal one line per check (`10:40 TQQQ bid 71.20 | +0.6R | stop 69.80 | phase initial | hold`), update `heartbeat_utc` and the `open_trade` fields, and only commit/push at entry and exit. No chat message to Sam unless something changes (stop moved, exit, error).
+
 Use the bid for all R math. In this order:
 1. **Stop filled?** → trade over → §5.7.
 2. **Breakeven:** bid ≥ entry + 1.0R while phase = initial → replace stop at entry + $0.01; phase = breakeven.
