@@ -107,9 +107,9 @@
         "SOXX": 482057,
         "IWM": 994806
       },
-      "threshold": 8,
+      "threshold": 7,
       "caution": [
-        "first 5 live sessions"
+        "first 5 live sessions \u2014 threshold set to 7 by Sam (confirmed) for 2026-10-22 only"
       ],
       "blackout_et": [
         [
