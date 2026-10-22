@@ -1,3 +1,5 @@
+> **ARCHIVED 2026-10-21 (evening).** Replaced by `CLAUDE.md` (Morning Leveraged-ETF Breakout rulebook). Kept for history only — do not trade from this file.
+
 # Index ETF Intraday Strategy — Agent Rules
 
 Source of truth for the Claude trading agent. Rules below are the user's, verbatim
