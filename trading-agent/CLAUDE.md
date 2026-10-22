@@ -198,7 +198,11 @@ At each check, first replay the bars since the last check: if any bar's low trad
 3. `get_equity_quotes` for the held ETF only (bid for R math, quote freshness).
 4. VWAP for the held ETF only, **and only while the trade has never reached +0.5R** (the VWAP-fail rule no longer applies after that).
 
-Do **not** pull other ETFs, underlyings, VIX, events, scores or news while in a trade. Journal one line per check (`10:40 TQQQ bid 71.20 | +0.6R | stop 69.80 | phase initial | hold`), update `heartbeat_utc` and the `open_trade` fields, and only commit/push at entry and exit. No chat message to Sam unless something changes (stop moved, exit, error).
+5. **Market pulse (cheap).** Add QQQ, SPY, SOXX, IWM to the same `get_equity_quotes` call in step 3 (no extra call), plus one `get_index_quotes` for VIX. Compare each underlying's last price with its `OR_mid` from `today.levels`, and VIX with its reading at entry (save `vix_at_entry` in `open_trade`).
+   - **Market flip** = at least 3 of the 4 underlyings back across their `OR_mid` *against* the trade (below for bull ETFs, above for bear ETFs) **and** VIX moved ≥ 3% against the trade since entry (up for bull, down for bear).
+   - Market flip while phase = initial (+1R not yet reached) → exit (§5.6). Once at breakeven or trailing → hold and let the stop work. Log the pulse on the check line either way, e.g. `pulse 1/4 against, VIX +0.8%`.
+
+Do **not** pull other ETFs, VWAPs or indicators beyond these, events, scores or news while in a trade. Journal one line per check (`10:40 TQQQ bid 71.20 | +0.6R | stop 69.80 | phase initial | hold`), update `heartbeat_utc` and the `open_trade` fields, and only commit/push at entry and exit. No chat message to Sam unless something changes (stop moved, exit, error).
 
 Use the bid for all R math. In this order:
 1. **Stop filled?** → trade over → §5.7.
