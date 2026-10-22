@@ -61,7 +61,7 @@
       719684
     ]
   },
-  "heartbeat_utc": "2026-10-22T13:45:26Z",
+  "heartbeat_utc": "2026-10-22T13:50:29Z",
   "today": {
     "date": "2026-10-22",
     "entries": 0,
@@ -210,7 +210,8 @@
           "avg_bar_vol": 76142
         }
       },
-      "vix_0945": 18.0
+      "vix_0945": 18.0,
+      "vix_prev_close": 16.68
     }
   },
   "open_trade": null,
