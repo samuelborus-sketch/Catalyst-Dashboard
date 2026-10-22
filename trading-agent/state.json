@@ -1,0 +1,129 @@
+{
+  "halted": false,
+  "halt_reason": null,
+  "account_floor_usd": 81.3,
+  "equity_hwm": 108.4,
+  "week_start_date": "2026-10-19",
+  "week_start_equity": 108.4,
+  "consecutive_losses": 0,
+  "caution_until_win": false,
+  "skip_next_session": false,
+  "live_sessions": 0,
+  "sim_sessions": 0,
+  "sim_equity": null,
+  "or_volume_history": {
+    "QQQ": [
+      974870,
+      1021820,
+      1018609,
+      1376031,
+      1344103,
+      2492771,
+      1485039,
+      1784382,
+      1220749,
+      990730
+    ],
+    "SPY": [
+      1007396,
+      559796,
+      532626,
+      655641,
+      993428,
+      1368282,
+      897299,
+      1028502,
+      808020,
+      870922
+    ],
+    "SOXX": [
+      413292,
+      330609,
+      372416,
+      453447,
+      289070,
+      1055099,
+      375451,
+      704354,
+      394280,
+      432556
+    ],
+    "IWM": [
+      887720,
+      768781,
+      1302192,
+      1211975,
+      1284427,
+      1308206,
+      587606,
+      821814,
+      1105508,
+      669833
+    ]
+  },
+  "heartbeat_utc": "2026-10-22T13:02:16Z",
+  "today": {
+    "date": "2026-10-22",
+    "entries": 0,
+    "entry_attempts": 0,
+    "levels": {
+      "daily": {
+        "QQQ": {
+          "atr14": 10.91,
+          "ema20": 732.13,
+          "sma50": 726.75,
+          "pdh": 727.95,
+          "pdl": 719.71,
+          "pdc": 725.2
+        },
+        "SPY": {
+          "atr14": 7.02,
+          "ema20": 770.37,
+          "sma50": 768.34,
+          "pdh": 774.44,
+          "pdl": 768.4,
+          "pdc": 773.09
+        },
+        "SOXX": {
+          "atr14": 17.65,
+          "ema20": 534.49,
+          "sma50": 535.44,
+          "pdh": 513.08,
+          "pdl": 503.37,
+          "pdc": 510.36
+        },
+        "IWM": {
+          "atr14": 3.77,
+          "ema20": 278.06,
+          "sma50": 287.49,
+          "pdh": 277.7,
+          "pdl": 275.3,
+          "pdc": 276.48
+        }
+      },
+      "or_vol_avg10": {
+        "QQQ": 1370910,
+        "SPY": 872191,
+        "SOXX": 482057,
+        "IWM": 994806
+      },
+      "threshold": 8,
+      "caution": [
+        "first 5 live sessions"
+      ],
+      "blackout_et": [
+        [
+          "09:55",
+          "10:15"
+        ]
+      ],
+      "active_pairs": [
+        "NDX",
+        "SEMI",
+        "R2K"
+      ]
+    }
+  },
+  "open_trade": null,
+  "pending_ref_id": null
+}
