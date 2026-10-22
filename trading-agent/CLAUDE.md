@@ -34,6 +34,7 @@ PAIRS  (underlying : bull / bear)
 OPENING_RANGE         = 09:30–09:45 ET (the 9:30, 9:35, 9:40 five-minute bars)
 ENTRY_WINDOW          = signals on bars closing 09:50 … 11:00 ET
 HARD_EXIT             = 12:00 ET
+CHECK_INTERVAL        = 10 min   # Sam 2026-10-21: usage saver — wake at :00/:10/:20… (+10 s), not every bar
 
 MAX_ENTRIES_PER_DAY   = 1        # any fill uses the day
 MAX_ENTRY_ATTEMPTS    = 2        # orders that didn't fill
@@ -113,14 +114,15 @@ ACCOUNT_FLOOR_USD     = in state.json → HALT below it
 - **Daily ATR(14) / EMA(20) / SMA(50):** same tool, `interval: "day"`, start ~120 days back, `output: "latest"`.
 - **Quotes:** `get_equity_quotes`. Older than 60 s during regular hours = stale.
 - **VIX:** `get_index_quotes` with the VIX id from `get_indexes` (`symbols: "VIX"`; last seen id `3b912aa2-88f9-4682-8ae3-e39520bdf4db`). Unavailable → web search; still unavailable → S5 scores 0 and the caution flag is on.
-- **Waiting:** pause between checks with a short `sleep` (or your environment's wait/monitor tool if foreground sleep is blocked). No more than one data refresh per 30 s.
+- **Waiting:** checks run every `CHECK_INTERVAL` (10 min), timed 10 s after a 5-minute bar closes (9:50:10, 10:00:10, … ET). Between checks, stop working entirely — wait with `send_later`, a background `sleep`, or a monitor tool. Within a check, no more than one data refresh per 30 s.
+- **Catch-up:** each check pulls every 5-minute bar completed since the previous check and evaluates them in order (so nothing between checks is skipped), but orders are only ever placed on current quotes.
 - **Bad data:** stale or missing data → no entry on that bar. Two bad fetches in a row while in a position → exit.
 
 ## 5. MORNING
 
 ### 5.1 Pre-flight (9:00–9:25 ET)
 
-1. Read `state.json`; create `journal/` if missing. `halted` → print "HALTED: <reason>" and stop. `skip_next_session` → set false, log the skip, stop. Write `heartbeat_utc` now and at least every 2 minutes until the session ends.
+1. Read `state.json`; create `journal/` if missing. `halted` → print "HALTED: <reason>" and stop. `skip_next_session` → set false, log the skip, stop. Write `heartbeat_utc` now and at every check until the session ends.
 2. Confirm today is a full regular session (web search the NYSE calendar). Holiday or early close → no trading.
 3. **Account**
    - `get_accounts` → the MCP account (ends 6604). Use its `account_number` everywhere.
@@ -146,12 +148,12 @@ At 9:45:10 ET, pull the 9:30/9:35/9:40 bars for the 4 underlyings and every ETF 
 
 Append today's OR volume to `or_volume_history` (keep the last 10).
 
-### 5.3 Signals — every bar close, 9:50 → 11:00 ET
+### 5.3 Signals — every check, 9:50 → 11:00 ET (10-minute cadence)
 
 Every candidate is a long breakout in an ETF: a bear ETF breaking above its own OR high *is* the underlying breaking down. For bear ETFs, mirror every underlying condition below. For each ETF in an active pair:
 
 **Gates (all must pass)**
-- **G1 Breakout:** the bar that just completed closed above the ETF's `OR_high`.
+- **G1 Breakout:** a bar completed since the last check closed above the ETF's `OR_high`, **and** the latest completed bar still closed above it.
 - **G2 VWAP:** ETF price above its session VWAP, and the underlying on the matching side of its own VWAP (above for bull ETFs, below for bear ETFs).
 - **G3 Stop fits:** `entry_est = round(ask × 1.002, 2)`; planned stop = `OR_mid`; `stop% = (entry_est − stop) ÷ entry_est`. If `stop% < 0.75%`, move the stop down to `entry_est × (1 − 0.75%)`. Passes only if `stop% ≤ 2.0%`.
 - **G4 No chasing:** `ask ≤ OR_high + 0.5 × OR_width`.
@@ -186,7 +188,9 @@ Nothing qualifies through the 11:00 bar → log "No trade" with the best candida
 6. Immediately review → place the stop: sell, `stop_market`, `stop_price`, `quantity` = filled shares, `time_in_force: gtc`. Confirm via `get_equity_orders` that it's live (`new` / `queued` / `confirmed`). Not live within 60 s of the fill (after one same-ref_id retry) → exit now (§5.6).
 7. Save `open_trade`; journal the entry.
 
-### 5.5 Managing (check every 60–90 s; full checks at each 5-minute close)
+### 5.5 Managing (every 10-minute check, after the 5-minute bars since the last check are complete)
+
+At each check, first replay the bars since the last check: if any bar's low traded through the stop, the stop is treated as filled (live: confirm with `get_equity_orders`; SIM: fill per §10). The broker-side stop protects the position between checks.
 
 Use the bid for all R math. In this order:
 1. **Stop filled?** → trade over → §5.7.
@@ -245,7 +249,7 @@ HALT = `halted: true` plus a reason. Only Sam clears it. In SIM, equity rules us
 
 ## 9. BACKSTOP
 
-1. Read `state.json`. Before 12:10 ET with `heartbeat_utc` under 5 minutes old → the morning session is alive: log "session alive", stop. Do nothing else.
+1. Read `state.json`. Before 12:10 ET with `heartbeat_utc` under 15 minutes old → the morning session is alive: log "session alive", stop. Do nothing else.
 2. Otherwise check positions and open orders on the 8 ETFs in the MCP account.
    - Position open → exit it (§5.6; SUPERVISED needs approval), cancel leftover orders, set `halted: true` ("backstop flatten").
    - Stray orders only → cancel, log.
