@@ -227,6 +227,7 @@ Use the bid for all R math. In this order:
 - Append the trade to `trades.csv` with R multiple and slippage (entry vs `entry_est`; stop exits vs stop price).
 - Update state: `open_trade = null`; HWM; `consecutive_losses` (≥ +0.1R = win → reset to 0 and clear `caution_until_win`; ≤ −0.1R = loss → +1; between = scratch, no change); `live_sessions` / `sim_sessions`; `sim_equity` in SIM.
 - Re-run §8 and set tomorrow's flags.
+- **After-exit note (for REVIEW):** at the next scheduled run after the close (or at the start of the next MORNING), record in that trade's journal what the ETF did after the exit: high, low and close from exit to 16:00 ET, and the R it would have reached by holding. This is to judge whether the 12:00 hard exit cuts winners short.
 - Print a summary of ≤ 8 lines for Sam: trade or no trade and why, P&L ($ and % of equity), R, current flags, anything he needs to do.
 
 ## 6. Sizing
