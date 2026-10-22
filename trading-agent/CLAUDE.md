@@ -35,7 +35,7 @@ PAIRS  (underlying : bull / bear)
 OPENING_RANGE         = 09:30–09:45 ET (the 9:30, 9:35, 9:40 five-minute bars)
 ENTRY_WINDOW          = signals on bars closing 09:50 … 11:00 ET
 HARD_EXIT             = 12:00 ET
-SCAN_INTERVAL         = 8 min    # Sam 2026-10-21: flat, looking for the entry (9:50:10, 9:58:10, 10:06:10 … 11:02:10 ET)
+SCAN_INTERVAL         = 5 min    # Sam 2026-10-22: every 5-min bar close +10 s (9:50:10, 9:55:10 … 11:00:10 ET) — 8 min missed the 10/22 SQQQ setup
 TRADE_INTERVAL        = 3 min    # Sam 2026-10-21: in a position (lean checks, §5.5)
 
 MAX_ENTRIES_PER_DAY   = 1        # any fill uses the day
@@ -116,7 +116,7 @@ ACCOUNT_FLOOR_USD     = in state.json → HALT below it
 - **Daily ATR(14) / EMA(20) / SMA(50):** same tool, `interval: "day"`, start ~120 days back, `output: "latest"`.
 - **Quotes:** `get_equity_quotes`. Older than 60 s during regular hours = stale.
 - **VIX:** `get_index_quotes` with the VIX id from `get_indexes` (`symbols: "VIX"`; last seen id `3b912aa2-88f9-4682-8ae3-e39520bdf4db`). Unavailable → web search; still unavailable → S5 scores 0 and the caution flag is on.
-- **Waiting:** while flat in the entry window, check every `SCAN_INTERVAL` (8 min: 9:50:10, 9:58:10, … 11:02:10 ET — the last one covers the bar closing 11:00). While in a position, check every `TRADE_INTERVAL` (3 min) until flat. Between checks, stop working entirely — wait with a background `sleep` or a monitor tool (`send_later` has 1-minute granularity and can fire late, so prefer sleep for the 3-minute cadence). Within a check, no more than one data refresh per 30 s.
+- **Waiting:** while flat in the entry window, check every `SCAN_INTERVAL` (5 min, 10 s after each bar close: 9:50:10, 9:55:10, … 11:00:10 ET). Skip checks that fall entirely inside an event blackout and replay those bars at the first check after it. While in a position, check every `TRADE_INTERVAL` (3 min) until flat. Between checks, stop working entirely — wait with a background `sleep` or a monitor tool (`send_later` has 1-minute granularity and can fire late, so prefer sleep for the 3-minute cadence). Within a check, no more than one data refresh per 30 s.
 - **Catch-up:** each check pulls every 5-minute bar completed since the previous check and evaluates them in order (so nothing between checks is skipped), but orders are only ever placed on current quotes.
 - **Bad data:** stale or missing data → no entry on that bar. Two bad fetches in a row while in a position → exit.
 
@@ -150,7 +150,7 @@ At 9:45:10 ET, pull the 9:30/9:35/9:40 bars for the 4 underlyings and every ETF 
 
 Append today's OR volume to `or_volume_history` (keep the last 10).
 
-### 5.3 Signals — every check, 9:50 → 11:00 ET (8-minute cadence)
+### 5.3 Signals — every check, 9:50 → 11:00 ET (5-minute cadence, on each bar close)
 
 Every candidate is a long breakout in an ETF: a bear ETF breaking above its own OR high *is* the underlying breaking down. For bear ETFs, mirror every underlying condition below. For each ETF in an active pair:
 
