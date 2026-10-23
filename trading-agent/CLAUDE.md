@@ -40,14 +40,14 @@ TRADE_INTERVAL        = 3 min    # Sam 2026-10-21: in a position (lean checks, �
 
 MAX_ENTRIES_PER_DAY   = 1        # any fill uses the day
 MAX_ENTRY_ATTEMPTS    = 2        # orders that didn't fill
-DEPLOY_PCT            = 98%      # of buying power, whole shares
-MIN_DEPLOY_PCT        = 50%      # can't size closer than this → ETF unusable today
+DEPLOY_PCT            = 99%      # Sam 2026-10-23: DOLLAR-based, whole account each trade (1% buffer so the market order isn't rejected) — see §1A
+MIN_DEPLOY_PCT        = n/a      # retired by §1A (fractional dollars → every pair is always sizeable)
 MAX_STOP_PCT          = 2.0%     # stop distance on the ETF
 MIN_STOP_PCT          = 0.75%    # noise floor
 MAX_ACCOUNT_RISK_PCT  = 2.0%     # shares × (entry − stop) ÷ equity
 SCORE_THRESHOLD       = 7 / 10   # 8 when any caution flag is on
-ENTRY_LIMIT           = ask × 1.002
-EXIT_LIMIT            = bid × 0.998
+ENTRY_ORDER           = market, dollar_amount (§1A)   # was: limit ask × 1.002
+EXIT_ORDER            = market, full fractional quantity (§1A)
 MAX_SPREAD_PCT        = 0.10% of mid
 
 BREAKEVEN_AT          = +1.0R
@@ -65,6 +65,20 @@ ACCOUNT_FLOOR_USD     = in state.json → HALT below it
 ```
 
 **All-in, in numbers:** ~100% of buying power in a 3x ETF is ~300% exposure to the index. A 0.67% move against you in QQQ ≈ 2% of the account. Expected loss on a stopped trade ≈ deploy% × stop% ≤ ~2%, plus slippage — and stops on 3x ETFs can fill well past the stop price in a fast tape.
+
+## 1A. Dollar-based, whole-account sizing (Sam 2026-10-23) — overrides any conflicting rule below
+
+1. **Entries are dollar-based market orders**: `type: market`, `dollar_amount = round(buying_power × 0.99, 2)`, `market_hours: regular_hours`, `time_in_force: gfd`. Fractional shares. No limit entries: the Robinhood app can't approve fractional limit orders, so a limit would sit unfillable.
+2. **All 4 pairs are always active** when quotes are fresh and tradable. Retired: whole-share sizing, the 50% minimum-deploy check, and pair deactivation for price (§5.1.8, §6).
+3. **Exits are market sells of the full fractional quantity** (`shares_available_for_sells`). The §5.6 limit-ladder is retired.
+4. **No broker-side stop is possible on fractional shares**, so rule §2.3 and the stop-order steps in §5.4.6, §5.5 "Replacing a stop", §7.3–7.4 and §13 are replaced by a **monitored stop**:
+   - The stop is a price recorded in `open_trade.stop_price`, computed exactly as before (OR_mid, clamped 0.75–2.0%, from the actual fill).
+   - At **every** `TRADE_INTERVAL` check (3 min), and on any 5-min bar replay: if the bid ≤ stop, or any completed bar's low traded through it → **exit now** (market sell, alert Sam). Never wait for a bar close on the stop.
+   - **Breakeven and trailing apply in SUPERVISED mode too.** Moving a monitored stop needs no order and no approval: update `open_trade.stop_price` (never lower it).
+   - **Disaster rule:** if the bid is ≥ 1.5× the planned stop distance below entry at any check, exit immediately. Log "STOP GAP" and count it toward the §8 execution-problem breaker.
+   - Missed in-trade checks (worker restart, usage) are the main risk now. The BACKSTOP runs stay mandatory.
+5. **Risk math is unchanged:** G3 stop 0.75–2.0%, G5 `deploy$ × stop% ≤ 2% of equity` (at 99% deploy this is the same as stop% ≤ ~2.0%). Expected loss on a normal stop ≈ 1–2% of the account plus the 3-min check gap plus approval delay.
+6. SETUP message format adds the dollar amount: `SETUP <setup> in <ETF> | score n/10 | $<amount> market | stop <x> | target <x> | R:R <x>`.
 
 ## 2. Hard rules
 
