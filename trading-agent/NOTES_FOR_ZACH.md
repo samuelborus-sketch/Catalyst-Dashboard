@@ -1,59 +1,133 @@
-# Notes for Zach Cheney — Claude Trading Agent
+# Notes for Zach Cheney: Claude Trading Agent
 
 **From:** Sam (written up by Claude at Sam's request)
-**Date:** Wed Oct 21, 2026
-**Status:** Day 1 of a live test. Small account, real money.
+**Updated:** Fri Oct 23, 2026, end of week 1
+**Status:** Live on a small account (about \$108). Every order needs Sam's approval in the Robinhood app.
 
-## What this is
+The full rulebook the agent follows is [`CLAUDE.md`](CLAUDE.md). This note explains it in plain English and covers what happened in week 1.
 
-Sam is testing Claude as an intraday trading agent on Robinhood. Sam writes the strategy, Claude follows it, and Sam approves every order on their phone.
+---
 
-- **Broker access:** Claude uses the Robinhood connector (MCP tools) for quotes, historical bars, technical indicators, VIX, earnings calendar, and orders.
-- **Account:** only the Robinhood *agentic* account nicknamed "MCP" (ends 6604). Claude cannot trade Sam's other accounts; Robinhood shows them as read-only to the agent.
-- **Size:** about $108 total, so trades are about $27–54 each and risk well under $1. The goal is to test the mechanics, not to make money.
-- **Approval:** "trades require approval" is ON in the Robinhood app. Each order Claude sends appears in the app as a pending request, and Sam approves or declines it.
+## 1. What this is
 
-## How it runs
+- **The agent** is Claude running as a Claude Code cloud session on this repo, branch `claude/robinhood-trading-agent-jt8qqj`.
+- **Market data and orders** go through the **Robinhood MCP connector**: quotes, 5-minute bars, VWAP/EMA/ATR, VIX, the earnings calendar, and order placement.
+- **Account:** only Sam's Robinhood **agentic account "MCP" (ends 6604)**. Sam's other accounts are read-only to the agent.
+- **Approvals:** "trades require approval" is ON. The agent sends an order, Sam gets a push notification, and Sam taps approve in the app. Nothing executes without Sam.
+- **Scheduling:** the agent wakes itself with scheduled messages. MORNING runs at 9:00 ET. BACKSTOP runs at 10:30 and 12:15 ET as a safety net that flattens anything left open if the morning session died.
 
-- Claude runs as a Claude Code cloud session (this repo, branch `claude/robinhood-trading-agent-jt8qqj`).
-- It wakes itself with one-time scheduled messages: a market check at 9:00 ET, then every 15 minutes, and every 5 minutes while in a trade or when a setup is forming.
-- Every check is written to `trading-agent/logs/YYYY-MM-DD.md` and pushed. Sam gets a status message in the chat about every 30 minutes, plus a phone notification whenever an order needs approval.
+## 2. The strategy: "Morning Leveraged-ETF Breakout"
 
-## The strategy (full text: [`STRATEGY.md`](STRATEGY.md))
+**Idea:** take one high-conviction trade per morning, all-in, in a 3× index ETF. Skip the chaotic first 15 minutes, use that range as the map, and only buy confirmed breakouts that have volume, trend and the rest of the market behind them. No-trade days are normal.
 
-Sam designed it with regular Claude and then pasted it in. It works in layers:
+### Universe: 4 pairs, buy side only
+| Underlying (watched) | Bull 3× | Bear 3× |
+|---|---|---|
+| QQQ (Nasdaq-100) | TQQQ | SQQQ |
+| SPY (S&P 500) | UPRO | SPXU |
+| SOXX (semiconductors) | SOXL | SOXS |
+| IWM (Russell 2000) | TNA | TZA |
 
-1. **Market read at 9:00 ET.** Ten signals score +1/−1 each: SPY vs. its 20/50/200-day averages, VIX, credit (HYG), breadth (RSP vs. SPY), defensive vs. cyclical sectors, the dollar (UUP), and bonds (TLT). The total sets the day: **GREEN** (full size), **YELLOW** (half size), or **RED** (no trades).
-2. **Reasons to skip the day:** VIX above 25, SPY gapping more than 1%, Fed/CPI/PCE/jobs days, two or more megacaps reporting earnings, loss limits hit.
-3. **Day type, from 10:30 ET:** TREND or RANGE, based on how SPY behaves around VWAP and its opening range. The day type decides which setups are allowed.
-4. **Five entry setups.** A: opening-range breakout. B: VWAP pullback. C: afternoon continuation. D: range-day VWAP reversion. E: pullback in the strongest ETF. Each needs these market conditions, plus a score of at least 6 out of 10 on a checklist:
-   - at least 5 of 9 sectors up
-   - at least 3 of 6 megacaps above VWAP
-   - VIX flat or falling
-5. **Exits:** target 2× the risk. At +1R the stop moves to breakeven, and at +1.5R it trails. Early exit if two warning signs show up. Out of every trade by 3:45 ET, with nothing held overnight.
-6. **Risk:** 0.5% of the account at risk per trade (half on YELLOW days), each trade capped at 50% of the account, one position at a time, at most 3 entries a day. Loss limits: **−$7.50 a day, −$25 a week.**
-7. **Tradable:** SPY, DIA, QQQ, RSP, XLK, XLF. Long only: no options, margin, leveraged ETFs, or single stocks.
-8. **Rotation (added today):** if the open trade is up at least $0.10, or has stalled for 30 minutes at breakeven or better, Claude may sell it and switch into a clearly better setup, one that scores at least 1 point higher. It never switches out of a losing trade.
+A bearish view is expressed by **buying** the bear ETF. The agent never shorts and never uses options or margin.
 
-## What happened on day 1
+### Daily timeline (ET)
+1. **9:00 pre-flight:**
+   - Account and flags.
+   - Holiday check.
+   - Economic calendar: no entries from 5 minutes before to 15 minutes after any scheduled release inside the window.
+   - Earnings.
+   - VIX: 35 or higher means no trading; 25 or higher means caution.
+   - Daily ATR(14), EMA(20) and SMA(50).
+   - 10-day opening-range volume baseline.
+2. **9:30–9:45 opening range (OR):** no orders. Record the OR high, low, middle and width, plus relative volume (RVOL).
+3. **9:50–11:00 entry window:** the agent checks 10 seconds after **every 5-minute bar close**.
+4. **Manage the trade,** with a hard exit at **12:00 ET**. Nothing is ever held overnight.
 
-- **Pre-market:** score +1 → YELLOW day. Nothing triggered a skip.
-- **Morning:** Sam sold the old BRK.B position by hand, so the account was all cash. The morning was choppy (a RANGE day), and Claude passed on several near-setups because they didn't meet the rules: low volume on the breakout, the reward too small for the risk, or VIX rising.
-- **~11:27 ET:** SPY held above VWAP for 45 minutes and broke out of its opening range, so the day became **TREND**.
-- **11:35 ET:** first live trade. **Setup A in SPY, score 6/10. Bought $54 (0.069938 sh) at $772.11.** Stop 770.48, target 775.37.
-- At the time of writing it was up a few cents. The end-of-day log will have the result.
+### Entry gates (all must pass)
+- **G1:** a bar closes above the ETF's OR high.
+- **G2:** the ETF is above its VWAP, and the underlying is on the matching side of its own VWAP.
+- **G3:** the stop is at the OR middle, clamped to 0.75–2.0% below entry.
+- **G4:** no chasing. The ask must be ≤ OR high + ½ OR width.
+- **G5:** account risk ≤ 2%.
+- **G6:** the spread is ≤ 0.10% and the quote is fresh.
+- **G7:** no event blackout and no circuit breaker. One entry per day.
 
-## Lessons learned (useful if you build something similar)
+### Score (0–10); need ≥ 7, or ≥ 8 when a caution flag is on
+- RVOL of the underlying: 2 points.
+- Trend stack (price, EMA20 and SMA50): 2 points.
+- The other three underlyings confirming the direction (VWAP and OR middle): 2 points.
+- Beyond the prior day's high or low: 1 point.
+- VIX moving the right way: 1 point.
+- Tight opening range (≤ 35% of ATR): 1 point.
+- Strong breakout bar on volume: 1 point.
 
-- **Robinhood can't approve fractional-share limit orders.** The app shows "0 shares / enter at least 1 share". With a small account, every order has to be a **market order**: dollar amounts for entries, the full share quantity for exits. This is now a rule.
-- **Claude Code's own safety check** blocked one real-money order until Sam gave explicit go-ahead in the chat. Expect that the first time.
-- **Some data isn't available:** VIX9D isn't in Robinhood's data (that signal scores 0), and there's no 15-minute bar size (proxied with the 10- and 30-minute EMAs).
-- **Scheduled check-ins can fire 1–5 minutes late**, so stops are watched by Claude, not placed as resting orders. With approval on, a stop-out also waits for Sam's tap.
-- **The pattern-day-trader rule:** FINRA dropped it as of June 2026, with brokers phasing the change in. The rules say to stop if Robinhood ever flags a day trade.
+### Sizing (changed Oct 23)
+- **Dollar-based market order for 99% of buying power,** in fractional shares. It's all-in every trade, which means about 300% exposure to the index.
+- The stop is the risk dial: a normal stop-out costs about 1–2% of the account.
 
-## Files
+### Managing the trade
+- **Monitored stop:** Robinhood can't hold a stop order on fractional shares, so the agent watches the stop itself.
+  - It checks every **3 minutes** and sells as soon as the bid touches the stop.
+  - **Disaster rule:** exit immediately if price gaps 1.5× past the stop.
+- **Stop moves:**
+  - At +1R the stop moves to breakeven.
+  - At +2R it starts trailing 1R behind the highest high, tightening to 0.75R after +3R.
+- **Other exits:**
+  - VWAP failure while the trade is under +0.5R.
+  - **Time stop:** 45 minutes without reaching +1R.
+  - **Market-flip exit:** 3 of the 4 indexes reverse and VIX moves against the trade.
+  - The 12:00 hard exit.
+- **Lean in-trade checks:** while in a trade, each check pulls only the held ETF, the 4 underlyings in a single quote call, and VIX. This saves usage.
 
-- [`STRATEGY.md`](STRATEGY.md): the full rules, plus every change Sam approved during the day, with timestamps.
-- [`logs/2026-10-21.md`](logs/2026-10-21.md): the check-by-check log for today, with each market read, setup score, order, and fill.
+### Circuit breakers
+- 2 losses in a row → threshold 8.
+- 3 losses in a row → skip the next session.
+- Down 6% for the week → done for the week.
+- Down 15% from the high-water mark → HALT.
+- Below the account floor (\$81.30) → HALT.
+- The first 5 live sessions run at threshold 8.
+- Only Sam can clear a HALT.
+
+## 3. How it evolved during week 1
+
+| When | Change | Why |
+|---|---|---|
+| Wed 10/21 | v1 was a looser multi-setup intraday ETF strategy, with SPY and QQQ trades | It worked but was busy and used a lot of Claude usage |
+| Wed 10/21 | Moved to market orders | The Robinhood app **can't approve fractional-share limit orders** |
+| Wed night | v2 rulebook (above) adopted. Went live instead of simulating, at Sam's call | Focus on one morning trade |
+| Wed night | Removed approval deadlines and added push alerts for every order | Sam can't know when an order will come |
+| Thu 10/22 | Entry scans went from 8 minutes to **5 minutes on bar closes** | The 8-minute gap missed a valid SQQQ breakdown and pushed it past the no-chase limit |
+| Fri 10/23 | **Dollar-based, whole-account sizing**, plus monitored stops | Whole-share sizing on a \$108 account made the S&P and chip pairs unaffordable |
+
+## 4. Week 1 results
+
+- **System trades (v2 rules): 0.** Thursday had a valid setup (SQQQ, 7/10), but the 8-minute check gap missed the entry. Friday was a low-volume chop day, and nothing scored above 5.
+- **Sam's manual trades:**
+
+| Day | Trades | Result |
+|---|---|---|
+| Wed (v1) | SPY +\$0.125, QQQ −\$0.20 | −\$0.08 |
+| Thu | TQQQ +\$0.44, then a TQQQ re-entry −\$1.83 (held past the planned stop) | −\$1.39 |
+| Fri | 5 quick scalps (4× SOXS, 1× SQQQ), each held under about 70 seconds, 5/5 winners | +\$1.11 |
+
+- The account is about **\$108.12** (it started the week at \$108.40).
+
+## 5. Lessons (useful if you build something similar)
+
+1. **Fractional shares through this connector:** market orders only, and no resting stop orders. Plan for agent-monitored stops.
+2. **Check timing matters for breakout strategies.** Check right after each bar closes. Checking more often between closes adds nothing, because the rules only act on completed bars.
+3. **Usage is the real constraint.** Keep checks lean when flat. Spend usage on watching an open trade.
+4. **Cloud sessions restart sometimes.** Scheduled wakes can drop, so keep a backstop run, and keep `state.json` as the source of truth.
+5. **The pattern-day-trader rule:** FINRA replaced it on June 4, 2026, and Robinhood says there are no day-trade limits now. The agent still stops if Robinhood ever shows a flag.
+6. **Claude Code's own safety check** sometimes blocks risk-loosening edits until the human confirms explicitly. Expect that.
+7. **Manual trades followed the playbook only some of the time.** The −\$1.83 came from buying a dip below VWAP on a down-trending day and holding past the stop. The rules exist for exactly that situation.
+
+## 6. Files
+
+- [`CLAUDE.md`](CLAUDE.md): the complete rulebook (source of truth).
+- `state.json`: flags, high-water mark, opening-range volume history, today's levels, any open trade.
+- `journal/YYYY-MM-DD.md`: every check, candidate score, order and fill.
+- `logs/2026-10-21.md`: the v1 day log.
+- [`STRATEGY_v1_archived.md`](STRATEGY_v1_archived.md): the retired v1 strategy.
 
 Questions go to Sam.
