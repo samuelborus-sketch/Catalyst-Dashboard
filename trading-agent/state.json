@@ -3,8 +3,8 @@
   "halt_reason": null,
   "account_floor_usd": 81.3,
   "equity_hwm": 108.84,
-  "week_start_date": "2026-10-19",
-  "week_start_equity": 108.4,
+  "week_start_date": "2026-10-26",
+  "week_start_equity": 108.12,
   "consecutive_losses": 0,
   "caution_until_win": false,
   "skip_next_session": false,
@@ -61,143 +61,65 @@
       796959
     ]
   },
-  "heartbeat_utc": "2026-10-23T15:00:24Z",
+  "heartbeat_utc": "2026-10-26T13:20:51Z",
   "today": {
-    "date": "2026-10-23",
+    "date": "2026-10-26",
     "entries": 0,
     "entry_attempts": 0,
     "levels": {
       "daily": {
         "QQQ": {
-          "atr14": 11.8,
-          "ema20": 729.5,
-          "sma50": 726.37,
-          "pdh": 715.43,
-          "pdl": 701.9,
-          "pdc": 704.47
+          "atr14": 11.54,
+          "ema20": 727.11,
+          "sma50": 725.81,
+          "pdh": 709.3,
+          "pdl": 701.16,
+          "pdc": 704.4
         },
         "SPY": {
-          "atr14": 7.37,
-          "ema20": 769.76,
-          "sma50": 768.17,
-          "pdh": 767.71,
-          "pdl": 761.165,
-          "pdc": 763.96
+          "atr14": 7.22,
+          "ema20": 768.83,
+          "sma50": 767.81,
+          "pdh": 763.47,
+          "pdl": 758.68,
+          "pdc": 759.97
         },
         "SOXX": {
-          "atr14": 19.12,
-          "ema20": 528.89,
-          "sma50": 534.02,
-          "pdh": 494.0,
-          "pdl": 472.21,
-          "pdc": 475.69
+          "atr14": 18.61,
+          "ema20": 524.06,
+          "sma50": 532.57,
+          "pdh": 485.04,
+          "pdl": 473.1,
+          "pdc": 478.2
         },
         "IWM": {
-          "atr14": 3.7,
-          "ema20": 277.92,
-          "sma50": 286.97,
-          "pdh": 277.28,
-          "pdl": 274.49,
-          "pdc": 276.67
+          "atr14": 3.68,
+          "ema20": 277.72,
+          "sma50": 286.41,
+          "pdh": 276.24,
+          "pdl": 273.345,
+          "pdc": 275.75
         }
       },
       "or_vol_avg10": {
-        "QQQ": 1440813,
-        "SPY": 878121,
-        "SOXX": 488957,
-        "IWM": 978003
+        "QQQ": 1478685,
+        "SPY": 908375,
+        "SOXX": 499814,
+        "IWM": 980820
       },
-      "threshold": 7,
+      "threshold": 8,
       "caution": [
-        "first 5 live sessions \u2014 threshold 7 per Sam's override for 2026-10-23"
+        "first 5 live sessions (session 3)"
       ],
-      "blackout_et": [
-        [
-          "09:40",
-          "10:15"
-        ]
-      ],
+      "blackout_et": [],
       "active_pairs": [
         "NDX",
+        "SPX",
+        "SEMI",
         "R2K"
       ],
-      "vix_prev_close": 19.03,
-      "vix_0901": 20.22,
-      "OR": {
-        "QQQ": {
-          "OR_high": 704.499,
-          "OR_low": 701.16,
-          "OR_mid": 702.8295,
-          "OR_width": 3.339,
-          "avg_bar_vol": 466847,
-          "or_vol": 1400542,
-          "rvol": 0.97,
-          "width_pct_atr": 28.3,
-          "gap_pct": -0.33
-        },
-        "SPY": {
-          "OR_high": 760.77,
-          "OR_low": 759.14,
-          "OR_mid": 759.955,
-          "OR_width": 1.63,
-          "avg_bar_vol": 287444,
-          "or_vol": 862333,
-          "rvol": 0.98,
-          "width_pct_atr": 22.1,
-          "gap_pct": -0.53
-        },
-        "SOXX": {
-          "OR_high": 479.74,
-          "OR_low": 473.1,
-          "OR_mid": 476.42,
-          "OR_width": 6.64,
-          "avg_bar_vol": 146391,
-          "or_vol": 439174,
-          "rvol": 0.9,
-          "width_pct_atr": 34.7,
-          "gap_pct": -0.17
-        },
-        "IWM": {
-          "OR_high": 275.24,
-          "OR_low": 274.05,
-          "OR_mid": 274.645,
-          "OR_width": 1.19,
-          "avg_bar_vol": 265653,
-          "or_vol": 796959,
-          "rvol": 0.81,
-          "width_pct_atr": 32.2,
-          "gap_pct": -0.66
-        },
-        "TQQQ": {
-          "OR_high": 66.315,
-          "OR_low": 65.37,
-          "OR_mid": 65.8425,
-          "OR_width": 0.945,
-          "avg_bar_vol": 1356135
-        },
-        "SQQQ": {
-          "OR_high": 40.228,
-          "OR_low": 39.67,
-          "OR_mid": 39.949,
-          "OR_width": 0.558,
-          "avg_bar_vol": 731595
-        },
-        "TNA": {
-          "OR_high": 55.38,
-          "OR_low": 54.662,
-          "OR_mid": 55.021,
-          "OR_width": 0.718,
-          "avg_bar_vol": 75929
-        },
-        "TZA": {
-          "OR_high": 49.561,
-          "OR_low": 48.96,
-          "OR_mid": 49.2605,
-          "OR_width": 0.601,
-          "avg_bar_vol": 49418
-        }
-      },
-      "vix_0945": 20.25
+      "vix_prev_close": 19.45,
+      "vix_0920": 19.06
     }
   },
   "open_trade": null,
