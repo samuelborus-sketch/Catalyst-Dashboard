@@ -45,7 +45,7 @@ MIN_DEPLOY_PCT        = n/a      # retired by §1A (fractional dollars → every
 MAX_STOP_PCT          = 2.0%     # stop distance on the ETF
 MIN_STOP_PCT          = 0.75%    # noise floor
 MAX_ACCOUNT_RISK_PCT  = 2.0%     # shares × (entry − stop) ÷ equity
-SCORE_THRESHOLD       = 7 / 10   # 8 when any caution flag is on
+SCORE_THRESHOLD       = 7 / 10   # Sam 2026-10-26: 7+ is the standard. 8 only with a loss-streak or VIX ≥ 25 caution flag (the first-5-live-sessions caution is removed)
 ENTRY_ORDER           = market, dollar_amount (§1A)   # was: limit ask × 1.002
 EXIT_ORDER            = market, full fractional quantity (§1A)
 MAX_SPREAD_PCT        = 0.10% of mid
@@ -276,7 +276,7 @@ Every order you place waits for Sam to approve it in the Robinhood app. **There 
 | Equity < `account_floor_usd` | HALT |
 | Last 5 stop-outs averaged > 1.5× the planned loss | HALT (execution problem) |
 | Unexpected position/order, or an order error you can't reconcile | Flatten, HALT |
-| VIX ≥ 25, or first 5 live (non-SIM) sessions | Caution (threshold 8) |
+| VIX ≥ 25 | Caution (threshold 8) |
 
 HALT = `halted: true` plus a reason. Only Sam clears it. In SIM, equity rules use `sim_equity`.
 
