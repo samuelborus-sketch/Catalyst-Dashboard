@@ -8,7 +8,7 @@
   "consecutive_losses": 0,
   "caution_until_win": false,
   "skip_next_session": false,
-  "live_sessions": 2,
+  "live_sessions": 3,
   "sim_sessions": 0,
   "sim_equity": null,
   "or_volume_history": {
@@ -61,7 +61,7 @@
       624960
     ]
   },
-  "heartbeat_utc": "2026-10-26T14:55:23Z",
+  "heartbeat_utc": "2026-10-26T15:00:25Z",
   "today": {
     "date": "2026-10-26",
     "entries": 0,
