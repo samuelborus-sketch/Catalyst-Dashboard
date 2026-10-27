@@ -45,7 +45,7 @@ MIN_DEPLOY_PCT        = n/a      # retired by §1A (fractional dollars → every
 MAX_STOP_PCT          = 2.0%     # stop distance on the ETF
 MIN_STOP_PCT          = 0.75%    # noise floor
 MAX_ACCOUNT_RISK_PCT  = 2.0%     # shares × (entry − stop) ÷ equity
-SCORE_THRESHOLD       = 7 / 10   # Sam 2026-10-26: 7+ is the standard. 8 only with a loss-streak or VIX ≥ 25 caution flag (the first-5-live-sessions caution is removed)
+SCORE_THRESHOLD       = 10 / 14  # Sam 2026-10-27: score scale grew to 14 with the volume block (S8–S11); 10/14 = the old 7/10 standard. 11/14 (= old 8/10) only with a loss-streak or VIX ≥ 25 caution flag
 ENTRY_ORDER           = market, dollar_amount (§1A)   # was: limit ask × 1.002
 EXIT_ORDER            = market, full fractional quantity (§1A)
 MAX_SPREAD_PCT        = 0.10% of mid
@@ -57,8 +57,8 @@ SUPERVISED_TARGET     = +2.0R    # §7 only
 
 VIX_CAUTION           = 25
 VIX_NO_TRADE          = 35
-CONSEC_LOSS_CAUTION   = 2        # → threshold 8
-CONSEC_LOSS_SKIP      = 3        # → skip next session; threshold 8 until a win
+CONSEC_LOSS_CAUTION   = 2        # → threshold 11/14
+CONSEC_LOSS_SKIP      = 3        # → skip next session; threshold 11/14 until a win
 WEEKLY_LOSS_STOP      = 6%       # vs week-start equity → done for the week
 DRAWDOWN_HALT         = 15%      # vs high-water mark → HALT
 ACCOUNT_FLOOR_USD     = in state.json → HALT below it
@@ -78,7 +78,7 @@ ACCOUNT_FLOOR_USD     = in state.json → HALT below it
    - **Disaster rule:** if the bid is ≥ 1.5× the planned stop distance below entry at any check, exit immediately. Log "STOP GAP" and count it toward the §8 execution-problem breaker.
    - Missed in-trade checks (worker restart, usage) are the main risk now. The BACKSTOP runs stay mandatory.
 5. **Risk math is unchanged:** G3 stop 0.75–2.0%, G5 `deploy$ × stop% ≤ 2% of equity` (at 99% deploy this is the same as stop% ≤ ~2.0%). Expected loss on a normal stop ≈ 1–2% of the account plus the 3-min check gap plus approval delay.
-6. SETUP message format adds the dollar amount: `SETUP <setup> in <ETF> | score n/10 | $<amount> market | stop <x> | target <x> | R:R <x>`.
+6. SETUP message format adds the dollar amount: `SETUP <setup> in <ETF> | score n/14 | $<amount> market | stop <x> | target <x> | R:R <x>`.
 
 ## 2. Hard rules
 
@@ -177,7 +177,7 @@ Every candidate is a long breakout in an ETF: a bear ETF breaking above its own 
 - **G6 Tradable:** spread ≤ 0.10% of mid, quote fresh, ETF not halted.
 - **G7 Allowed:** no event blackout right now, no circuit breaker blocking, `entries = 0`, `entry_attempts < 2`.
 
-**Score (0–10)**
+**Score (0–14)**
 
 | | Criterion (bull; mirror for bear) | Pts |
 |---|---|---|
@@ -188,9 +188,18 @@ Every candidate is a long breakout in an ETF: a bear ETF breaking above its own 
 | S5 | VIX down on the day | 1 |
 | S6 | Underlying OR width ≤ 35% of ATR(14) | 1 |
 | S7 | Breakout bar closed in the top 25% of its range on volume ≥ the ETF's average OR bar | 1 |
+| **Volume block (Sam 2026-10-27)** | | |
+| S8 | **OBV confirms:** the underlying's session OBV (5-minute, from 9:30) at the breakout bar is at its session high (bear: session low). A new price high without a new OBV high = 0 | 1 |
+| S9 | **MFI healthy:** the underlying's 5-minute MFI(14) is 50–80 (bear: 20–50). Above 80 (bear: below 20) = stretched = 0 | 1 |
+| S10 | **Pullback volume light:** since 9:45, the underlying's average volume on down bars < its average on up bars (bear: up bars lighter than down bars) | 1 |
+| S11 | **Our fund out-trading its twin:** the ETF's last-3-bar volume ÷ its average OR bar volume ≥ the same ratio for its opposite fund (e.g. SOXS vs SOXL) | 1 |
+
+**Volume-block data (usage):** compute S8–S11 only for candidates that already pass every gate. S8 and S9 = one `get_equity_technical_indicators` call each (`obv`, `mfi`; 5-minute; start 9:30 ET; `output: latest` for MFI, full series for OBV), all candidate underlyings in one call. S10 uses the underlying bars already pulled for G1/S7. S11 uses the ETF bars already pulled (both funds of each active pair are scanned). Any of these unavailable → that item scores 0 and the journal says why; never estimate it.
+
+**Not used (no data source through the connector):** volume profile, NYSE TICK / up-vs-down volume breadth, and Level 2 order book. Do not approximate them.
 
 **Decision:** take the highest-scoring candidate that passes every gate with score ≥ threshold. Ties → smaller `stop%`, then TQQQ/SQQQ > UPRO/SPXU > TNA/TZA > SOXL/SOXS. Log every candidate every bar on one line, e.g.
-`09:55 SOXL  G1✓ G2✓ G3✗ (2.4%) | score 6 = S1:2 S2:1 S3:1 S4:0 S5:1 S6:0 S7:1`
+`09:55 SOXL  G1✓ G2✓ G3✗ (2.4%) | score 9 = S1:2 S2:1 S3:1 S4:0 S5:1 S6:0 S7:1 | S8:1 S9:1 S10:0 S11:1`
 
 Nothing qualifies through the 11:00 bar → log "No trade" with the best candidate and what it lacked, print the summary, end.
 
@@ -269,14 +278,14 @@ Every order you place waits for Sam to approve it in the Robinhood app. **There 
 | Trigger | Action |
 |---|---|
 | A fill today | No more entries today |
-| 2 losses in a row | Caution (threshold 8) |
+| 2 losses in a row | Caution (threshold 11/14) |
 | 3 losses in a row | Skip next session; `caution_until_win = true` |
 | Equity ≤ 94% of week-start | No more trades this week |
 | Equity ≤ 85% of HWM | HALT |
 | Equity < `account_floor_usd` | HALT |
 | Last 5 stop-outs averaged > 1.5× the planned loss | HALT (execution problem) |
 | Unexpected position/order, or an order error you can't reconcile | Flatten, HALT |
-| VIX ≥ 25 | Caution (threshold 8) |
+| VIX ≥ 25 | Caution (threshold 11/14) |
 
 HALT = `halted: true` plus a reason. Only Sam clears it. In SIM, equity rules use `sim_equity`.
 
@@ -296,7 +305,7 @@ Run everything exactly as live but place no orders. Fills: entry = ask × 1.0005
 
 ## 11. REVIEW
 
-From `trades.csv`, the daily logs and `get_pnl_trade_history` (to reconcile live fills): sessions, trades, no-trade days and top skip reasons, win rate, average win/loss in R, expectancy per trade, total return, max drawdown, average slippage, approval latency, results by score (7 / 8 / 9–10), by pair, by direction, and any rule violations or process errors. Finish with up to 3 suggested parameter changes, each with its evidence. Change nothing.
+From `trades.csv`, the daily logs and `get_pnl_trade_history` (to reconcile live fills): sessions, trades, no-trade days and top skip reasons, win rate, average win/loss in R, expectancy per trade, total return, max drawdown, average slippage, approval latency, results by score (10 / 11 / 12–14), by pair, by direction, and any rule violations or process errors. Finish with up to 3 suggested parameter changes, each with its evidence. Change nothing.
 
 ## 12. STATUS
 

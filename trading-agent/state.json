@@ -232,5 +232,6 @@
     "2026-10-23": 7
   },
   "threshold_overrides_note": "Set by Sam (explicit chat instruction). Use this threshold instead of the caution 8 on these dates only.",
-  "manual_trades_note": "2026-10-22: Sam's manual TQQQ trades +0.44 and -1.83 (not system trades; system counters unchanged)."
+  "manual_trades_note": "2026-10-22: Sam's manual TQQQ trades +0.44 and -1.83 (not system trades; system counters unchanged).",
+  "score_scale_note": "From 2026-10-27 the score is out of 14 (volume block S8\u2013S11 added). Standard threshold 10/14, caution 11/14. threshold_overrides before this date are on the old /10 scale."
 }
