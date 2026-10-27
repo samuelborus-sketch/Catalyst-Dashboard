@@ -61,7 +61,7 @@
       493851
     ]
   },
-  "heartbeat_utc": "2026-10-27T14:15:36Z",
+  "heartbeat_utc": "2026-10-27T14:20:48Z",
   "today": {
     "date": "2026-10-27",
     "entries": 0,
@@ -119,7 +119,7 @@
         "SEMI",
         "R2K"
       ],
-      "vix_prev_close": null,
+      "vix_prev_close": 18.39,
       "vix_0908": 17.87,
       "OR": {
         "QQQ": {
