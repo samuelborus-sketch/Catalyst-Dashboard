@@ -107,7 +107,7 @@
         "SOXX": 485958,
         "IWM": 913097
       },
-      "threshold": 10,
+      "threshold": 9,
       "threshold_scale": 14,
       "caution": [],
       "blackout_et": [
@@ -234,7 +234,8 @@
   "pending_ref_id": null,
   "threshold_overrides": {
     "2026-10-22": 7,
-    "2026-10-23": 7
+    "2026-10-23": 7,
+    "2026-10-27": "9/14"
   },
   "threshold_overrides_note": "Set by Sam (explicit chat instruction). Use this threshold instead of the caution 8 on these dates only.",
   "manual_trades_note": "2026-10-22: Sam's manual TQQQ trades +0.44 and -1.83 (not system trades; system counters unchanged).",
