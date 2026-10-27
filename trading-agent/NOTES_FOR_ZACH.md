@@ -1,7 +1,7 @@
 # Notes for Zach Cheney: Claude Trading Agent
 
 **From:** Sam (written up by Claude at Sam's request)
-**Updated:** Fri Oct 23, 2026, end of week 1
+**Updated:** Tue Oct 27, 2026
 **Status:** Live on a small account (about \$108). Every order needs Sam's approval in the Robinhood app.
 
 The full rulebook the agent follows is [`CLAUDE.md`](CLAUDE.md). This note explains it in plain English and covers what happened in week 1.
@@ -52,7 +52,7 @@ A bearish view is expressed by **buying** the bear ETF. The agent never shorts a
 - **G6:** the spread is ≤ 0.10% and the quote is fresh.
 - **G7:** no event blackout and no circuit breaker. One entry per day.
 
-### Score (0–10); need ≥ 7, or ≥ 8 when a caution flag is on
+### Score (0–14); need ≥ 10, or ≥ 11 when a caution flag is on
 - RVOL of the underlying: 2 points.
 - Trend stack (price, EMA20 and SMA50): 2 points.
 - The other three underlyings confirming the direction (VWAP and OR middle): 2 points.
@@ -60,6 +60,12 @@ A bearish view is expressed by **buying** the bear ETF. The agent never shorts a
 - VIX moving the right way: 1 point.
 - Tight opening range (≤ 35% of ATR): 1 point.
 - Strong breakout bar on volume: 1 point.
+- **Volume block (added Oct 27), 1 point each:**
+  - OBV makes a new session high along with the price.
+  - MFI(14) is between 50 and 80, so buying is not stretched.
+  - Dips happen on lighter volume than the moves up.
+  - The traded fund's recent volume is stronger than its twin's (for example, SOXS vs. SOXL).
+- Volume profile, breadth and Level 2 aren't available through the connector, so they aren't used.
 
 ### Sizing (changed Oct 23)
 - **Dollar-based market order for 99% of buying power,** in fractional shares. It's all-in every trade, which means about 300% exposure to the index.
@@ -80,12 +86,11 @@ A bearish view is expressed by **buying** the bear ETF. The agent never shorts a
 - **Lean in-trade checks:** while in a trade, each check pulls only the held ETF, the 4 underlyings in a single quote call, and VIX. This saves usage.
 
 ### Circuit breakers
-- 2 losses in a row → threshold 8.
+- 2 losses in a row → threshold 11.
 - 3 losses in a row → skip the next session.
 - Down 6% for the week → done for the week.
 - Down 15% from the high-water mark → HALT.
 - Below the account floor (\$81.30) → HALT.
-- The first 5 live sessions run at threshold 8.
 - Only Sam can clear a HALT.
 
 ## 3. How it evolved during week 1
