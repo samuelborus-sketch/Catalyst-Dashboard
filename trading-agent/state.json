@@ -61,7 +61,7 @@
       493851
     ]
   },
-  "heartbeat_utc": "2026-10-27T14:22:41Z",
+  "heartbeat_utc": "2026-10-27T14:25:21Z",
   "today": {
     "date": "2026-10-27",
     "entries": 1,
@@ -242,8 +242,8 @@
     "opened_et": "2026-10-27 10:22:10",
     "mode": "LIVE-manual (Sam placed; managed by rules)",
     "phase": "initial",
-    "highest_high": 47.8164,
-    "max_r": 0.0,
+    "highest_high": 47.89,
+    "max_r": 0.12,
     "breakeven_at": 48.17,
     "trail_at": 48.53,
     "disaster_at": 47.28,
