@@ -5,7 +5,7 @@
   "equity_hwm": 108.84,
   "week_start_date": "2026-10-26",
   "week_start_equity": 108.12,
-  "consecutive_losses": 0,
+  "consecutive_losses": 1,
   "caution_until_win": false,
   "skip_next_session": false,
   "live_sessions": 4,
@@ -61,7 +61,7 @@
       493851
     ]
   },
-  "heartbeat_utc": "2026-10-27T14:28:24Z",
+  "heartbeat_utc": "2026-10-27T14:35:44Z",
   "today": {
     "date": "2026-10-27",
     "entries": 1,
@@ -230,28 +230,8 @@
       "vix_0945": 17.74
     }
   },
-  "open_trade": {
-    "vehicle": "TZA",
-    "direction": "bear (R2K)",
-    "shares": 2.274951,
-    "entry_price": 47.8164,
-    "stop_price": 47.46,
-    "r_per_share": 0.3564,
-    "stop_order_id": null,
-    "entry_order_id": "6ae0b391-7912-435f-892b-558a3465e3fc",
-    "opened_et": "2026-10-27 10:22:10",
-    "mode": "LIVE-manual (Sam placed; managed by rules)",
-    "phase": "initial",
-    "highest_high": 47.89,
-    "max_r": 0.12,
-    "breakeven_at": 48.17,
-    "trail_at": 48.53,
-    "disaster_at": 47.28,
-    "time_stop_et": "11:07",
-    "vix_at_entry": 18.14,
-    "score": "8/14 (Sam took it manually; bar was 9)"
-  },
-  "pending_ref_id": "17a87352-0956-43f4-815b-2ad83a623fd1",
+  "open_trade": null,
+  "pending_ref_id": null,
   "threshold_overrides": {
     "2026-10-22": 7,
     "2026-10-23": 7,
