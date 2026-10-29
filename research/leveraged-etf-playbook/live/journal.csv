@@ -1,1 +1,2 @@
 date,equity_open,week_start_equity,play,symbol,dollars,fill_price,shares,stop_price,exit_price,exit_reason,pnl_dollars,pnl_pct,notes
+2026-10-29,105.35,105.35,CASH,,,,,,,,,,"dry run (read-only); no play qualifies; SPY gap -0.46%; down streak 0; 20d vol 10.0%; trading day 21; run scheduled 9:31 ET, fired 10:04 ET"
