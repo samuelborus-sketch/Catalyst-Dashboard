@@ -1,6 +1,6 @@
 {
-  "halted": false,
-  "halt_reason": null,
+  "halted": true,
+  "halt_reason": "Paused by Sam 2026-10-28: running a different strategy for the foreseeable future. Only Sam clears this.",
   "account_floor_usd": 81.3,
   "equity_hwm": 108.84,
   "week_start_date": "2026-10-26",
