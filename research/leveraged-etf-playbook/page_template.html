@@ -1,0 +1,1271 @@
+<title>3x Morning Playbook</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a trading-desk run sheet - one 1040px column, the morning routine as a gated timeline, evidence in full-width chart panels, hairline rules between sections. */
+:root {
+  --bg: #f2f5f1;
+  --surface: #fbfcfa;
+  --ink: #101814;
+  --ink-2: #44514a;
+  --muted: #6c7871;
+  --rule: #d9e0db;
+  --grid: #e4e9e5;
+  --axis: #b9c3bc;
+  --accent-text: #8a4b00;
+  --c-strat: #ad5f00;
+  --c-strat-wash: rgba(173, 95, 0, 0.10);
+  --c-spy: #949d97;
+  --c-spy-wash: rgba(148, 157, 151, 0.12);
+  --bull: #0b6b3a;
+  --bull-bg: #e1f1e7;
+  --bear: #a3271f;
+  --bear-bg: #f8e3e0;
+  --cash: #4d5a53;
+  --cash-bg: #e7ece8;
+  --warn-bg: #fbf0dc;
+  --shadow: 0 1px 0 rgba(16, 24, 20, 0.04), 0 6px 18px -12px rgba(16, 24, 20, 0.25);
+  --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1311;
+    --surface: #151c18;
+    --ink: #e6ede9;
+    --ink-2: #b3c0b8;
+    --muted: #8b9891;
+    --rule: #26312b;
+    --grid: #222c26;
+    --axis: #3b4740;
+    --accent-text: #f0a53a;
+    --c-strat: #cc7f0a;
+    --c-strat-wash: rgba(204, 127, 10, 0.14);
+    --c-spy: #6c7871;
+    --c-spy-wash: rgba(108, 120, 113, 0.16);
+    --bull: #52cf8f;
+    --bull-bg: #14281d;
+    --bear: #ff8b7f;
+    --bear-bg: #2d1815;
+    --cash: #b3c0b8;
+    --cash-bg: #1e2722;
+    --warn-bg: #2a2214;
+    --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 8px 22px -14px rgba(0, 0, 0, 0.7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1311;
+  --surface: #151c18;
+  --ink: #e6ede9;
+  --ink-2: #b3c0b8;
+  --muted: #8b9891;
+  --rule: #26312b;
+  --grid: #222c26;
+  --axis: #3b4740;
+  --accent-text: #f0a53a;
+  --c-strat: #cc7f0a;
+  --c-strat-wash: rgba(204, 127, 10, 0.14);
+  --c-spy: #6c7871;
+  --c-spy-wash: rgba(108, 120, 113, 0.16);
+  --bull: #52cf8f;
+  --bull-bg: #14281d;
+  --bear: #ff8b7f;
+  --bear-bg: #2d1815;
+  --cash: #b3c0b8;
+  --cash-bg: #1e2722;
+  --warn-bg: #2a2214;
+  --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 8px 22px -14px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: var(--accent-text); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible, .chart:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+h2 {
+  font-size: clamp(1.45rem, 1.1rem + 1.4vw, 2rem);
+  font-weight: 750;
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+h3 { font-size: 1.12rem; font-weight: 700; font-stretch: 108%; line-height: 1.25; }
+p { margin: 0; }
+.mono { font-family: var(--f-mono); }
+.num { font-variant-numeric: tabular-nums; }
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lede { color: var(--ink-2); max-width: 64ch; font-size: 1.04rem; }
+.small { font-size: 0.86rem; color: var(--ink-2); }
+.tick { font-family: var(--f-mono); font-weight: 600; letter-spacing: 0.02em; }
+
+/* ---------- masthead ---------- */
+.masthead { padding-block: 40px 28px; border-bottom: 1px solid var(--rule); }
+.masthead .wrap { display: grid; gap: 22px; }
+.masthead h1 {
+  font-size: clamp(2.3rem, 1.4rem + 4.2vw, 4.1rem);
+  font-weight: 800;
+  font-stretch: 118%;
+  letter-spacing: -0.02em;
+  line-height: 1.0;
+}
+.masthead h1 .x { color: var(--accent-text); }
+.navrow { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.88rem; }
+.navrow a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.navrow a:hover { color: var(--ink); border-bottom-color: var(--ink-2); }
+
+.headline { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr); gap: 18px; align-items: stretch; }
+.hero {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+.hero .label { font-size: 0.86rem; color: var(--ink-2); }
+.hero .fig { font-size: clamp(3rem, 2.2rem + 3vw, 4.4rem); font-weight: 600; line-height: 1; letter-spacing: -0.03em; }
+.hero .fig small { font-size: 0.36em; font-weight: 500; letter-spacing: 0; color: var(--ink-2); margin-left: 4px; }
+.hero .vs { font-size: 0.92rem; color: var(--ink-2); }
+.hero .vs b { color: var(--ink); font-weight: 600; }
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.tile {
+  border-top: 2px solid var(--ink);
+  padding: 8px 2px 4px;
+  display: grid;
+  gap: 2px;
+  align-content: start;
+}
+.tile .label { font-size: 0.82rem; color: var(--ink-2); }
+.tile .value { font-size: 1.55rem; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+.tile .sub { font-size: 0.82rem; color: var(--muted); }
+
+/* ---------- sections ---------- */
+section { padding-block: 44px; border-bottom: 1px solid var(--rule); }
+section > .wrap { display: grid; gap: 22px; }
+.sec-head { display: grid; gap: 8px; }
+
+/* ---------- morning routine ---------- */
+.gates { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.gate {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 16px;
+  position: relative;
+  padding-bottom: 22px;
+}
+.gate:last-child { padding-bottom: 0; }
+.gate .when { display: grid; gap: 4px; justify-items: start; align-content: start; position: relative; }
+.gate .stage {
+  font-family: var(--f-mono);
+  font-weight: 600;
+  font-size: 0.78rem;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 4px;
+  padding: 2px 7px;
+  letter-spacing: 0.04em;
+}
+.gate .time { font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); }
+.gate::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 30px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--rule);
+}
+.gate:last-child::before { display: none; }
+.gate .body {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.gate .body ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.gate .body li { color: var(--ink-2); }
+.gate .body li b { color: var(--ink); font-weight: 600; }
+.outcomes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.outcome {
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 2px;
+  font-size: 0.88rem;
+}
+.outcome .t { font-family: var(--f-mono); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.04em; }
+.outcome.bull { background: var(--bull-bg); color: var(--bull); }
+.outcome.bear { background: var(--bear-bg); color: var(--bear); }
+.outcome.cash { background: var(--cash-bg); color: var(--cash); }
+.outcome span { color: var(--ink-2); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--f-mono);
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  border-radius: 999px;
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+.pill.bull { background: var(--bull-bg); color: var(--bull); }
+.pill.bear { background: var(--bear-bg); color: var(--bear); }
+.pill.cash { background: var(--cash-bg); color: var(--cash); }
+.pill .arrow { font-size: 0.9em; }
+
+/* ---------- checker ---------- */
+.checker {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+}
+.checker form { padding: 18px; display: grid; gap: 12px; border-right: 1px solid var(--rule); }
+.checker .row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.field { display: grid; gap: 4px; min-width: 0; }
+.field label { font-size: 0.82rem; color: var(--ink-2); }
+.field input {
+  font: 500 0.98rem var(--f-mono);
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--axis);
+  border-radius: 6px;
+  padding: 7px 9px;
+  width: 100%;
+  min-width: 0;
+}
+.field .hint { font-size: 0.76rem; color: var(--muted); }
+.btnrow { display: flex; flex-wrap: wrap; gap: 8px; }
+button {
+  font: 600 0.86rem var(--f-body);
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--axis);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+button:hover { border-color: var(--ink-2); }
+.verdict { padding: 18px; display: grid; gap: 12px; align-content: start; }
+.verdict .tag { font-size: 0.78rem; color: var(--muted); }
+.verdict .play {
+  font-family: var(--f-display);
+  font-stretch: 112%;
+  font-weight: 800;
+  font-size: 1.7rem;
+  line-height: 1.1;
+}
+.verdict .play.bull { color: var(--bull); }
+.verdict .play.bear { color: var(--bear); }
+.verdict .play.cash { color: var(--cash); }
+.verdict .order { font-size: 0.95rem; color: var(--ink-2); }
+.verdict .order b { color: var(--ink); }
+.trail { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 0.86rem; }
+.trail li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 6px; color: var(--ink-2); }
+.trail .mk { font-family: var(--f-mono); font-weight: 600; text-align: center; border-radius: 4px; font-size: 0.78rem; line-height: 1.6; }
+.trail .mk.yes { background: var(--bull-bg); color: var(--bull); }
+.trail .mk.no { background: var(--cash-bg); color: var(--cash); }
+.trail .mk.stop { background: var(--bear-bg); color: var(--bear); }
+.example-note { font-size: 0.78rem; color: var(--muted); }
+
+/* ---------- plays ---------- */
+.plays { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.play-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+}
+.play-card .top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.play-card h3 { font-size: 1.25rem; }
+.play-card dl { margin: 0; display: grid; gap: 8px; }
+.play-card dt { font-size: 0.74rem; font-family: var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.play-card dd { margin: 0; color: var(--ink-2); font-size: 0.92rem; }
+.play-card dd b { color: var(--ink); font-weight: 600; }
+.record { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; border-top: 1px solid var(--rule); padding-top: 10px; }
+.record div { display: grid; gap: 0; }
+.record .v { font-weight: 600; font-size: 1.05rem; }
+.record .k { font-size: 0.74rem; color: var(--muted); }
+.share { display: grid; gap: 4px; }
+.share .bar { height: 6px; border-radius: 3px; background: var(--grid); overflow: hidden; }
+.share .bar i { display: block; height: 100%; background: var(--c-strat); border-radius: 3px; }
+.share .k { font-size: 0.78rem; color: var(--ink-2); }
+
+/* ---------- charts ---------- */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 16px 16px 10px;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.panel-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.panel-head .titles { display: grid; gap: 2px; min-width: 0; }
+.panel-head .sub { font-size: 0.84rem; color: var(--ink-2); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.82rem; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.key-line { width: 16px; height: 2px; border-radius: 1px; display: inline-block; }
+.key-rect { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.k-strat { background: var(--c-strat); }
+.k-spy { background: var(--c-spy); }
+.chart { position: relative; width: 100%; outline: none; touch-action: pan-y; }
+.chart svg { display: block; width: 100%; overflow: visible; }
+.chart .gridline { stroke: var(--grid); stroke-width: 1; shape-rendering: crispEdges; }
+.chart .baseline { stroke: var(--axis); stroke-width: 1; shape-rendering: crispEdges; }
+.chart .ticklabel { fill: var(--muted); font: 400 11px var(--f-mono); font-variant-numeric: tabular-nums; }
+.chart .endlabel { fill: var(--ink); font: 600 12px var(--f-body); }
+.chart .endlabel-sub { fill: var(--ink-2); font: 400 11px var(--f-body); }
+.chart .ln { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .ln-s { stroke: var(--c-strat); }
+.chart .ln-b { stroke: var(--c-spy); }
+.chart .area-s { fill: var(--c-strat-wash); }
+.chart .area-b { fill: var(--c-spy-wash); }
+.chart .dot-s { fill: var(--c-strat); stroke: var(--surface); stroke-width: 2; }
+.chart .dot-b { fill: var(--c-spy); stroke: var(--surface); stroke-width: 2; }
+.chart .bar-s { fill: var(--c-strat); }
+.chart .bar-b { fill: var(--c-spy); }
+.chart .crosshair { stroke: var(--ink-2); stroke-width: 1; shape-rendering: crispEdges; }
+.chart .hoverband { fill: var(--ink); opacity: 0.05; }
+.chart .datalabel { fill: var(--ink); font: 600 11px var(--f-body); }
+.tip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--surface);
+  border: 1px solid var(--axis);
+  border-radius: 8px;
+  padding: 8px 10px;
+  box-shadow: var(--shadow);
+  font-size: 0.8rem;
+  min-width: 150px;
+  display: grid;
+  gap: 4px;
+  z-index: 2;
+}
+.tip .tdate { font-family: var(--f-mono); color: var(--muted); font-size: 0.74rem; }
+.tip .trow { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; align-items: center; gap: 6px; }
+.tip .trow b { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.tip .trow span { color: var(--ink-2); }
+.scroll-x { overflow-x: auto; }
+.scroll-x .chart { min-width: 640px; }
+details.tableview { border-top: 1px solid var(--rule); padding-top: 8px; }
+details.tableview summary { cursor: pointer; font-size: 0.84rem; color: var(--ink-2); width: max-content; }
+.tbl-wrap { overflow: auto; max-height: 340px; margin-top: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+th, td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-weight: 600; color: var(--ink-2); font-size: 0.78rem; position: sticky; top: 0; background: var(--surface); }
+td.pos { color: var(--bull); }
+td.neg { color: var(--bear); }
+.stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+
+/* ---------- tests ---------- */
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.fact {
+  border-top: 2px solid var(--ink);
+  padding-top: 10px;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  min-width: 0;
+}
+.fact .big { font-size: 1.5rem; font-weight: 600; line-height: 1.15; }
+.fact p { color: var(--ink-2); font-size: 0.9rem; }
+.verdict-chip { font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; padding: 1px 7px; border-radius: 4px; width: max-content; }
+.verdict-chip.pass { background: var(--bull-bg); color: var(--bull); }
+.verdict-chip.mixed { background: var(--warn-bg); color: var(--accent-text); }
+.verdict-chip.fail { background: var(--bear-bg); color: var(--bear); }
+
+/* ---------- risks ---------- */
+.risks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; counter-reset: risk; }
+.risk { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: start; }
+.risk .n { font-family: var(--f-mono); font-weight: 600; color: var(--bear); font-size: 0.86rem; padding-top: 2px; }
+.risk h3 { font-size: 1rem; font-stretch: 104%; }
+.risk p { color: var(--ink-2); font-size: 0.9rem; margin-top: 2px; }
+
+/* ---------- calendar ---------- */
+.cal { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.cal li { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--rule); }
+.cal .d { font-family: var(--f-mono); font-size: 0.86rem; font-weight: 500; }
+.cal .w { color: var(--ink-2); font-size: 0.92rem; min-width: 0; }
+
+/* ---------- spec ---------- */
+pre.spec {
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font: 400 0.82rem/1.6 var(--f-mono);
+  color: var(--ink);
+}
+pre.spec .c { color: var(--muted); }
+.method { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; }
+.method p { color: var(--ink-2); font-size: 0.92rem; }
+.method h3 { font-size: 0.98rem; margin-bottom: 4px; }
+footer { padding-block: 26px 40px; color: var(--muted); font-size: 0.82rem; }
+
+@media (max-width: 860px) {
+  .headline, .checker, .plays, .facts, .risks, .method { grid-template-columns: minmax(0, 1fr); }
+  .checker form { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .outcomes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .gate { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .gate::before { display: none; }
+  .gate .when { grid-auto-flow: column; justify-content: start; align-items: center; gap: 10px; }
+  .tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .tile .value { font-size: 1.3rem; }
+  .cal li { grid-template-columns: minmax(0, 1fr) auto; }
+  .cal .d { grid-column: 1 / -1; }
+  .checker .row2 { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tip { transition: opacity 0.12s ease; }
+}
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Day-trading plan &middot; 3x leveraged ETFs &middot; tested on every session, Jan 2000 &ndash; Oct 2026</div>
+    <h1>3<span class="x">x</span> Morning Playbook</h1>
+    <p class="lede">Each morning the bot runs four checks, then picks one of three plays or stays in cash. It buys at the opening bell with the whole account, exits by the close, and stops out at a 5% loss. It never holds overnight.</p>
+    <nav class="navrow" aria-label="Sections">
+      <a href="#routine">Morning routine</a><a href="#check">Today's check</a><a href="#plays">The three plays</a><a href="#record">Track record</a><a href="#tests">Stress tests</a><a href="#risks">Risks</a><a href="#calendar">Calendar</a><a href="#method">Method</a>
+    </nav>
+    <div class="headline">
+      <div class="hero">
+        <div class="label">Compound annual return, 2000&ndash;2026</div>
+        <div class="fig" id="hero-cagr">&ndash;<small>a year</small></div>
+        <div class="vs" id="hero-vs"></div>
+      </div>
+      <div class="tiles" id="tiles"></div>
+    </div>
+  </div>
+</header>
+
+<section id="routine">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Stage by stage</div>
+      <h2>The morning routine</h2>
+      <p class="lede">The stages run in this order every trading day. Most mornings end in cash: the bot trades on about one day in seven, and only when the calendar or the tape has historically leaned one way.</p>
+    </div>
+    <ol class="gates">
+      <li class="gate">
+        <div class="when"><span class="stage">STAGE 0</span><span class="time">before 9:00</span></div>
+        <div class="body">
+          <h3>Circuit breakers</h3>
+          <ul>
+            <li>If the account is <b>down 10% or more since Monday's open</b>, the bot is locked until next Monday. Stop here.</li>
+            <li>Set today's stop at <b>&minus;5%</b>. If the week is already down, use the tighter level that would put the week at &minus;10% (week down 8% &rarr; today's stop is &minus;2.2%).</li>
+          </ul>
+        </div>
+      </li>
+      <li class="gate">
+        <div class="when"><span class="stage">STAGE 1</span><span class="time">before 9:00</span></div>
+        <div class="body">
+          <h3>Calendar</h3>
+          <ul>
+            <li>Is today the <b>monthly options-expiration Friday</b> (third Friday)? &rarr; candidate <span class="pill bear"><span class="arrow">&darr;</span>OPEX FADE</span></li>
+            <li>Is today one of the <b>first 3 trading days of the month</b>? &rarr; candidate <span class="pill bull"><span class="arrow">&uarr;</span>MONTH START</span></li>
+          </ul>
+        </div>
+      </li>
+      <li class="gate">
+        <div class="when"><span class="stage">STAGE 2</span><span class="time">before 9:00</span></div>
+        <div class="body">
+          <h3>Market state at yesterday's close</h3>
+          <ul>
+            <li>Has <span class="tick">SPY</span> closed lower <b>3 or more days in a row</b>? &rarr; candidate <span class="pill bull"><span class="arrow">&uarr;</span>DIP BOUNCE</span></li>
+            <li>Keep MONTH START only if SPY's <b>20-day volatility is between 15% and 40%</b> (annualized standard deviation of the last 20 daily % changes). Calmer than that and the edge doesn't cover costs. Wilder than that and the stop sits inside normal noise.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="gate">
+        <div class="when"><span class="stage">STAGE 3</span><span class="time">9:30 open</span></div>
+        <div class="body">
+          <h3>Opening check: don't chase</h3>
+          <ul>
+            <li>Drop DIP BOUNCE if SPY opens <b>more than 0.3% above</b> yesterday's close. The bounce already happened overnight.</li>
+            <li>Drop OPEX FADE if <span class="tick">QQQ</span> opens <b>more than 0.3% below</b> yesterday's close. The drop already happened overnight.</li>
+            <li>If a bull play and a bear play both survive, stay in cash.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="gate">
+        <div class="when"><span class="stage">STAGE 4</span><span class="time">9:30 &rarr; 4:00</span></div>
+        <div class="body">
+          <h3>Execute and manage</h3>
+          <ul>
+            <li>Bull play: buy <span class="tick">SPXL</span> (3x S&amp;P 500) with 100% of the account at the open. Bear play: buy <span class="tick">SQQQ</span> (3x short Nasdaq-100).</li>
+            <li>If the position falls to today's stop, sell everything. <b>The bot is done for the day.</b></li>
+            <li>Otherwise sell everything at the close (3:59 pm ET, or a market-on-close order). Nothing is held overnight.</li>
+          </ul>
+          <div class="outcomes" aria-label="Possible outcomes">
+            <div class="outcome bear"><span class="t">OPEX FADE</span><span>buy SQQQ</span></div>
+            <div class="outcome bull"><span class="t">DIP BOUNCE</span><span>buy SPXL</span></div>
+            <div class="outcome bull"><span class="t">MONTH START</span><span>buy SPXL</span></div>
+            <div class="outcome cash"><span class="t">CASH</span><span>no trade, ~86% of days</span></div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="check">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Interactive</div>
+      <h2>Today's check</h2>
+      <p class="lede">Enter the morning's numbers and the routine above runs on them. The form opens on an example: November's expiration Friday on a quiet tape.</p>
+    </div>
+    <div class="checker">
+      <form id="ck" novalidate>
+        <div class="field">
+          <label for="ck-date">Trading date</label>
+          <input id="ck-date" type="date" value="2026-11-20">
+          <span class="hint" id="ck-date-hint">&nbsp;</span>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="ck-streak">SPY down closes in a row</label>
+            <input id="ck-streak" type="number" min="0" max="20" step="1" value="1" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="ck-vol">SPY 20-day volatility, %</label>
+            <input id="ck-vol" type="number" min="0" max="200" step="0.1" value="11" inputmode="decimal">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="ck-spygap">SPY open vs prior close, %</label>
+            <input id="ck-spygap" type="number" step="0.01" value="0.10" inputmode="decimal">
+            <span class="hint">Leave blank before 9:30</span>
+          </div>
+          <div class="field">
+            <label for="ck-qqqgap">QQQ open vs prior close, %</label>
+            <input id="ck-qqqgap" type="number" step="0.01" value="0.20" inputmode="decimal">
+            <span class="hint">Leave blank before 9:30</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="ck-week">Account P&amp;L since Monday's open, %</label>
+          <input id="ck-week" type="number" step="0.1" value="1.0" inputmode="decimal">
+        </div>
+        <div class="btnrow">
+          <button type="button" id="ck-today">Use today's date</button>
+          <button type="button" id="ck-reset">Reset to example</button>
+        </div>
+        <p class="example-note">Example values, not live market data. Trading-day counts use the NYSE holiday calendar for 2026&ndash;2027; outside those years only weekends are skipped.</p>
+      </form>
+      <div class="verdict" aria-live="polite">
+        <div class="tag">The routine says</div>
+        <div class="play" id="ck-play">&ndash;</div>
+        <div class="order" id="ck-order"></div>
+        <ul class="trail" id="ck-trail"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="plays">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">What the bot trades</div>
+      <h2>The three plays</h2>
+      <p class="lede">Each play is a well-known market pattern that showed up in both halves of the sample and in both the S&amp;P 500 and the Nasdaq-100. Records below are per trade after costs, 2000&ndash;2026.</p>
+    </div>
+    <div class="plays" id="play-cards"></div>
+    <p class="small">When MONTH START and DIP BOUNCE fire on the same day (20 times since 2000), the trade averaged &minus;0.6%. The rule was left alone because 20 trades is too few to fit a rule to.</p>
+  </div>
+</section>
+
+<section id="record">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">2000 &ndash; 2026</div>
+      <h2>Track record</h2>
+      <p class="lede" id="record-lede"></p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="titles"><h3>Growth of $10,000</h3><div class="sub">Log scale, month-end values. SPY is buy-and-hold, price only.</div></div>
+        <div class="legend"><span><i class="key-line k-strat"></i>Playbook</span><span><i class="key-line k-spy"></i>SPY buy-and-hold</span></div>
+      </div>
+      <div class="chart" id="ch-growth" tabindex="0" role="img" aria-label="Line chart: growth of 10,000 dollars, playbook versus SPY, 2000 to 2026, log scale. Use left and right arrow keys to read values."></div>
+      <details class="tableview">
+        <summary>Show values as a table</summary>
+        <div class="tbl-wrap"><table id="tb-growth"><thead><tr><th>Month end</th><th>Playbook</th><th>SPY</th></tr></thead><tbody></tbody></table></div>
+      </details>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="titles"><h3>Drawdown from the prior peak</h3><div class="sub">Worst point reached each month.</div></div>
+        <div class="legend"><span><i class="key-line k-strat"></i>Playbook</span><span><i class="key-line k-spy"></i>SPY buy-and-hold</span></div>
+      </div>
+      <div class="chart" id="ch-dd" tabindex="0" role="img" aria-label="Line chart: drawdown from prior peak, playbook versus SPY. Use left and right arrow keys to read values."></div>
+      <details class="tableview">
+        <summary>Show values as a table</summary>
+        <div class="tbl-wrap"><table id="tb-dd"><thead><tr><th>Month</th><th>Playbook</th><th>SPY</th></tr></thead><tbody></tbody></table></div>
+      </details>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div class="titles"><h3>Year by year</h3><div class="sub">Calendar-year return. 2026 runs through Oct 27.</div></div>
+        <div class="legend"><span><i class="key-rect k-strat"></i>Playbook</span><span><i class="key-rect k-spy"></i>SPY buy-and-hold</span></div>
+      </div>
+      <div class="scroll-x"><div class="chart" id="ch-years" tabindex="0" role="img" aria-label="Column chart: calendar-year returns, playbook versus SPY, 2000 to 2026. Use left and right arrow keys to read values."></div></div>
+      <details class="tableview">
+        <summary>Show values as a table</summary>
+        <div class="tbl-wrap"><table id="tb-years"><thead><tr><th>Year</th><th>Playbook</th><th>SPY</th><th>QQQ</th><th>Trades</th></tr></thead><tbody></tbody></table></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="tests">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Did the backtest fool us?</div>
+      <h2>Stress tests</h2>
+      <p class="lede">A backtest can look good because the rules were bent to fit the past. These checks look for that.</p>
+    </div>
+    <div class="facts" id="facts"></div>
+    <div class="stack">
+      <div class="panel">
+        <div class="panel-head"><div class="titles"><h3>Costs and execution</h3><div class="sub">Full period, 2000&ndash;2026.</div></div></div>
+        <div class="tbl-wrap" style="max-height:none"><table><thead><tr><th>Scenario</th><th>Per year</th><th>Max drop</th><th>$10k becomes</th></tr></thead><tbody id="tb-stress"></tbody></table></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div class="titles"><h3>Markets never used to build it</h3><div class="sub">Same rules on the Russell 2000 and the Dow. Average gain per trade after costs, 3x.</div></div></div>
+        <div class="tbl-wrap" style="max-height:none"><table><thead><tr><th>Play</th><th>Russell 00&ndash;12</th><th>Russell 13&ndash;26</th><th>Dow 00&ndash;12</th><th>Dow 13&ndash;26</th></tr></thead><tbody id="tb-markets"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="risks">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Read before funding</div>
+      <h2>What can go wrong</h2>
+    </div>
+    <div class="risks">
+      <div class="risk"><span class="n">01</span><div><h3>Years of going nowhere</h3><p>From mid-2015 to early 2020 the playbook barely grew while SPY kept climbing. Five-year stretches ending 2016&ndash;2020 returned 0.8% to 6.1% a year against SPY's 6.4% to 12.8%. The longest time below a prior high was 571 days.</p></div></div>
+      <div class="risk"><span class="n">02</span><div><h3>Deeper drops than history shows</h3><p>The worst historical drop was &minus;31%, and the worst month was &minus;27.8% (Dec 2018). Across 5,000 reshuffled histories, the median worst drop was &minus;38%, and 14% of them hit &minus;50% or worse.</p></div></div>
+      <div class="risk"><span class="n">03</span><div><h3>Stops are not guarantees</h3><p>A stop becomes a market order. In a flash crash, a trading halt or a market-wide circuit breaker it can fill far below &minus;5%. A 7% S&amp;P drop that halts the market is about &minus;21% on a 3x fund. The test assumes 0.25% slippage; at 2% the edge shrinks to 10.5% a year.</p></div></div>
+      <div class="risk"><span class="n">04</span><div><h3>All-in, 3x, every trade</h3><p>Putting the whole account in one 3x fund means one extreme day decides the year. An index drop of about 33% in a session would wipe out a 3x fund entirely. The bot depends on the stop and on the day staying orderly.</p></div></div>
+      <div class="risk"><span class="n">05</span><div><h3>The edges can fade</h3><p>These are published, well-known patterns. The playbook earned 23% a year in 2000&ndash;2012 and 14% in 2013&ndash;2026, roughly even with SPY including dividends. If more traders crowd in, the edge can shrink further.</p></div></div>
+      <div class="risk"><span class="n">06</span><div><h3>Account rules and taxes</h3><p>Margin accounts under $25,000 get 3 day trades per 5 sessions. The playbook needs 4 or 5 in about 2% of weeks, so use a cash account or keep $25k+. Every gain is short-term income, and quick re-buys after losses can trigger wash-sale rules.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="calendar">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Next eight weeks</div>
+      <h2>Calendar</h2>
+      <p class="lede">Calendar plays are known in advance. DIP BOUNCE can fire on any day after three straight down closes in SPY. On Oct 27, SPY's 20-day volatility was about 10%, below the 15% floor for MONTH START.</p>
+    </div>
+    <ul class="cal">
+      <li><span class="d">Fri Oct 30</span><span class="w">Last trading day of October. No calendar play.</span><span class="pill cash">WATCH DIPS</span></li>
+      <li><span class="d">Mon Nov 2 &ndash; Wed Nov 4</span><span class="w">Month-start window. Trades only if SPY's 20-day volatility is between 15% and 40% that morning.</span><span class="pill bull"><span class="arrow">&uarr;</span>MONTH START?</span></li>
+      <li><span class="d">Fri Nov 20</span><span class="w">November options expiration. Buy SQQQ at the open unless QQQ opens more than 0.3% lower.</span><span class="pill bear"><span class="arrow">&darr;</span>OPEX FADE</span></li>
+      <li><span class="d">Thu Nov 26</span><span class="w">Thanksgiving, market closed. Fri Nov 27 closes early at 1:00 pm, so exit by then.</span><span class="pill cash">CLOSED</span></li>
+      <li><span class="d">Tue Dec 1 &ndash; Thu Dec 3</span><span class="w">Month-start window, same volatility check.</span><span class="pill bull"><span class="arrow">&uarr;</span>MONTH START?</span></li>
+      <li><span class="d">Fri Dec 18</span><span class="w">December expiration, a quarterly "quad witching" Friday. Quarterly expirations have produced the strongest fades.</span><span class="pill bear"><span class="arrow">&darr;</span>OPEX FADE</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">For whoever builds the bot</div>
+      <h2>Method and bot spec</h2>
+    </div>
+<pre class="spec" aria-label="Bot specification">
+<span class="c"># runs once per trading day; all inputs are known by the 9:30 opening print</span>
+if week_pnl &lt;= -10%:                      stay in cash until next Monday
+stop = max(-5%, 0.90 / (1 + week_pnl) - 1)
+
+bull = None
+if trading_day_of_month in (1, 2, 3) and 15% &lt;= spy_vol20 &lt;= 40%:
+    bull = "MONTH_START"
+if spy_down_closes_in_a_row &gt;= 3 and spy_open / spy_prev_close - 1 &lt;= +0.3%:
+    bull = "DIP_BOUNCE"
+bear = (today is the 3rd Friday) and (qqq_open / qqq_prev_close - 1 &gt;= -0.3%)
+
+if bull and bear:   cash
+elif bull:          buy SPXL with 100% of equity at the open
+elif bear:          buy SQQQ with 100% of equity at the open
+<span class="c"># intraday: sell all if position return &lt;= stop, then done for the day</span>
+<span class="c"># 3:59 pm ET: sell all; never hold overnight</span>
+</pre>
+    <div class="method">
+      <div><h3>Data</h3><p>Robinhood daily bars for SPY, QQQ, IWM and DIA, Jan 3, 2000 to Oct 27, 2026: 6,744 sessions with no gaps, split-adjusted. Real SPXL/SPXS (since Nov 2008) and TQQQ/SQQQ (since Feb 2010) were used to check the model.</p></div>
+      <div><h3>3x model</h3><p>Before the funds existed, each 3x day is rebuilt from the index with the funds' daily-reset math. Against the real funds the model correlates 0.96 (SPXL) to 0.998 (TQQQ). It charges the measured gap of 0.02% a day on top.</p></div>
+      <div><h3>Costs</h3><p>0.05% per round trip (fund drag plus spread), plus 0.25% extra on every stop-out. The stop is checked against the day's low (bull) or high (bear). Without intraday bars, the exact fill time is unknown.</p></div>
+      <div><h3>How rules were chosen</h3><p>About 60 candidate patterns were screened. A rule survived only if it worked in 2000&ndash;2012 and in 2013&ndash;2026, in both SPY and QQQ. Thresholds sit in the middle of ranges that all worked. The Russell 2000 and Dow tests above were run once, with no changes.</p></div>
+      <div><h3>Benchmark</h3><p>SPY buy-and-hold from the same start, price only. Dividends would add roughly 1.8 points a year. Cash between trades earns nothing in the test, though a sweep account would add interest.</p></div>
+      <div><h3>Code</h3><p>The backtest, data loader and robustness suite are in the <span class="tick">research/leveraged-etf-playbook</span> folder of the Catalyst-Dashboard repository. Every number on this page is produced by those scripts; <span class="tick">build_page.py</span> writes this page.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Backtest research, not financial advice. Leveraged ETFs can lose most of their value quickly, and past patterns may not repeat.</div>
+</footer>
+
+<script id="pb-data" type="application/json">/*__DATA__*/</script>
+<script>
+(function () {
+  "use strict";
+  const D = JSON.parse(document.getElementById("pb-data").textContent);
+  const NS = "http://www.w3.org/2000/svg";
+  const $ = (id) => document.getElementById(id);
+
+  const pct = (v, d = 1, sign = true) => (sign && v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(d) + "%";
+  const money = (v) => {
+    if (v >= 1e6) return "$" + (v / 1e6).toFixed(2).replace(/\.?0+$/, "") + "M";
+    if (v >= 1e3) return "$" + (v / 1e3).toFixed(v >= 1e5 ? 0 : 1).replace(/\.0$/, "") + "K";
+    return "$" + Math.round(v);
+  };
+  const moneyFull = (v) => "$" + Math.round(v).toLocaleString("en-US");
+  const fmtMonth = (s) => {
+    const [y, m, d] = s.split("-").map(Number);
+    return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("en-US", { month: "short", year: "numeric", day: "numeric", timeZone: "UTC" });
+  };
+
+  function svgEl(tag, attrs, parent) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function textEl(parent, x, y, str, cls, anchor) {
+    const t = svgEl("text", { x, y, class: cls, "text-anchor": anchor || "start" }, parent);
+    t.textContent = str;
+    return t;
+  }
+  function tipRow(tip, cls, label, value) {
+    const row = document.createElement("div");
+    row.className = "trow";
+    const k = document.createElement("i");
+    k.className = "key-line " + cls;
+    const s = document.createElement("span");
+    s.textContent = label;
+    const b = document.createElement("b");
+    b.textContent = value;
+    row.append(k, s, b);
+    tip.appendChild(row);
+  }
+
+  /* ---------- headline ---------- */
+  const F = D.full, S = D.spy;
+  $("hero-cagr").firstChild.textContent = F.cagr.toFixed(1) + "%";
+  const vs = $("hero-vs");
+  vs.append("SPY buy-and-hold: ");
+  const vb = document.createElement("b");
+  vb.textContent = S.cagr.toFixed(1) + "% a year";
+  vs.append(vb, " on price, about 8% with dividends.");
+  const lastPt = D.curve[D.curve.length - 1];
+  const tiles = [
+    ["$10,000 became", money(lastPt.s), "SPY: " + money(lastPt.b)],
+    ["Worst drop from a peak", pct(F.max_dd, 0), "SPY: " + pct(S.max_dd, 0)],
+    ["Trades a year", String(Math.round(F.per_year)), "In the market " + D.days_in_market_pct.toFixed(0) + "% of days"],
+    ["Winning trades", F.win.toFixed(0) + "%", "Avg win +" + D.avg_win.toFixed(1) + "%, avg loss −" + Math.abs(D.avg_loss).toFixed(1) + "%"],
+  ];
+  const tl = $("tiles");
+  tiles.forEach(([l, v, s]) => {
+    const d = document.createElement("div");
+    d.className = "tile";
+    const a = document.createElement("div"); a.className = "label"; a.textContent = l;
+    const b = document.createElement("div"); b.className = "value"; b.textContent = v;
+    const c = document.createElement("div"); c.className = "sub"; c.textContent = s;
+    d.append(a, b, c);
+    tl.appendChild(d);
+  });
+  $("record-lede").textContent = "The playbook beat SPY in " + D.beat_spy_years + " of " + D.n_years +
+    " calendar years and lost money in " + D.losing_years.length + " (" + D.losing_years.join(", ") +
+    "). Its biggest wins over SPY came in rough markets: 2000–2002, 2008, 2020 and 2022.";
+
+  /* ---------- play cards ---------- */
+  const PLAYS = [
+    { key: "OPEX_FADE", name: "OPEX FADE", side: "bear", etf: "SQQQ", etfName: "3x short Nasdaq-100",
+      when: "The monthly options-expiration Friday (third Friday of the month).",
+      skip: "QQQ opens more than 0.3% below yesterday's close.",
+      why: "QQQ finished below its open on " + D.why.opex_down.toFixed(0) + "% of expiration Fridays since 2000, by " + Math.abs(D.why.opex_mean_bp / 100).toFixed(2) + "% on average, as expiring option hedges unwind during the session." },
+    { key: "DIP_BOUNCE", name: "DIP BOUNCE", side: "bull", etf: "SPXL", etfName: "3x S&P 500",
+      when: "SPY has closed lower 3 or more days in a row.",
+      skip: "SPY opens more than 0.3% above yesterday's close.",
+      why: "After 3+ down closes, SPY rose from open to close " + D.why.dip_up.toFixed(0) + "% of the time, averaging +" + (D.why.dip_mean_bp / 100).toFixed(2) + "% against +" + (D.why.all_mean_bp / 100).toFixed(2) + "% on a typical day. Short-term selling overshoots and snaps back." },
+    { key: "MONTH_START", name: "MONTH START", side: "bull", etf: "SPXL", etfName: "3x S&P 500",
+      when: "The first 3 trading days of the month, with SPY's 20-day volatility between 15% and 40%.",
+      skip: "Volatility outside the 15–40% band.",
+      why: "Paychecks, 401(k) contributions and rebalancing land at the start of each month. On these days SPY averaged +" + (D.why.tom_mean_bp / 100).toFixed(2) + "% open to close and rose " + D.why.tom_up.toFixed(0) + "% of the time." },
+  ];
+  const sigBy = Object.fromEntries(D.signals.map((s) => [s.signal, s]));
+  const cards = $("play-cards");
+  PLAYS.forEach((p) => {
+    const s = sigBy[p.key];
+    const c = document.createElement("article");
+    c.className = "play-card";
+    const top = document.createElement("div"); top.className = "top";
+    const h = document.createElement("h3"); h.textContent = p.name;
+    const pill = document.createElement("span"); pill.className = "pill " + p.side;
+    pill.textContent = (p.side === "bull" ? "↑ BUY " : "↓ BUY ") + p.etf;
+    top.append(h, pill);
+    const dl = document.createElement("dl");
+    [["When", p.when], ["Skip if", p.skip], ["Instrument", p.etf + ", " + p.etfName], ["Why it works", p.why]].forEach(([k, v]) => {
+      const dt = document.createElement("dt"); dt.textContent = k;
+      const dd = document.createElement("dd"); dd.textContent = v;
+      dl.append(dt, dd);
+    });
+    const rec = document.createElement("div"); rec.className = "record";
+    [[String(s.trades), "trades"], [s.win.toFixed(0) + "%", "winners"], [pct(s.avg, 2), "avg per trade"],
+     [s.pf.toFixed(2), "profit factor"], [pct(s.best, 1), "best day"], [String(s.stops), "stop-outs"]].forEach(([v, k]) => {
+      const d = document.createElement("div");
+      const a = document.createElement("span"); a.className = "v num"; a.textContent = v;
+      const b = document.createElement("span"); b.className = "k"; b.textContent = k;
+      d.append(a, b); rec.appendChild(d);
+    });
+    const sh = document.createElement("div"); sh.className = "share";
+    const bar = document.createElement("div"); bar.className = "bar";
+    const fill = document.createElement("i"); fill.style.width = Math.max(0, s.share) + "%";
+    bar.appendChild(fill);
+    const k = document.createElement("span"); k.className = "k"; k.textContent = s.share.toFixed(0) + "% of the playbook's total growth";
+    sh.append(bar, k);
+    c.append(top, dl, rec, sh);
+    cards.appendChild(c);
+  });
+
+  /* ---------- facts & tables ---------- */
+  const R = D.robust;
+  const facts = [
+    ["mixed", "Early years vs later years", F_is(), "Annual return in 2000–2012 and in 2013–2026. Rules had to work in both halves, so neither is a fully clean test. The later half roughly ties SPY once dividends are counted."],
+    ["pass", "Real fund prices", R.real_cagr.toFixed(2) + "% vs " + R.model_cagr.toFixed(2) + "%", "The " + R.real_trades + " trades since 2010, re-priced with actual SPXL, SPXS, TQQQ and SQQQ prints, against the model's estimate."],
+    ["pass", "Untouched markets", R.iwm_cagr.toFixed(1) + "% vs " + R.iwm_bh.toFixed(1) + "%", "The full playbook on the Russell 2000 against IWM buy-and-hold, with no changes. On the Dow: " + R.dia_cagr.toFixed(1) + "% vs " + R.dia_bh.toFixed(1) + "%."],
+    ["pass", "Luck check", R.bs_p5.toFixed(1) + "% to " + R.bs_p95.toFixed(1) + "%", "Middle 90% of annual returns across 5,000 reshuffled histories. " + R.bs_below_spy.toFixed(1) + "% of them trailed SPY with dividends."],
+    ["mixed", "Rolling five-year windows", R.roll_lag + " of " + R.roll_n, "Five-year windows where the playbook trailed SPY. All of them end between " + R.roll_first_end + " and " + R.roll_last_end + "."],
+    ["mixed", "Your risk rules", "−" + R.cost_of_rules.toFixed(1) + " pts a year", "What the −5% daily stop and −10% weekly lock cost here. Without them: " + R.no_rules_cagr.toFixed(1) + "% a year, worst drop " + pct(R.no_rules_dd, 0) + ". They insure against a crash day bigger than any since 2000."],
+  ];
+  function F_is() { return D.is_.cagr.toFixed(1) + "% / " + D.oos.cagr.toFixed(1) + "%"; }
+  const fx = $("facts");
+  facts.forEach(([v, t, big, p]) => {
+    const d = document.createElement("div"); d.className = "fact";
+    const chip = document.createElement("span"); chip.className = "verdict-chip " + v; chip.textContent = v === "pass" ? "HOLDS UP" : "WATCH";
+    const h = document.createElement("h3"); h.textContent = t;
+    const b = document.createElement("div"); b.className = "big"; b.textContent = big;
+    const pp = document.createElement("p"); pp.textContent = p;
+    d.append(chip, h, b, pp); fx.appendChild(d);
+  });
+  const st = $("tb-stress");
+  R.stress.forEach((r) => {
+    const tr = document.createElement("tr");
+    [r.label, r.cagr.toFixed(1) + "%", pct(r.dd, 0), moneyFull(r.end)].forEach((v, i) => {
+      const td = document.createElement(i === 0 ? "th" : "td"); td.textContent = v;
+      if (i === 0) { td.scope = "row"; td.style.fontWeight = "400"; td.style.color = "var(--ink)"; }
+      tr.appendChild(td);
+    });
+    st.appendChild(tr);
+  });
+  const mk = $("tb-markets");
+  R.markets.forEach((r) => {
+    const tr = document.createElement("tr");
+    const th = document.createElement("th"); th.scope = "row"; th.textContent = r.label; th.style.fontWeight = "400"; th.style.color = "var(--ink)";
+    tr.appendChild(th);
+    r.vals.forEach((v) => {
+      const td = document.createElement("td"); td.textContent = pct(v, 2); td.className = v > 0 ? "pos" : "neg"; tr.appendChild(td);
+    });
+    mk.appendChild(tr);
+  });
+
+  /* ---------- tables for charts ---------- */
+  (function () {
+    const tg = $("tb-growth").tBodies[0], td = $("tb-dd").tBodies[0], ty = $("tb-years").tBodies[0];
+    D.curve.forEach((p) => {
+      const r1 = document.createElement("tr");
+      [fmtMonth(p.d), moneyFull(p.s), moneyFull(p.b)].forEach((v, i) => { const c = document.createElement("td"); c.textContent = v; r1.appendChild(c); });
+      tg.appendChild(r1);
+      const r2 = document.createElement("tr");
+      [p.d.slice(0, 7), pct(p.sdd, 1), pct(p.bdd, 1)].forEach((v) => { const c = document.createElement("td"); c.textContent = v; r2.appendChild(c); });
+      td.appendChild(r2);
+    });
+    D.years.forEach((y) => {
+      const r = document.createElement("tr");
+      [String(y.year), pct(y.strategy, 1), pct(y.spy, 1), pct(y.qqq, 1), String(y.trades)].forEach((v, i) => {
+        const c = document.createElement("td"); c.textContent = v;
+        if (i === 1) c.className = y.strategy >= 0 ? "pos" : "neg";
+        r.appendChild(c);
+      });
+      ty.appendChild(r);
+    });
+  })();
+
+  /* ---------- line chart ---------- */
+  function lineChart(host, cfg) {
+    let idx = cfg.data.length - 1, tip, cross, dots, geom;
+    function draw() {
+      host.textContent = "";
+      const W = Math.max(300, host.clientWidth);
+      const narrow = W < 560;
+      const H = cfg.height(W);
+      const m = { t: 14, r: narrow ? 74 : 104, b: 26, l: narrow ? 46 : 54 };
+      const iw = W - m.l - m.r, ih = H - m.t - m.b;
+      const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, height: H, "aria-hidden": "true" }, host);
+      const n = cfg.data.length;
+      const t0 = cfg.data[0].t, t1 = cfg.data[n - 1].t;
+      const x = (t) => m.l + ((t - t0) / (t1 - t0)) * iw;
+      const y = cfg.y(ih, m.t);
+      cfg.yTicks.forEach((v) => {
+        const yy = Math.round(y(v)) + 0.5;
+        svgEl("line", { x1: m.l, x2: m.l + iw, y1: yy, y2: yy, class: v === cfg.base ? "baseline" : "gridline" }, svg);
+        textEl(svg, m.l - 8, yy + 4, cfg.yFmt(v), "ticklabel", "end");
+      });
+      const years = narrow ? [2000, 2010, 2020] : [2000, 2005, 2010, 2015, 2020, 2025];
+      years.forEach((yr) => {
+        const xx = x(Date.UTC(yr, 0, 1));
+        textEl(svg, xx, m.t + ih + 18, String(yr), "ticklabel", "middle");
+      });
+      cfg.series.forEach((s) => {
+        let d = "";
+        cfg.data.forEach((p, i) => { d += (i ? "L" : "M") + x(p.t).toFixed(1) + "," + y(p[s.key]).toFixed(1); });
+        if (cfg.area) {
+          const a = d + "L" + x(t1).toFixed(1) + "," + y(cfg.base).toFixed(1) + "L" + x(t0).toFixed(1) + "," + y(cfg.base).toFixed(1) + "Z";
+          svgEl("path", { d: a, class: "area-" + s.cls }, svg);
+        }
+        svgEl("path", { d, class: "ln ln-" + s.cls }, svg);
+      });
+      // end markers + direct labels in the right gutter
+      const ends = cfg.series.map((s) => ({ s, v: cfg.data[n - 1][s.key], yy: y(cfg.data[n - 1][s.key]) }));
+      if (cfg.endLabels) {
+        ends.sort((a, b) => a.yy - b.yy);
+        for (let i = 1; i < ends.length; i++) if (ends[i].yy - ends[i - 1].yy < 30) ends[i].ly = ends[i - 1].yy + 30;
+        ends.forEach((e) => {
+          svgEl("circle", { cx: x(t1), cy: e.yy, r: 4, class: "dot-" + e.s.cls }, svg);
+          const ly = e.ly || e.yy;
+          textEl(svg, x(t1) + 10, ly - 1, cfg.endFmt(e.v), "endlabel");
+          textEl(svg, x(t1) + 10, ly + 13, e.s.label, "endlabel-sub");
+        });
+      }
+      cross = svgEl("line", { x1: 0, x2: 0, y1: m.t, y2: m.t + ih, class: "crosshair", visibility: "hidden" }, svg);
+      dots = cfg.series.map((s) => svgEl("circle", { r: 4, class: "dot-" + s.cls, visibility: "hidden" }, svg));
+      tip = document.createElement("div");
+      tip.className = "tip"; tip.hidden = true;
+      host.appendChild(tip);
+      geom = { x, y, m, iw, ih, W };
+    }
+    function show(i) {
+      idx = Math.max(0, Math.min(cfg.data.length - 1, i));
+      const p = cfg.data[idx], xx = geom.x(p.t);
+      cross.setAttribute("x1", xx); cross.setAttribute("x2", xx); cross.setAttribute("visibility", "visible");
+      cfg.series.forEach((s, k) => { dots[k].setAttribute("cx", xx); dots[k].setAttribute("cy", geom.y(p[s.key])); dots[k].setAttribute("visibility", "visible"); });
+      tip.textContent = "";
+      const dt = document.createElement("div"); dt.className = "tdate"; dt.textContent = fmtMonth(p.d); tip.appendChild(dt);
+      cfg.series.forEach((s) => tipRow(tip, "k-" + (s.cls === "s" ? "strat" : "spy"), s.label, cfg.tipFmt(p[s.key])));
+      tip.hidden = false;
+      const tw = tip.offsetWidth;
+      let left = xx + 12;
+      if (left + tw > geom.W - 4) left = xx - tw - 12;
+      tip.style.left = Math.max(0, left) + "px";
+      tip.style.top = geom.m.t + 4 + "px";
+    }
+    function hide() { if (!tip) return; tip.hidden = true; cross.setAttribute("visibility", "hidden"); dots.forEach((d) => d.setAttribute("visibility", "hidden")); }
+    function nearest(clientX) {
+      const r = host.getBoundingClientRect();
+      const px = clientX - r.left;
+      let best = 0, bd = Infinity;
+      for (let i = 0; i < cfg.data.length; i++) { const dd = Math.abs(geom.x(cfg.data[i].t) - px); if (dd < bd) { bd = dd; best = i; } }
+      return best;
+    }
+    host.addEventListener("pointermove", (e) => show(nearest(e.clientX)));
+    host.addEventListener("pointerleave", hide);
+    host.addEventListener("focus", () => show(idx));
+    host.addEventListener("blur", hide);
+    host.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { show(idx - 1); e.preventDefault(); }
+      else if (e.key === "ArrowRight") { show(idx + 1); e.preventDefault(); }
+      else if (e.key === "Home") { show(0); e.preventDefault(); }
+      else if (e.key === "End") { show(cfg.data.length - 1); e.preventDefault(); }
+      else if (e.key === "Escape") hide();
+    });
+    draw();
+    return draw;
+  }
+
+  const pts = D.curve.map((p) => {
+    const [yy, mm, dd] = p.d.split("-").map(Number);
+    return { t: Date.UTC(yy, mm - 1, dd), d: p.d, s: p.s, b: p.b, sdd: p.sdd, bdd: p.bdd };
+  });
+  pts[0].sdd = 0; pts[0].bdd = 0;
+  const lo = 4000, hi = 1.2e6;
+  const growthRedraw = lineChart($("ch-growth"), {
+    data: pts,
+    series: [{ key: "s", cls: "s", label: "Playbook" }, { key: "b", cls: "b", label: "SPY" }],
+    height: (w) => (w < 560 ? 260 : 340),
+    y: (ih, top) => (v) => top + ih - ((Math.log10(v) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo))) * ih,
+    yTicks: [5000, 10000, 50000, 100000, 500000, 1000000],
+    base: 10000,
+    yFmt: money, endFmt: money, tipFmt: moneyFull, endLabels: true,
+  });
+  const ddRedraw = lineChart($("ch-dd"), {
+    data: pts,
+    series: [{ key: "sdd", cls: "s", label: "Playbook" }, { key: "bdd", cls: "b", label: "SPY" }],
+    height: (w) => (w < 560 ? 190 : 220),
+    y: (ih, top) => (v) => top + (-v / 60) * ih,
+    yTicks: [0, -20, -40, -60],
+    base: 0, area: true,
+    yFmt: (v) => (v === 0 ? "0%" : "−" + Math.abs(v) + "%"), endFmt: (v) => pct(v, 0), tipFmt: (v) => pct(v, 1), endLabels: false,
+  });
+
+  /* ---------- year columns ---------- */
+  function yearChart(host) {
+    let idx = D.years.length - 1, tip, band, geom;
+    function draw() {
+      host.textContent = "";
+      const W = Math.max(640, host.clientWidth), H = 300;
+      const m = { t: 18, r: 8, b: 26, l: 48 };
+      const iw = W - m.l - m.r, ih = H - m.t - m.b;
+      const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, height: H, "aria-hidden": "true" }, host);
+      const lo = -40, hi = 100;
+      const y = (v) => m.t + ((hi - v) / (hi - lo)) * ih;
+      [-40, -20, 0, 20, 40, 60, 80, 100].forEach((v) => {
+        const yy = Math.round(y(v)) + 0.5;
+        svgEl("line", { x1: m.l, x2: m.l + iw, y1: yy, y2: yy, class: v === 0 ? "baseline" : "gridline" }, svg);
+        textEl(svg, m.l - 8, yy + 4, v === 0 ? "0%" : (v > 0 ? "+" : "−") + Math.abs(v) + "%", "ticklabel", "end");
+      });
+      const n = D.years.length, bw = iw / n;
+      const barW = Math.min(12, Math.max(4, (bw - 6) / 2));
+      band = svgEl("rect", { y: m.t, height: ih, width: bw, class: "hoverband", visibility: "hidden" }, svg);
+      const y0 = y(0);
+      function bar(x0, v, cls) {
+        const yv = y(v), h = Math.abs(yv - y0), r = Math.min(4, h, barW / 2);
+        let d;
+        if (v >= 0) d = `M${x0},${y0}V${yv + r}Q${x0},${yv} ${x0 + r},${yv}H${x0 + barW - r}Q${x0 + barW},${yv} ${x0 + barW},${yv + r}V${y0}Z`;
+        else d = `M${x0},${y0}V${yv - r}Q${x0},${yv} ${x0 + r},${yv}H${x0 + barW - r}Q${x0 + barW},${yv} ${x0 + barW},${yv - r}V${y0}Z`;
+        svgEl("path", { d, class: cls }, svg);
+      }
+      const lastFiveIdx = D.years.map((r) => r.year % 5 === 0).lastIndexOf(true);
+      const roomForLast = (n - 1) - lastFiveIdx >= Math.ceil(32 / bw);
+      D.years.forEach((yr, i) => {
+        const cx = m.l + bw * i + bw / 2;
+        bar(cx - barW - 1, yr.strategy, "bar-s");
+        bar(cx + 1, yr.spy, "bar-b");
+        if (yr.year % 5 === 0 || (i === n - 1 && roomForLast)) textEl(svg, cx, H - 6, String(yr.year), "ticklabel", "middle");
+      });
+      const lab = (yearNum, key, above) => {
+        const i = D.years.findIndex((r) => r.year === yearNum);
+        if (i < 0) return;
+        const v = D.years[i][key];
+        const cx = m.l + bw * i + bw / 2 + (key === "strategy" ? -barW / 2 - 1 : barW / 2 + 1);
+        textEl(svg, cx, above ? y(v) - 6 : y(v) + 14, pct(v, 0), "datalabel", "middle");
+      };
+      const best = D.years.reduce((a, b) => (b.strategy > a.strategy ? b : a));
+      const worstSpy = D.years.reduce((a, b) => (b.spy < a.spy ? b : a));
+      lab(best.year, "strategy", true);
+      lab(worstSpy.year, "spy", false);
+      tip = document.createElement("div"); tip.className = "tip"; tip.hidden = true; host.appendChild(tip);
+      geom = { m, bw, W };
+    }
+    function show(i) {
+      idx = Math.max(0, Math.min(D.years.length - 1, i));
+      const yr = D.years[idx], x0 = geom.m.l + geom.bw * idx;
+      band.setAttribute("x", x0); band.setAttribute("visibility", "visible");
+      tip.textContent = "";
+      const dt = document.createElement("div"); dt.className = "tdate"; dt.textContent = String(yr.year) + (yr.year === 2026 ? " (to Oct 27)" : "") + " · " + yr.trades + " trades"; tip.appendChild(dt);
+      tipRow(tip, "k-strat", "Playbook", pct(yr.strategy, 1));
+      tipRow(tip, "k-spy", "SPY", pct(yr.spy, 1));
+      tip.hidden = false;
+      const tw = tip.offsetWidth;
+      let left = x0 + geom.bw + 6;
+      if (left + tw > geom.W - 4) left = x0 - tw - 6;
+      tip.style.left = Math.max(0, left) + "px";
+      tip.style.top = geom.m.t + "px";
+    }
+    function hide() { if (!tip) return; tip.hidden = true; band.setAttribute("visibility", "hidden"); }
+    host.addEventListener("pointermove", (e) => {
+      const r = host.getBoundingClientRect();
+      const i = Math.floor((e.clientX - r.left - geom.m.l) / geom.bw);
+      if (i >= 0 && i < D.years.length) show(i); else hide();
+    });
+    host.addEventListener("pointerleave", hide);
+    host.addEventListener("focus", () => show(idx));
+    host.addEventListener("blur", hide);
+    host.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { show(idx - 1); e.preventDefault(); }
+      else if (e.key === "ArrowRight") { show(idx + 1); e.preventDefault(); }
+      else if (e.key === "Escape") hide();
+    });
+    draw();
+    return draw;
+  }
+  const yearsRedraw = yearChart($("ch-years"));
+
+  let rz;
+  const ro = new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(() => { growthRedraw(); ddRedraw(); yearsRedraw(); }, 80); });
+  ro.observe(document.querySelector("#record .wrap"));
+
+  /* ---------- today's check ---------- */
+  const HOLIDAYS = new Set([
+    "2026-01-01", "2026-01-19", "2026-02-16", "2026-04-03", "2026-05-25", "2026-06-19", "2026-07-03", "2026-09-07", "2026-11-26", "2026-12-25",
+    "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26", "2027-05-31", "2027-06-18", "2027-07-05", "2027-09-06", "2027-11-25", "2027-12-24",
+  ]);
+  const iso = (dt) => dt.toISOString().slice(0, 10);
+  const isOpen = (dt) => { const w = dt.getUTCDay(); return w !== 0 && w !== 6 && !HOLIDAYS.has(iso(dt)); };
+  function tradingDayOfMonth(dt) {
+    let n = 0;
+    for (let d = new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), 1)); d <= dt; d = new Date(d.getTime() + 864e5)) if (isOpen(d)) n++;
+    return n;
+  }
+  const isThirdFriday = (dt) => dt.getUTCDay() === 5 && dt.getUTCDate() >= 15 && dt.getUTCDate() <= 21;
+  const num = (id) => { const v = $(id).value.trim(); return v === "" ? null : Number(v); };
+
+  function decide(i) {
+    const trail = [];
+    const out = { trail };
+    if (!i.date || isNaN(i.date)) { out.play = "Enter a date"; out.cls = "cash"; return out; }
+    if (!isOpen(i.date)) { out.play = "Market closed"; out.cls = "cash"; trail.push(["no", "Weekend or NYSE holiday."]); return out; }
+    const week = i.week ?? 0;
+    if (week <= -10) {
+      out.play = "CASH: locked for the week"; out.cls = "cash";
+      trail.push(["stop", "Stage 0: account is " + pct(week, 1) + " since Monday, at or past the −10% weekly breaker."]);
+      return out;
+    }
+    const stop = Math.max(-5, (0.9 / (1 + week / 100) - 1) * 100);
+    trail.push(["yes", "Stage 0: breakers clear. Today's stop is " + pct(stop, 1) + (stop > -5 ? " (tightened by this week's loss)." : ".")]);
+    const tdom = tradingDayOfMonth(i.date), opex = isThirdFriday(i.date);
+    trail.push([opex ? "yes" : "no", "Stage 1: " + (opex ? "monthly options-expiration Friday." : "not an expiration Friday.")]);
+    const msWindow = tdom <= 3;
+    trail.push([msWindow ? "yes" : "no", "Stage 1: trading day " + tdom + " of the month" + (msWindow ? ", inside the month-start window." : ".")]);
+    let monthStart = false;
+    if (msWindow) {
+      if (i.vol === null) trail.push(["no", "Stage 2: enter SPY's 20-day volatility to judge MONTH START."]);
+      else {
+        monthStart = i.vol >= 15 && i.vol <= 40;
+        trail.push([monthStart ? "yes" : "no", "Stage 2: 20-day volatility " + i.vol + "%" + (monthStart ? " is inside 15–40%." : " is outside 15–40%, so MONTH START is off.")]);
+      }
+    }
+    const dipSetup = (i.streak ?? 0) >= 3;
+    trail.push([dipSetup ? "yes" : "no", "Stage 2: SPY down " + (i.streak ?? 0) + " closes in a row" + (dipSetup ? ", a DIP BOUNCE setup." : "; DIP BOUNCE needs 3.")]);
+    let dip = false, pendingDip = false, bear = false, pendingBear = false;
+    if (dipSetup) {
+      if (i.spyGap === null) pendingDip = true;
+      else {
+        dip = i.spyGap <= 0.3;
+        trail.push([dip ? "yes" : "no", "Stage 3: SPY opened " + pct(i.spyGap, 2) + (dip ? ", not chasing a gap up." : ", more than +0.3%, so skip the dip.")]);
+      }
+    }
+    if (opex) {
+      if (i.qqqGap === null) pendingBear = true;
+      else {
+        bear = i.qqqGap >= -0.3;
+        trail.push([bear ? "yes" : "no", "Stage 3: QQQ opened " + pct(i.qqqGap, 2) + (bear ? ", not chasing a gap down." : ", more than −0.3%, so skip the fade.")]);
+      }
+    }
+    const bull = monthStart || dip;
+    if (pendingDip || pendingBear) {
+      out.play = "Wait for the 9:30 open"; out.cls = "cash";
+      out.order = "Enter " + (pendingDip ? "SPY" : "") + (pendingDip && pendingBear ? " and " : "") + (pendingBear ? "QQQ" : "") + "'s opening gap to finish the check." + (monthStart ? " MONTH START is already on." : "");
+      return out;
+    }
+    if (bull && bear) {
+      out.play = "CASH: signals conflict"; out.cls = "cash";
+      trail.push(["no", "Stage 3: a bull and a bear play both qualify, so stay in cash."]);
+      return out;
+    }
+    if (bull) {
+      out.play = (dip ? "DIP BOUNCE" : "MONTH START") + (dip && monthStart ? " + MONTH START" : ""); out.cls = "bull";
+      out.order = "Buy SPXL with 100% of the account at the open. Stop at " + pct(stop, 1) + " from entry, otherwise sell at 3:59 pm ET.";
+      return out;
+    }
+    if (bear) {
+      out.play = "OPEX FADE"; out.cls = "bear";
+      out.order = "Buy SQQQ with 100% of the account at the open. Stop at " + pct(stop, 1) + " from entry, otherwise sell at 3:59 pm ET.";
+      return out;
+    }
+    out.play = "CASH"; out.cls = "cash"; out.order = "No play today. The bot stays flat.";
+    return out;
+  }
+  window.__pbDecide = decide;
+
+  function runCheck() {
+    const v = $("ck-date").value;
+    const dt = v ? new Date(v + "T00:00:00Z") : null;
+    $("ck-date-hint").textContent = dt && !isNaN(dt) ? dt.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "UTC" }) : " ";
+    const r = decide({ date: dt, streak: num("ck-streak"), vol: num("ck-vol"), spyGap: num("ck-spygap"), qqqGap: num("ck-qqqgap"), week: num("ck-week") });
+    const play = $("ck-play");
+    play.textContent = r.play; play.className = "play " + (r.cls || "cash");
+    $("ck-order").textContent = r.order || "";
+    const tr = $("ck-trail"); tr.textContent = "";
+    r.trail.forEach(([k, t]) => {
+      const li = document.createElement("li");
+      const m = document.createElement("span"); m.className = "mk " + k; m.textContent = k === "yes" ? "✓" : k === "stop" ? "!" : "–";
+      const s = document.createElement("span"); s.textContent = t;
+      li.append(m, s); tr.appendChild(li);
+    });
+  }
+  const EXAMPLE = { "ck-date": "2026-11-20", "ck-streak": "1", "ck-vol": "11", "ck-spygap": "0.10", "ck-qqqgap": "0.20", "ck-week": "1.0" };
+  $("ck").addEventListener("input", runCheck);
+  $("ck").addEventListener("submit", (e) => e.preventDefault());
+  $("ck-reset").addEventListener("click", () => { for (const k in EXAMPLE) $(k).value = EXAMPLE[k]; runCheck(); });
+  $("ck-today").addEventListener("click", () => {
+    const n = new Date();
+    $("ck-date").value = n.getFullYear() + "-" + String(n.getMonth() + 1).padStart(2, "0") + "-" + String(n.getDate()).padStart(2, "0");
+    $("ck-spygap").value = ""; $("ck-qqqgap").value = "";
+    runCheck();
+  });
+  runCheck();
+})();
+</script>
