@@ -105,3 +105,16 @@ Add this to your main dashboard's nav or footer:
 ```html
 <a href="https://your-catalyst-lab-url.pages.dev" target="_blank">⚗️ Catalyst Lab</a>
 ```
+
+---
+
+## ◎ Long-Term Portfolio (`portfolio.html`)
+
+A second dashboard for the long-term holdings (BRK.B, OKLO, CBRS, RKLB, RDW, ACIW, GPOR, ATEN, ADUS, SPXC, FSS, AYI). Open `portfolio.html`, or use the **◎ Portfolio** button in Catalyst Lab's top bar.
+
+- **Three NYSE-style tapes:** equities and indices, ETFs, and FX, Treasury yields and bond ETFs. Hover to pause.
+- **Command Wheel:** the outer ring has one slice per holding, sized by weight, with a tick for today's move. Click a slice to load it in the center. The four inner quadrants (Position · Risk & Mitigants · Thesis & Catalysts · Valuation) each open their page. The center opens the full stock overview.
+- **Tabs:** Dashboard · Holdings (sortable) · Risk Register (heat map plus auto-calculated portfolio risks) · Allocation (theme/style/sector, equal-weight drift, 1Y vs SPY) · Calendar (earnings with beat/miss, dividends, custom events) · Journal.
+- **Editable:** risks and mitigants, thesis, catalysts, conviction, price levels, a buy/sell log that recalculates average cost, and adding or removing holdings. Edits are saved in localStorage. Back them up with ⚙ → Export JSON.
+- **Data:** live prices come from Yahoo Finance (with CORS-proxy fallbacks, refreshed every 5 min). Until they load, the page uses a Nov 5, 2026 snapshot. Fundamentals, earnings dates and 1Y weekly history are embedded from that same snapshot.
+- To change the base holdings, edit the `HOLDINGS` array at the top of the script.

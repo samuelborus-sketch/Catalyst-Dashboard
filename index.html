@@ -581,7 +581,7 @@ function renderNav(){
     return`<span class="pill ${hotCls}" title="${pos.drug}"><span class="sym">${pos.ticker}</span>${priceHtml}${chgHtml}<span class="dim">${days<0?'PAST':days+'d'}</span></span>`;
   }).join('');
   const doubled=pills+pills;
-  document.getElementById('nav-root').innerHTML=`<nav class="nav"><div class="wordmark">⚗️ CATALYST LAB</div><div class="tape-wrap"><div class="tape">${doubled}</div></div><div class="nav-r">${staleHtml}<span class="clock">${ct} CT · ↺${secs}s</span><span class="live"><span class="live-dot"></span>LIVE</span><button class="icon-btn" onclick="toggleSettings()" title="Settings">⚙</button></div></nav>`;
+  document.getElementById('nav-root').innerHTML=`<nav class="nav"><div class="wordmark">⚗️ CATALYST LAB</div><div class="tape-wrap"><div class="tape">${doubled}</div></div><div class="nav-r">${staleHtml}<span class="clock">${ct} CT · ↺${secs}s</span><span class="live"><span class="live-dot"></span>LIVE</span><a class="icon-btn" href="portfolio.html" title="Long-Term Portfolio" style="text-decoration:none">◎ Portfolio</a><button class="icon-btn" onclick="toggleSettings()" title="Settings">⚙</button></div></nav>`;
 }
 
 // =============================================
