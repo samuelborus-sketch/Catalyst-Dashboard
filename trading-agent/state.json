@@ -1,10 +1,10 @@
 {
-  "halted": true,
-  "halt_reason": "Paused by Sam 2026-10-28: running a different strategy for the foreseeable future. Only Sam clears this.",
+  "halted": false,
+  "halt_reason": null,
   "account_floor_usd": 81.3,
   "equity_hwm": 108.84,
-  "week_start_date": "2026-10-26",
-  "week_start_equity": 108.12,
+  "week_start_date": "2026-11-02",
+  "week_start_equity": 105.35,
   "consecutive_losses": 1,
   "caution_until_win": false,
   "skip_next_session": false,
@@ -239,5 +239,6 @@
   },
   "threshold_overrides_note": "Set by Sam (explicit chat instruction). Use this threshold instead of the caution 8 on these dates only.",
   "manual_trades_note": "2026-10-22: Sam's manual TQQQ trades +0.44 and -1.83 (not system trades; system counters unchanged).",
-  "score_scale_note": "From 2026-10-27 the score is out of 14 (volume block S8\u2013S11 added). Standard threshold 10/14, caution 11/14. threshold_overrides before this date are on the old /10 scale."
+  "score_scale_note": "From 2026-10-27 the score is out of 14 (volume block S8\u2013S11 added). Standard threshold 10/14, caution 11/14. threshold_overrides before this date are on the old /10 scale.",
+  "mode_note": "2026-11-06: Sam unpaused the agent and turned trade approvals OFF in the app -> AUTO mode (orders execute without Sam's tap). Equity at unpause $105.35."
 }
