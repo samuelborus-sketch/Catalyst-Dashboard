@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b13">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Portfolio">
 <title>Long-Term Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +28,7 @@ button{font-family:inherit}
 .dim{color:var(--tm)}
 
 /* ---------- top nav ---------- */
-.nav{position:sticky;top:0;z-index:50;background:rgba(7,11,19,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.nav{background:rgba(7,11,19,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
 .nav-row{display:flex;align-items:center;gap:16px;padding:10px 20px;flex-wrap:wrap}
 .wordmark{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--tc);letter-spacing:.06em;white-space:nowrap;cursor:pointer}
 .wordmark span{color:var(--tm);font-weight:500}
@@ -42,7 +46,8 @@ button{font-family:inherit}
 .icon-btn:hover{color:var(--tp);border-color:var(--tc)}
 
 /* ---------- tapes ---------- */
-.tapes{border-top:1px solid var(--border)}
+#tapes{position:sticky;top:0;z-index:51;background:var(--bg);border-bottom:1px solid var(--border)}
+#nav{position:sticky;top:var(--tape-h,86px);z-index:50}
 .tape-row{display:flex;align-items:stretch;border-bottom:1px solid rgba(30,58,95,.55);height:28px;overflow:hidden}
 .tape-row:last-child{border-bottom:none}
 .tape-lbl{flex:0 0 112px;display:flex;align-items:center;gap:6px;padding:0 12px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--bg);text-transform:uppercase;white-space:nowrap}
@@ -221,6 +226,7 @@ tfoot td{font-weight:700;background:var(--alt);border-bottom:none}
 
 @media (max-width:1100px){.hero,.two{grid-template-columns:1fr}.three{grid-template-columns:1fr}}
 @media (max-width:640px){
+  #nav{position:static}
   main{padding:16px 16px 50px}.nav-row{padding:8px 16px;gap:10px}
   .tabs{order:3;flex:1 0 100%;overflow-x:auto;flex-wrap:nowrap}
   .tape-lbl{flex-basis:74px;padding:0 8px;font-size:8px}
@@ -234,6 +240,7 @@ tfoot td{font-weight:700;background:var(--alt);border-bottom:none}
 </style>
 </head>
 <body>
+<div id="tapes"></div>
 <div id="nav"></div>
 <main id="view"></main>
 <div class="ov" id="ov"><div class="modal" id="modal"></div></div>
@@ -245,7 +252,7 @@ tfoot td{font-weight:700;background:var(--alt);border-bottom:none}
 //  CONFIG — your holdings. Shares + avg cost are the base values;
 //  anything you edit in the app is saved on top of these in localStorage.
 // =====================================================================
-const SNAP_AT = '2026-11-05T15:51:00Z'; // snapshot used until live prices load
+const SNAP_AT = '2026-11-06T21:00:00Z'; // snapshot used until live prices load
 const REFRESH_SEC = 300;
 
 const HOLDINGS = [
@@ -262,7 +269,7 @@ const HOLDINGS = [
  {t:'OKLO',name:'Oklo Inc.',theme:'Nuclear / AI Power',style:'Speculative',color:'#a3e635',shares:.96588,cost:19.93,
   thesis:"A call option on small fast-fission powerhouses (Aurora) sold as power-as-a-service to data centers, industry and defense. If Oklo converts licensing into a first operating plant, its long pipeline of AI/data-center power demand could re-rate the business. Sized as a high-risk, high-optionality bet.",
   wrong:"Licensing slips by years, fuel can't be secured, or cash runs low enough to force heavy dilution at depressed prices.",
-  catalysts:["Q3 results (Thu 11/6, pre-market)","NRC licensing milestones for the first Aurora powerhouse","Customer offtake / data-center power agreements","Fuel (HALEU) supply and recycling progress"],
+  catalysts:["Q3 reported 11/6 (EPS beat: −0.22 vs −0.26 est; stock +23%)","NRC licensing milestones for the first Aurora powerhouse","Customer offtake / data-center power agreements","Fuel (HALEU) supply and recycling progress"],
   risks:[
    {title:"Regulatory / licensing delay",cat:"Regulatory",l:4,i:5,status:"open",mit:"Track NRC application milestones each quarter; DOE programs can offer parallel paths. Mine: small position, no adds until a concrete licensing milestone lands.",trip:"Material licensing setback or a multi-year slip in the first plant."},
    {title:"Pre-revenue cash burn & dilution",cat:"Financial",l:4,i:4,status:"partial",mit:"Cash cushion from prior equity raises; watch quarterly burn vs cash. Expect dilution and size for it.",trip:"Runway under ~2 years without a funded plan."},
@@ -320,14 +327,14 @@ const HOLDINGS = [
    {title:"Mild winters",cat:"Weather",l:3,i:2,status:"partial",mit:"Hedges cushion a warm winter.",trip:""}
   ]},
  {t:'ATEN',name:'A10 Networks',theme:'Networking & Security',style:'Quality Growth',color:'#818cf8',shares:.878945,cost:25.03,
-  thesis:"Profitable, cash-generative application delivery and DDoS-security vendor with a clean balance sheet, buybacks and a dividend. AI data-center build-outs and service-provider spending are tailwinds. Has beaten EPS estimates every quarter in my data.",
+  thesis:"Profitable, cash-generative application delivery and DDoS-security vendor with a clean balance sheet, buybacks and a dividend. AI data-center build-outs and service-provider spending are tailwinds. Has beaten EPS estimates every quarter in my data, including Q3 2026.",
   wrong:"Service-provider spending rolls over and larger rivals squeeze pricing.",
-  catalysts:["Q3 results (Thu 11/5, after close)","AI data-center / enterprise security wins","Buybacks & dividend"],
+  catalysts:["Q3 reported 11/5 (EPS beat: 0.31 vs 0.26 est)","AI data-center / enterprise security wins","Buybacks & dividend"],
   risks:[
    {title:"Lumpy service-provider spending",cat:"Business",l:3,i:3,status:"partial",mit:"Enterprise mix has grown; judge trend over several quarters.",trip:""},
    {title:"Competition (F5, Cloudflare, etc.)",cat:"Competitive",l:3,i:3,status:"open",mit:"Niche focus and profitability; watch gross margin trend.",trip:"Gross margin falls sharply."},
    {title:"Valuation (~40x P/E)",cat:"Valuation",l:3,i:3,status:"partial",mit:"Already ~41% off its 52-week high.",trip:""},
-   {title:"Earnings event today",cat:"Event",l:3,i:2,status:"open",mit:"Long-term holder, so don't trade the print.",trip:""}
+   {title:"Post-earnings volatility",cat:"Event",l:2,i:2,status:"mitigated",mit:"Q3 beat (0.31 vs 0.26) and the stock rose ~9%. Long-term holder, so no trading around prints.",trip:""}
   ]},
  {t:'ADUS',name:'Addus HomeCare',theme:'Healthcare Services',style:'Quality Compounder',color:'#f472b6',shares:.184447,cost:119.28,
   thesis:"In-home personal care for elderly and disabled people: a lower-cost alternative to institutional care with strong demographic tailwinds. Beat EPS estimates 8 quarters running and sits at a 52-week high.",
@@ -349,26 +356,12 @@ const HOLDINGS = [
    {title:"Commercial construction slowdown",cat:"Macro",l:3,i:3,status:"open",mit:"Watch orders and book-to-bill.",trip:""},
    {title:"M&A integration",cat:"Execution",l:2,i:3,status:"mitigated",mit:"Disciplined acquirer historically.",trip:""}
   ]},
- {t:'FSS',name:'Federal Signal',theme:'Industrials',style:'Quality Compounder',color:'#fca5a5',shares:.191104,cost:115.12,
-  thesis:"Niche leader in street sweepers, sewer cleaners, vacuum / hydro-excavation trucks and safety signalling. Municipal budgets, infrastructure spending and steady bolt-on M&A compound earnings, and it beats estimates consistently.",
-  wrong:"Municipal budgets tighten while chassis or supply issues pinch output.",
-  catalysts:["Q3 reported 10/29 (EPS beat: 1.34 vs 1.32 est)","Ex-dividend 11/13 ($0.15)","Infrastructure spending","Bolt-on acquisitions"],
-  risks:[
-   {title:"Municipal budget pressure",cat:"Macro",l:2,i:3,status:"partial",mit:"Essential equipment with long replacement cycles; strong backlog.",trip:""},
-   {title:"Chassis / supply chain",cat:"Operational",l:3,i:3,status:"partial",mit:"Watch backlog conversion and margins.",trip:""},
-   {title:"Industrial demand cycle",cat:"Macro",l:3,i:3,status:"open",mit:"Mix of municipal and industrial customers.",trip:""},
-   {title:"Acquisition integration",cat:"Execution",l:2,i:2,status:"mitigated",mit:"Long record of bolt-ons.",trip:""}
-  ]},
- {t:'AYI',name:'Acuity Inc.',theme:'Industrials',style:'Quality',color:'#67e8f9',shares:.069684,cost:315.71,
-  thesis:"North America's leading lighting maker, shifting toward higher-margin building-management tech (Acuity Intelligent Spaces / Distech). Strong margins, consistent beats and buybacks.",
-  wrong:"Non-residential construction slumps and Intelligent Spaces fails to scale.",
-  catalysts:["Fiscal Q1 results (~1/7, tentative)","Intelligent Spaces growth","Buybacks"],
-  risks:[
-   {title:"Non-residential construction cycle",cat:"Macro",l:3,i:4,status:"partial",mit:"Renovation / retrofit demand cushions new-build weakness.",trip:"Two quarters of falling sales with margin compression."},
-   {title:"Tariffs on components",cat:"Macro",l:3,i:3,status:"partial",mit:"Pricing power has offset input costs historically.",trip:""},
-   {title:"Lighting commoditisation",cat:"Competitive",l:3,i:3,status:"open",mit:"Mix shift toward controls and software.",trip:""},
-   {title:"Intelligent Spaces execution",cat:"Execution",l:2,i:3,status:"open",mit:"Track segment growth and margins.",trip:""}
-  ]},
+];
+
+// Positions you've sold. Set the actual fill price in the app (Holdings → Closed positions).
+const CLOSED = [
+ {t:'FSS',name:'Federal Signal',color:'#fca5a5',shares:.191104,cost:115.12,sold:'2026-11-09',est:113.425,note:'Sell at market open'},
+ {t:'AYI',name:'Acuity Inc.',color:'#67e8f9',shares:.069684,cost:315.71,sold:'2026-11-09',est:323.16,note:'Sell at market open'},
 ];
 
 // Fundamentals snapshot (Nov 5, 2026)
@@ -389,20 +382,20 @@ const PROFILE = {
 
 // [price, prev close] snapshot — replaced by live data when available
 const SNAP = {
- 'OKLO':[18.94,22.12],'CBRS':[79.33,91.85],'RKLB':[44.725,52.37],'BRK.B':[581.80,579.09],'RDW':[6.21,7.72],'ACIW':[61.9775,59.19],
- 'GPOR':[162.23,159.11],'ATEN':[22.625,23.81],'ADUS':[130.73,127.94],'SPXC':[143.365,153.47],'FSS':[115.20,117.93],'AYI':[325.625,337.44],
- 'AAPL':[346.88,349.51],'MSFT':[536.52,555.80],'NVDA':[183.63,200.13],'AMZN':[253.98,266.03],'GOOGL':[279.07,288.93],'META':[586.25,630.00],
- 'TSLA':[344.63,385.19],'AVGO':[295.90,325.48],'JPM':[337.77,352.11],'V':[431.41,436.57],'XOM':[172.35,169.27],'LLY':[1427.71,1417.99],
- 'SPY':[740.75,766.81],'QQQ':[652.47,691.95],'DIA':[521.10,533.11],'IWM':[275.65,284.02],'VTI':[364.04,376.92],'XLK':[164.15,176.50],
- 'XLF':[58.12,59.20],'XLE':[64.01,63.52],'XLI':[164.86,169.46],'XLV':[190.09,189.66],'SMH':[453.27,504.27],'URA':[30.70,32.70],
- 'ITA':[69.01,70.95],'ARKX':[27.01,28.92],'GLD':[375.92,372.49],'SLV':[47.10,47.16],'USO':[147.46,145.41],'IBIT':[42.90,45.33],
- 'TLT':[82.03,81.76],'IEF':[91.97,91.66],'SHY':[81.60,81.50],'AGG':[96.54,96.38],'LQD':[104.51,104.50],'HYG':[77.17,77.52],'TIP':[106.29,106.10],
- 'UUP':[28.90,28.90],'FXE':[103.55,103.61],'FXY':[58.04,57.82],
+ 'OKLO':[23.565,19.20],'CBRS':[89.77,81.71],'RKLB':[53.05,45.99],'BRK.B':[571.065,572.33],'RDW':[7.20,6.19],'ACIW':[60.01,59.52],
+ 'GPOR':[150.01,155.08],'ATEN':[24.735,22.60],'ADUS':[124.31,126.81],'SPXC':[142.86,138.54],'FSS':[113.425,112.08],'AYI':[323.16,323.31],
+ 'AAPL':[342.36,344.17],'MSFT':[530.54,535.93],'NVDA':[186.68,181.60],'AMZN':[259.35,260.21],'GOOGL':[284.68,282.57],'META':[610.12,605.08],
+ 'TSLA':[358.16,343.69],'AVGO':[293.23,291.53],'JPM':[334.51,337.34],'V':[422.70,422.59],'XOM':[165.86,165.30],'LLY':[1353.99,1364.73],
+ 'SPY':[735.44,733.00],'QQQ':[656.18,647.05],'DIA':[512.22,514.27],'IWM':[273.64,270.98],'VTI':[361.88,360.52],'XLK':[164.79,162.38],
+ 'XLF':[57.17,57.50],'XLE':[61.64,61.63],'XLI':[162.71,162.47],'XLV':[184.81,184.91],'SMH':[463.73,447.73],'URA':[32.335,30.98],
+ 'ITA':[69.00,68.11],'ARKX':[28.42,27.045],'GLD':[372.555,375.49],'SLV':[46.875,46.93],'USO':[148.41,148.21],'IBIT':[42.87,43.03],
+ 'TLT':[81.925,81.93],'IEF':[91.84,91.97],'SHY':[81.62,81.67],'AGG':[96.55,96.62],'LQD':[104.535,104.66],'HYG':[77.24,77.28],'TIP':[106.29,106.26],
+ 'UUP':[29.145,28.92],'FXE':[102.79,103.50],'FXY':[57.79,58.05],
 };
 
 // Three NYSE-style tapes
 const TAPES = [
- {id:'eq',label:'Equities',items:['^GSPC','^DJI','^IXIC','^RUT','^VIX','|MEGA CAP','AAPL','MSFT','NVDA','AMZN','GOOGL','META','AVGO','TSLA','JPM','V','LLY','XOM','|MY HOLDINGS','BRK.B','OKLO','CBRS','RKLB','RDW','ACIW','GPOR','ATEN','ADUS','SPXC','FSS','AYI']},
+ {id:'eq',label:'Equities',items:['^GSPC','^DJI','^IXIC','^RUT','^VIX','|MEGA CAP','AAPL','MSFT','NVDA','AMZN','GOOGL','META','AVGO','TSLA','JPM','V','LLY','XOM']},
  {id:'etf',label:'ETFs',items:['SPY','QQQ','DIA','IWM','VTI','|SECTORS','XLK','XLF','XLE','XLI','XLV','SMH','|THEMES','URA','ITA','ARKX','IBIT','|COMMODITIES','GLD','SLV','USO']},
  {id:'fx',label:'FX · Bonds',items:['DX-Y.NYB','EURUSD=X','JPY=X','GBPUSD=X','CAD=X','AUDUSD=X','CHF=X','CNY=X','MXN=X','BTC-USD','UUP','FXE','FXY','|TREASURY YIELDS','^IRX','^FVX','^TNX','^TYX','|BOND ETFs','SHY','IEF','TLT','TIP','AGG','LQD','HYG']},
 ];
@@ -412,20 +405,23 @@ const FX4 = new Set(['EURUSD=X','GBPUSD=X','AUDUSD=X','CAD=X','CHF=X','CNY=X','M
 
 // Earnings: [quarter label, report date, timing, EPS est, EPS actual|null, verified]
 const EARN = {
- 'OKLO':[['Q1 25','2025-05-13','pm',-.10,-.07,1],['Q2 25','2025-08-11','pm',-.11,-.18,1],['Q3 25','2025-11-11','pm',-.13,-.20,1],['Q4 25','2026-03-17','pm',-.17,-.27,1],['Q1 26','2026-05-12','pm',-.19,-.19,1],['Q2 26','2026-08-07','am',-.16,-.28,1],['Q3 26','2026-11-06','am',-.26,null,1],['Q4 26','2027-03-16','pm',-.27,null,0]],
+ 'OKLO':[['Q1 25','2025-05-13','pm',-.10,-.07,1],['Q2 25','2025-08-11','pm',-.11,-.18,1],['Q3 25','2025-11-11','pm',-.13,-.20,1],['Q4 25','2026-03-17','pm',-.17,-.27,1],['Q1 26','2026-05-12','pm',-.19,-.19,1],['Q2 26','2026-08-07','am',-.16,-.28,1],['Q3 26','2026-11-06','am',-.26,-.22,1],['Q4 26','2027-03-16','pm',-.27,null,0]],
  'CBRS':[['Q1 26','2026-06-23','pm',-.16,-.039,1],['Q2 26','2026-08-12','pm',-.19,-.045,1],['Q3 26','2026-11-12','pm',-.14,null,1],['Q4 26','2027-02-19','am',-.22,null,0]],
  'RKLB':[['Q1 25','2025-05-08','pm',-.09,-.12,1],['Q2 25','2025-08-07','pm',-.09,-.13,1],['Q3 25','2025-11-10','pm',-.10,-.03,1],['Q4 25','2026-02-26','pm',-.09,-.09,1],['Q1 26','2026-05-07','pm',-.08,-.07,1],['Q2 26','2026-08-10','pm',-.08,-.08,1],['Q3 26','2026-11-09','pm',-.06,null,1],['Q4 26','2027-02-25','pm',-.05,null,0]],
  'BRK.B':[['Q1 25','2025-05-03','am',4.68,4.469,1],['Q2 25','2025-08-02','am',4.98,5.17,1],['Q3 25','2025-11-01','am',null,6.25,1],['Q4 25','2026-02-28','am',5.19,4.728,1],['Q1 26','2026-05-02','am',null,5.259,1],['Q2 26','2026-08-08','am',5.13,6.02,1],['Q3 26','2026-11-07','am',null,null,1],['Q4 26','2027-03-01','am',null,null,0]],
  'RDW':[['Q1 25','2025-05-12','am',-.20,-.09,1],['Q2 25','2025-08-06','pm',-.04,-.41,1],['Q3 25','2025-11-05','pm',-.13,-.29,1],['Q4 25','2026-02-25','pm',-.16,-.58,1],['Q1 26','2026-05-06','pm',-.17,-.40,1],['Q2 26','2026-08-05','pm',-.16,-.19,1],['Q3 26','2026-11-04','pm',-.09,-.06,1],['Q4 26','2027-02-24','pm',-.09,null,0]],
  'ACIW':[['Q1 25','2025-05-08','am',.34,.51,1],['Q2 25','2025-08-07','am',.23,.35,1],['Q3 25','2025-11-06','am',.94,1.09,1],['Q4 25','2026-02-26','am',.96,.90,1],['Q1 26','2026-05-07','am',.46,.61,1],['Q2 26','2026-08-06','am',.48,.54,1],['Q3 26','2026-11-05','am',.58,.54,1],['Q4 26','2027-02-25','am',1.79,null,0]],
  'GPOR':[['Q1 25','2025-05-06','pm',5.23,5.63,1],['Q2 25','2025-08-05','pm',5.09,5.42,1],['Q3 25','2025-11-04','pm',4.66,4.934,1],['Q4 25','2026-02-24','pm',5.63,5.75,1],['Q1 26','2026-05-05','pm',7.72,7.28,1],['Q2 26','2026-08-03','pm',4.54,3.917,1],['Q3 26','2026-11-04','pm',5.17,5.47,1],['Q4 26','2027-02-23','pm',6.53,null,0]],
- 'ATEN':[['Q1 25','2025-05-01','pm',.18,.20,1],['Q2 25','2025-08-05','pm',.18,.21,1],['Q3 25','2025-11-04','pm',.19,.23,1],['Q4 25','2026-02-04','pm',.22,.26,1],['Q1 26','2026-04-28','pm',.22,.24,1],['Q2 26','2026-08-05','pm',.23,.25,1],['Q3 26','2026-11-05','pm',.26,null,1],['Q4 26','2027-02-03','pm',.27,null,0]],
+ 'ATEN':[['Q1 25','2025-05-01','pm',.18,.20,1],['Q2 25','2025-08-05','pm',.18,.21,1],['Q3 25','2025-11-04','pm',.19,.23,1],['Q4 25','2026-02-04','pm',.22,.26,1],['Q1 26','2026-04-28','pm',.22,.24,1],['Q2 26','2026-08-05','pm',.23,.25,1],['Q3 26','2026-11-05','pm',.26,.31,1],['Q4 26','2027-02-03','pm',.27,null,0]],
  'ADUS':[['Q1 25','2025-05-05','pm',1.33,1.42,1],['Q2 25','2025-08-04','pm',1.41,1.49,1],['Q3 25','2025-11-03','pm',1.46,1.56,1],['Q4 25','2026-02-23','pm',1.65,1.77,1],['Q1 26','2026-05-04','pm',1.50,1.62,1],['Q2 26','2026-08-03','pm',1.65,1.73,1],['Q3 26','2026-11-03','pm',1.76,1.83,1],['Q4 26','2027-02-22','pm',1.86,null,0]],
  'SPXC':[['Q1 25','2025-05-01','pm',1.17,1.38,1],['Q2 25','2025-07-31','pm',1.45,1.65,1],['Q3 25','2025-10-30','pm',1.61,1.84,1],['Q4 25','2026-02-24','pm',1.86,1.88,1],['Q1 26','2026-04-30','pm',1.56,1.69,1],['Q2 26','2026-07-30','pm',1.85,2.02,1],['Q3 26','2026-10-29','pm',2.10,2.21,1],['Q4 26','2027-02-23','pm',2.47,null,0]],
  'FSS':[['Q1 25','2025-04-30','am',.73,.76,1],['Q2 25','2025-07-30','am',1.06,1.17,1],['Q3 25','2025-10-30','am',1.08,1.14,1],['Q4 25','2026-02-25','am',1.08,1.16,1],['Q1 26','2026-04-29','am',.89,1.18,1],['Q2 26','2026-07-30','am',1.29,1.42,1],['Q3 26','2026-10-29','am',1.32,1.34,1],['Q4 26','2027-02-24','am',1.30,null,0]],
  'AYI':[['FQ2 25','2025-04-03','am',3.70,3.73,1],['FQ3 25','2025-06-26','am',4.44,5.12,1],['FQ4 25','2025-10-01','am',4.63,5.20,1],['FQ1 26','2026-01-08','am',4.42,4.69,1],['FQ2 26','2026-04-02','am',3.96,4.14,1],['FQ3 26','2026-06-25','am',5.12,5.31,1],['FQ4 26','2026-10-01','am',5.59,5.77,1],['FQ1 27','2027-01-07','am',5.03,null,0]],
 };
 const FIXED_EVENTS = [{d:'2026-11-13',t:'FSS',label:'Ex-dividend · $0.15/sh (pays 12/1)',kind:'div'}];
+
+// Hourly closes for the 1W chart (UTC hour stamps), snapshot through Nov 6 close
+const INTRA = {"t":["2026-10-30T14","2026-10-30T15","2026-10-30T16","2026-10-30T17","2026-10-30T18","2026-10-30T19","2026-11-02T15","2026-11-02T16","2026-11-02T17","2026-11-02T18","2026-11-02T19","2026-11-02T20","2026-11-03T15","2026-11-03T16","2026-11-03T17","2026-11-03T18","2026-11-03T19","2026-11-03T20","2026-11-04T15","2026-11-04T16","2026-11-04T17","2026-11-04T18","2026-11-04T19","2026-11-04T20","2026-11-05T15","2026-11-05T16","2026-11-05T17","2026-11-05T18","2026-11-05T19","2026-11-05T20","2026-11-06T15","2026-11-06T16","2026-11-06T17","2026-11-06T18","2026-11-06T19","2026-11-06T20"],"c":{"BRK.B":[546.01,546.49,546.51,545.523,544.555,543.41,551.16,552.414,553.4,555.27,555.795,556.23,557.8,557.62,559.07,558.79,557.717,557.135,571.15,573.08,573.04,574.51,577.735,579.665,583.805,581.1,576.61,576.78,575.0,572.235,572.02,571.52,571.98,574.91,574.134,571.065],"OKLO":[25.43,25.17,24.9,24.852,24.67,25.21,25.41,24.87,24.52,24.15,23.78,23.47,23.66,23.145,23.185,23.195,23.17,23.5,22.085,22.19,22.36,22.172,22.115,22.2,19.75,19.32,19.015,19.287,19.21,19.195,22.56,23.215,23.28,23.86,23.935,23.565],"CBRS":[108.035,107.57,107.19,106.21,105.825,107.02,99.905,99.346,98.29,97.36,97.168,96.315,101.61,99.625,99.46,99.12,97.96,97.82,92.405,94.33,93.46,91.33,91.428,90.821,79.49,82.75,82.1,82.18,83.83,81.625,86.225,86.55,86.2,89.125,89.825,89.77],"RKLB":[56.4,55.52,54.55,53.8,53.471,54.72,53.73,53.54,52.865,52.72,51.65,52.07,54.36,53.96,54.19,54.06,53.648,54.47,51.38,52.29,52.67,51.97,52.025,52.38,44.45,46.275,45.48,45.66,46.706,45.98,50.24,51.0,50.973,52.09,52.65,53.05],"RDW":[8.615,8.485,8.37,8.333,8.245,8.36,8.345,8.265,8.169,8.01,7.925,7.825,8.135,8.08,8.055,8.043,8.025,8.13,7.575,7.69,7.885,7.69,7.735,7.715,6.12,6.305,6.145,6.2,6.19,6.185,6.741,6.795,6.76,7.055,7.165,7.2],"ACIW":[55.967,56.2,56.16,56.155,56.22,56.34,57.6,57.73,58.2,58.395,58.38,58.42,58.96,58.92,58.87,59.16,58.92,58.49,59.36,59.1,59.01,58.89,58.91,59.11,62.31,60.165,59.72,59.27,59.525,59.63,58.92,60.37,60.15,60.0,60.08,60.01],"GPOR":[169.89,169.06,167.215,166.43,166.632,166.395,168.495,167.695,166.355,167.34,168.435,167.595,169.0,168.18,168.06,168.438,168.3,166.355,161.42,157.21,158.46,158.57,158.085,159.02,162.825,158.407,157.185,155.505,156.215,155.15,155.625,155.56,153.845,153.305,153.57,150.01],"ATEN":[24.705,24.42,24.06,24.209,24.155,24.498,23.32,23.645,23.954,23.925,23.825,23.528,23.93,23.89,24.19,24.2,24.249,24.31,23.775,23.86,23.96,23.775,23.92,23.82,22.565,22.73,22.37,22.26,22.21,22.61,24.83,24.732,24.45,24.57,24.65,24.735],"ADUS":[125.57,125.31,125.55,125.75,125.045,125.55,123.64,124.91,124.875,125.15,126.665,125.75,126.06,126.345,125.415,125.805,126.03,126.13,126.12,126.06,125.41,126.96,128.9,128.0,130.73,127.89,126.88,126.335,126.84,126.93,124.585,124.97,124.785,124.9,125.435,124.31],"SPXC":[163.92,160.27,160.52,160.36,159.7,159.925,162.51,159.795,159.13,158.62,158.71,161.42,167.39,165.66,165.17,165.745,164.67,163.55,151.885,154.02,154.13,152.19,152.72,153.39,143.365,143.925,141.505,141.27,141.18,138.42,139.19,140.315,139.955,142.43,142.68,142.86]}};
 
 // Weekly closes, 1 year (split-adjusted)
 const HIST = {"OKLO":{"start":"2025-11-03","c":[112.65,97.57,88.17,91.38,104.67,87.42,83.23,76.92,77.8,105.31,94.95,87.63,79.62,71.1,65.69,63.83,62.95,58.25,58.37,53.97,50.23,48.13,50.25,66.81,71.0,70.4,72.51,62.25,65.88,66.88,58.09,57.49,61.17,50.0,52.36,48.85,41.11,40.25,38.83,48.42,44.38,42.09,40.14,41.27,36.22,38.0,38.04,35.87,34.7,27.97,26.35,25.25]},"CBRS":{"start":"2026-05-11","c":[279.72,256.78,236.99,201.01,214.0,234.71,181.59,204.86,215.08,172.86,199.12,198.71,226.73,218.98,196.13,179.08,210.05,191.93,198.37,206.75,166.43,164.17,127.21,110.82,109.18]},"RKLB":{"start":"2025-11-03","c":[51.64,45.54,40.3,42.14,49.05,61.49,70.52,70.65,75.99,84.85,96.3,88.9,80.07,72.32,67.44,70.86,69.1,70.11,68.41,67.23,60.93,67.73,68.05,84.8,79.68,78.81,105.47,124.77,135.76,143.48,110.08,102.39,107.24,84.54,100.46,81.04,67.62,63.91,64.95,82.83,80.25,72.57,64.39,64.26,62.95,64.57,73.95,73.92,68.21,50.84,52.6,54.73]},"BRK.B":{"start":"2025-11-03","c":[499.06,508.94,504.04,513.81,504.34,499.52,494.53,498.3,496.85,499.1,493.29,478.97,480.53,508.09,497.55,498.2,504.95,498.98,490.03,480.94,468.49,477.35,479.9,474.58,469.32,473.01,475.94,482.7,486.38,474.48,488.13,489.25,489.46,498.66,507.78,493.71,490.91,494.93,511.54,521.8,504.03,495.82,505.0,506.03,510.37,509.77,505.48,502.65,515.62,532.02,542.19,542.49]},"RDW":{"start":"2025-11-03","c":[6.56,5.41,5.3,5.51,6.39,7.29,8.0,7.15,9.03,10.98,11.71,12.52,11.75,10.04,8.02,7.99,9.07,8.55,9.59,9.2,8.16,9.73,9.29,10.34,9.68,9.34,11.07,14.06,17.49,24.57,18.45,15.12,14.35,10.93,11.31,10.18,8.45,8.69,8.62,13.59,13.58,12.02,10.87,10.53,10.62,10.74,11.62,10.88,9.58,8.39,8.36,8.39]},"ACIW":{"start":"2025-11-03","c":[48.96,46.97,46.61,46.86,45.91,47.53,48.14,48.73,45.67,46.77,42.99,44.03,43.36,42.28,39.56,40.88,39.68,42.55,39.77,39.44,39.88,41.33,39.89,44.47,43.19,43.86,45.51,41.66,42.72,43.67,42.8,45.24,44.09,49.26,54.88,56.42,58.07,56.31,57.33,53.67,53.44,51.86,53.83,52.95,52.09,50.27,49.51,50.15,50.87,52.8,55.88,56.34]},"GPOR":{"start":"2025-11-03","c":[201.91,210.41,204.68,222.49,216.57,208.08,201.26,210.18,206.16,174.05,178.94,194.12,204.17,212.22,203.97,205.06,208.66,211.45,196.64,204.92,216.42,207.0,203.59,193.48,187.6,189.9,178.28,182.78,178.22,168.59,168.06,166.41,160.71,162.87,168.87,152.1,152.91,157.27,161.37,162.76,170.03,173.45,176.37,179.4,173.25,159.7,154.62,154.4,162.66,166.0,166.18,166.53]},"ATEN":{"start":"2025-11-03","c":[17.23,17.49,16.84,17.22,17.77,18.12,17.96,18.07,17.35,17.23,17.31,17.38,17.44,19.67,20.7,19.98,19.26,20.47,20.97,21.46,22.34,23.99,24.0,27.55,27.56,26.85,27.8,27.95,29.16,30.14,30.57,31.76,33.26,34.98,36.3,37.17,35.96,34.27,29.57,26.84,27.4,26.12,25.7,24.59,24.74,26.15,25.73,27.63,29.63,24.46,25.45,24.48]},"ADUS":{"start":"2025-11-03","c":[113.08,109.07,112.7,120.2,113.19,114.59,112.82,110.16,106.58,109.72,107.5,110.37,103.48,105.88,113.8,115.48,103.53,103.21,101.35,99.28,95.19,91.59,92.21,94.32,95.71,99.56,99.57,90.98,92.65,91.68,92.1,93.28,94.23,96.95,105.17,108.21,114.52,114.55,115.48,119.68,116.06,120.81,115.55,118.76,117.09,117.07,113.19,111.27,114.33,115.98,121.81,125.54]},"SPXC":{"start":"2025-11-03","c":[221.92,211.43,204.57,215.04,208.67,219.94,203.17,208.48,203.26,207.51,217.65,211.03,208.41,222.32,239.0,242.29,226.94,204.62,199.45,186.77,200.0,197.29,215.97,223.52,222.82,208.13,202.84,200.99,207.8,216.66,227.8,230.05,242.97,231.87,227.74,219.87,211.73,220.07,219.62,215.68,217.32,207.2,198.73,196.37,191.82,181.77,172.79,173.09,169.46,166.04,160.33,159.95]},"FSS":{"start":"2025-11-03","c":[110.71,109.74,108.69,114.0,110.84,110.83,112.56,113.44,111.44,116.57,114.51,111.95,108.09,116.71,120.49,118.74,116.43,108.77,105.42,105.57,106.47,109.25,115.04,114.24,116.01,121.61,118.33,111.33,112.61,106.7,106.49,109.11,118.52,125.37,131.09,115.23,116.63,118.89,124.95,128.21,125.85,122.51,118.13,119.28,113.98,113.83,114.75,116.34,113.57,112.39,113.23,112.67]},"AYI":{"start":"2025-11-03","c":[360.49,350.47,349.36,366.42,371.99,364.68,362.84,373.32,373.33,325.55,320.43,315.25,309.24,328.39,305.5,310.8,301.59,275.42,260.83,267.87,269.69,265.39,278.45,292.63,289.57,289.29,293.33,281.63,287.59,305.11,302.04,297.24,317.62,362.48,359.04,333.11,333.72,330.14,328.39,359.58,358.43,343.1,335.16,334.05,318.96,302.96,319.42,308.76,298.34,303.25,318.72,318.14]},"SPY":{"start":"2025-11-03","c":[670.97,671.93,659.03,683.39,685.69,681.76,680.59,690.31,683.17,694.07,691.66,689.23,691.97,690.62,681.75,689.43,685.99,672.38,662.29,648.57,634.09,655.83,679.46,710.14,713.94,720.65,737.62,739.17,745.64,756.48,737.55,741.75,746.74,728.99,744.78,754.95,743.29,738.93,747.03,773.26,776.34,765.72,769.35,770.19,764.29,761.69,771.35,769.64,778.57,763.25,759.97,755.72]}};
@@ -435,7 +431,7 @@ const HIST = {"OKLO":{"start":"2025-11-03","c":[112.65,97.57,88.17,91.38,104.67,
 // =====================================================================
 const LS_KEY='ltp_user_v1', LS_PX='ltp_prices_v1';
 const S={px:{},live:false,stale:false,lastFetch:null,nextAt:0,sort:{k:'value',d:-1},chartRange:'1Y'};
-let U=loadU();
+let U=loadU();if(['1W','3M','6M','1Y'].includes(U.range))S.chartRange=U.range;
 function loadU(){try{const u=JSON.parse(localStorage.getItem(LS_KEY)||'null');if(u&&typeof u==='object')return Object.assign({h:{},added:[],removed:[],journal:[],events:[],sel:'BRK.B'},u);}catch{}return{h:{},added:[],removed:[],journal:[],events:[],sel:'BRK.B'};}
 function saveU(){try{localStorage.setItem(LS_KEY,JSON.stringify(U));}catch{}}
 
@@ -525,7 +521,7 @@ async function refresh(manual){
   if(manual)toast('Refreshing prices…');
   const ok=await fetchPrices();
   S.nextAt=Date.now()+REFRESH_SEC*1000;
-  renderNav();render(true);
+  renderTapes();renderNav();render(true);
   if(manual)toast(ok?'Prices updated':'Live prices unavailable — showing '+(S.stale?'last cached':'snapshot')+' data');
 }
 
@@ -630,7 +626,7 @@ function lineChart(points,opts={}){
   let s=`<svg viewBox="0 0 ${W} ${Hh}" data-chart="${id}" preserveAspectRatio="none" style="aspect-ratio:${W}/${Hh}">`;
   for(let k=0;k<=4;k++){const v=lo+(hi-lo)*k/4,y=Y(v);s+=`<line x1="${pl}" x2="${W-pr}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(30,58,95,.45)" stroke-width="1"/><text x="${pl-6}" y="${(y+3).toFixed(1)}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#64748b">${opts.fmt?opts.fmt(v):'$'+(v>=100?v.toFixed(0):v.toFixed(2))}</text>`;}
   const step=Math.max(1,Math.round(points.length/6));
-  points.forEach((p,i)=>{if(i%step===0&&p.lbl)s+=`<text x="${X(i).toFixed(1)}" y="${Hh-8}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#64748b">${esc(p.lbl)}</text>`;});
+  points.forEach((p,i)=>{if((opts.labelAll||i%step===0)&&p.lbl)s+=`<text x="${X(i).toFixed(1)}" y="${Hh-8}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#64748b">${esc(p.lbl)}</text>`;});
   const d=points.map((p,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(p.y).toFixed(1)).join('');
   s+=`<path d="${d}L${X(points.length-1).toFixed(1)},${Hh-pb}L${pl},${Hh-pb}Z" fill="${hexA(col,.1)}"/>`;
   s+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>`;
@@ -649,6 +645,23 @@ function bindCharts(){
     const leave=()=>{hl.style.display='none';hd.style.display='none';tip.style.opacity=0;};
     svg.addEventListener('mousemove',move);svg.addEventListener('touchmove',move,{passive:true});svg.addEventListener('mouseleave',leave);svg.addEventListener('touchend',leave);
   });
+}
+const ET={timeZone:'America/New_York'};
+function intraPoints(t){
+  let ts,cs;const L=S.intra&&S.intra[t];
+  if(L){ts=L.t;cs=L.c;}else if(INTRA.c[t]){ts=INTRA.t.map(x=>x+':00:00Z');cs=INTRA.c[t];}else return null;
+  const last=new Date(ts[ts.length-1]).getTime();let prevDay='';
+  const pts=[];ts.forEach((x,i)=>{const d=new Date(x);if(last-d.getTime()>7*864e5||cs[i]==null)return;const day=d.toLocaleDateString('en-US',{...ET,weekday:'short'});
+    pts.push({y:cs[i],lbl:day!==prevDay?day:'',full:d.toLocaleString('en-US',{...ET,weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+' ET'});prevDay=day;});
+  const p=price(t);if(p!=null&&S.live)pts.push({y:p,lbl:'',full:'Now'});
+  return pts.length>1?pts:null;
+}
+async function fetchIntra(t){
+  S.intraTried=S.intraTried||{};if(S.intraTried[t])return;S.intraTried[t]=1;
+  const c=await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ySym(t))}?range=5d&interval=60m`);
+  const r=c?.chart?.result?.[0];if(!r||!r.timestamp)return;
+  const cl=r.indicators?.quote?.[0]?.close||[];S.intra=S.intra||{};S.intra[t]={t:r.timestamp.map(x=>new Date(x*1000).toISOString()),c:cl};
+  if(S.chartRange==='1W')render(true);
 }
 function histPoints(t,weeks){
   const h=HIST[t];if(!h)return null;const[y,m,d]=h.start.split('-').map(Number);const start=new Date(y,m-1,d);
@@ -678,11 +691,17 @@ function tapeItem(sym){
 function renderNav(){
   const r=location.hash||'#/';
   const tab=TABS.map(([h,l,k])=>`<a href="${h}" class="${(h==='#/'?(r==='#/'||r===''||r==='#'):r.startsWith(h))?'on':''}">${l}<span class="k">${k}</span></a>`).join('');
-  const st=S.live?`<span class="status live"><span class="dot"></span>LIVE</span>`:`<span class="status" title="Live feed unavailable — showing ${S.stale?'last cached':'Nov 5 snapshot'} prices"><span class="dot"></span>${S.stale?'CACHED':'SNAPSHOT'}</span>`;
+  const st=S.live?`<span class="status live"><span class="dot"></span>LIVE</span>`:`<span class="status" title="Live feed unavailable — showing ${S.stale?'last cached':'Nov 6 close snapshot'} prices"><span class="dot"></span>${S.stale?'CACHED':'SNAPSHOT'}</span>`;
   const ts=S.lastFetch?S.lastFetch.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):new Date(SNAP_AT).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-  const tapes=TAPES.map(tp=>{const parts=tp.items.map(tapeItem);const inner=parts.filter((x,i)=>{if(!tp.items[i].startsWith('|'))return x;for(let j=i+1;j<parts.length&&!tp.items[j].startsWith('|');j++)if(parts[j])return true;return false;}).join('');const n=tp.items.length;return`<div class="tape-row"><div class="tape-lbl ${tp.id}">${tp.label}</div><div class="tape-win"><div class="tape-track" style="--dur:${Math.max(40,n*3.2)}s">${inner}${inner}</div></div></div>`;}).join('');
-  document.getElementById('nav').innerHTML=`<nav class="nav"><div class="nav-row"><div class="wordmark" data-go="#/">◎ LONG-TERM <span>PORTFOLIO</span></div><div class="tabs">${tab}</div><div class="nav-r">${st}<span>${ts}</span><button class="icon-btn" data-act="refresh" title="Refresh prices (R)">↻</button><button class="icon-btn" data-act="settings" title="Settings">⚙</button><a class="icon-btn" href="index.html" title="Catalyst Lab">⚗ Lab</a></div></div><div class="tapes">${tapes}</div></nav>`;
+  document.getElementById('nav').innerHTML=`<nav class="nav"><div class="nav-row"><div class="wordmark" data-go="#/">◎ LONG-TERM <span>PORTFOLIO</span></div><div class="tabs">${tab}</div><div class="nav-r">${st}<span>${ts}</span><button class="icon-btn" data-act="refresh" title="Refresh prices (R)">↻</button><button class="icon-btn" data-act="settings" title="Settings">⚙</button><a class="icon-btn" href="index.html" title="Catalyst Lab">⚗ Lab</a></div></div></nav>`;
 }
+function tapeLists(){return TAPES.map(tp=>tp.id==='eq'?{...tp,items:tp.items.concat(['|MY HOLDINGS'],baseList().map(h=>h.t))}:tp);}
+function renderTapes(){
+  const html=tapeLists().map(tp=>{const parts=tp.items.map(tapeItem);const inner=parts.filter((x,i)=>{if(!tp.items[i].startsWith('|'))return x;for(let j=i+1;j<parts.length&&!tp.items[j].startsWith('|');j++)if(parts[j])return true;return false;}).join('');const n=tp.items.length;return`<div class="tape-row"><div class="tape-lbl ${tp.id}">${tp.label}</div><div class="tape-win"><div class="tape-track" style="--dur:${Math.max(40,n*3.2)}s">${inner}${inner}</div></div></div>`;}).join('');
+  const el=document.getElementById('tapes');el.innerHTML=html;
+  document.documentElement.style.setProperty('--tape-h',el.offsetHeight+'px');
+}
+window.addEventListener('resize',()=>{const el=document.getElementById('tapes');if(el)document.documentElement.style.setProperty('--tape-h',el.offsetHeight+'px');});
 
 // =====================================================================
 //  VIEWS
@@ -718,6 +737,12 @@ function viewDashboard(){
   <div class="orbs">${L.map(h=>`<div class="orb${h.t===U.sel?' sel':''}">${orbSVG(h)}<div class="orb-foot"><span>${(weight(h)).toFixed(1)}% wt</span><span>${esc(h.theme)}</span></div></div>`).join('')}</div>`;
 }
 
+function closedCard(){
+  if(!CLOSED.length)return'';const fills=U.closedPx||{};let tc=0,tp=0;
+  const rows=CLOSED.map(c=>{const f=fills[c.t];const px_=f??c.est;const cb=c.shares*c.cost,pr=c.shares*px_;tc+=cb;tp+=pr;const pend=daysTo(c.sold)>0;
+    return`<tr><td><span class="tk"><span class="sw" style="background:${c.color}"></span>${esc(c.t)}</span></td><td class="l" style="font-family:var(--body);color:var(--ts)">${esc(c.name)}</td><td>${shares(c.shares)}</td><td>${$(c.cost)}</td><td>${$(cb)}</td><td>${fdate(c.sold,{month:'short',day:'numeric'})}${pend?' <span class="st partial">pending</span>':''}</td><td>${$(px_)}${f==null?' <span class="dim">(est.)</span>':''}</td><td>${$(pr)}</td><td class="${cls(pr-cb)}">${sd$(pr-cb)}</td><td class="${cls(pr-cb)}">${pct((pr/cb-1)*100)}</td><td><button class="btn sm" data-act="set-fill" data-t="${esc(c.t)}">${f==null?'Set fill price':'Edit fill'}</button></td></tr>`;}).join('');
+  return`<div class="sec-title" style="margin-top:26px">Closed positions</div><div class="tbl-wrap"><table><thead><tr><th class="l">Ticker</th><th class="l">Company</th><th>Shares</th><th>Avg cost</th><th>Cost basis</th><th>Sold</th><th>Sell price</th><th>Proceeds</th><th>Realized P/L</th><th>%</th><th></th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td>TOTAL</td><td></td><td></td><td></td><td>${$(tc)}</td><td></td><td></td><td>${$(tp)}</td><td class="${cls(tp-tc)}">${sd$(tp-tc)}</td><td class="${cls(tp-tc)}">${pct((tp/tc-1)*100)}</td><td></td></tr></tfoot></table></div><div class="dim" style="font-size:11px;margin-top:8px">Estimated sell prices use the Nov 6 close until you enter the actual fill.</div>`;
+}
 function viewHoldings(){
   const L=all();const T=totals();
   const cols=[['t','Ticker','l'],['theme','Theme','l'],['shares','Shares'],['cost','Avg cost'],['price','Price'],['day','Today'],['value','Value'],['weight','Weight'],['pl','P/L $'],['plp','P/L %'],['r52','52-wk range'],['spark','6 mo'],['earn','Next EPS'],['risk','Risk']];
@@ -729,7 +754,7 @@ function viewHoldings(){
    return`<tr class="click" data-go="#/stock/${encodeURIComponent(h.t)}"><td><span class="tk"><span class="sw" style="background:${h.color}"></span>${esc(h.t)}</span></td><td class="l" style="font-family:var(--body);color:var(--ts)">${esc(h.theme)}</td><td>${shares(h.shares)}</td><td>${$(h.cost)}</td><td>${$(p)}</td><td class="${cls(dp)}">${pct(dp)}</td><td>${$(val(h))}</td><td>${weight(h).toFixed(1)}%</td><td class="${cls(pl)}">${sd$(pl)}</td><td class="${cls(pl)}">${pct(plp)}</td>
    <td>${p5==null?'—':`<span class="dim" style="font-size:10px">${P?px(P.lo):''}</span> <span class="range"><i style="left:calc(${(p5*100).toFixed(0)}% - 1px)"></i></span> <span class="dim" style="font-size:10px">${P?px(P.hi):''}</span>`}</td>
    <td>${sparkSVG(h.t)}</td><td>${e?`${fdate(e[1])} <span class="dim">(${daysTo(e[1])}d)</span>`:'—'}</td><td><span class="score" style="background:${hexA(scoreColor(rs),.18)};color:${scoreColor(rs)}">${rs.toFixed(0)}</span></td></tr>`;}).join('')}
-  </tbody><tfoot><tr><td>TOTAL</td><td></td><td></td><td></td><td></td><td class="${cls(T.d)}">${pct(T.dp)}</td><td>${$(T.v)}</td><td>100%</td><td class="${cls(T.pl)}">${sd$(T.pl)}</td><td class="${cls(T.pl)}">${pct(T.plp)}</td><td></td><td></td><td></td><td></td></tr></tfoot></table></div>`;
+  </tbody><tfoot><tr><td>TOTAL</td><td></td><td></td><td></td><td></td><td class="${cls(T.d)}">${pct(T.dp)}</td><td>${$(T.v)}</td><td>100%</td><td class="${cls(T.pl)}">${sd$(T.pl)}</td><td class="${cls(T.pl)}">${pct(T.plp)}</td><td></td><td></td><td></td><td></td></tr></tfoot></table></div>${closedCard()}`;
 }
 
 function matrixHTML(items){ // items: [{t,r,color}]
@@ -839,9 +864,10 @@ function viewStock(t,sub){
   return head+({overview:stockOverview,risk:stockRisk,thesis:stockThesis,valuation:stockValuation,position:stockPosition}[sub])(h);
 }
 function priceChartCard(h){
-  const R=S.chartRange;const w=R==='3M'?13:R==='6M'?26:null;const pts=histPoints(h.t,w);
+  const R=S.chartRange;const w=R==='3M'?13:R==='6M'?26:null;const pts=R==='1W'?intraPoints(h.t):histPoints(h.t,w);
+  if(R==='1W')fetchIntra(h.t);
   if(!pts)return`<div class="card"><div class="sec-title">Price</div><div class="dim">No price history for this holding.</div></div>`;
-  return`<div class="card"><div class="sec-title" style="justify-content:space-between">Price · weekly <span class="chart-tabs">${['3M','6M','1Y'].map(r=>`<button class="${R===r?'on':''}" data-act="range" data-v="${r}">${r}</button>`).join('')}</span></div>${lineChart(pts,{refs:[{y:h.cost,c:'#eab308',l:'my avg cost $'+px(h.cost)}].concat(h.fair?[{y:+h.fair,c:'#7dd3fc',l:'fair value $'+px(+h.fair)}]:[])})}</div>`;
+  return`<div class="card"><div class="sec-title" style="justify-content:space-between">Price · ${R==='1W'?'hourly, past week':'weekly'} <span class="chart-tabs">${['1W','3M','6M','1Y'].map(r=>`<button class="${R===r?'on':''}" data-act="range" data-v="${r}">${r}</button>`).join('')}</span></div>${lineChart(pts,{labelAll:R==='1W',refs:[{y:h.cost,c:'#eab308',l:'my avg cost $'+px(h.cost)}].concat(h.fair?[{y:+h.fair,c:'#7dd3fc',l:'fair value $'+px(+h.fair)}]:[])})}</div>`;
 }
 function epsChart(t){
   const E=(EARN[t]||[]);if(!E.length)return'<div class="dim">No earnings data.</div>';
@@ -963,7 +989,7 @@ function render(keepScroll){
   else if(r[0]==='journal')html=viewJournal();
   else if(r[0]==='stock')html=viewStock(r[1],r[2]);
   else html=viewDashboard();
-  document.getElementById('view').innerHTML=html+`<div class="foot">Prices: Yahoo Finance (live, every ${REFRESH_SEC/60} min) with a Nov 5, 2026 snapshot fallback · Fundamentals & earnings: Nov 5, 2026 snapshot<br>Your edits are saved in this browser. Back them up with ⚙ → Export · Not investment advice</div>`;
+  document.getElementById('view').innerHTML=html+`<div class="foot">Prices: Yahoo Finance (live, every ${REFRESH_SEC/60} min) with a Nov 6, 2026 close snapshot fallback · Fundamentals & earnings: Nov 5, 2026 snapshot<br>Your edits are saved in this browser. Back them up with ⚙ → Export · Not investment advice</div>`;
   bindCharts();
   if(keepScroll)window.scrollTo(0,y);
 }
@@ -1031,14 +1057,15 @@ document.addEventListener('click',e=>{
     if(act==='log-buy')return tradeForm(t,'buy');
     if(act==='log-sell')return tradeForm(t,'sell');
     if(act==='add-holding')return addHoldingForm();
-    if(act==='remove-holding'){if(!confirm(`Remove ${t} from the portfolio? (You can add it back later.)`))return;U.removed=(U.removed||[]).concat([t]);U.added=(U.added||[]).filter(h=>h.t!==t);saveU();closeModal();location.hash='#/';renderNav();render();return toast(t+' removed');}
+    if(act==='set-fill'){const c=CLOSED.find(x=>x.t===t);const cur=(U.closedPx||{})[t];return modal('Sell price · '+t,fld('px','Actual fill price per share ($)',cur??c.est,'number','step="any" min="0" required'),fd=>{U.closedPx=Object.assign({},U.closedPx,{[t]:+fd.px});saveU();toast(t+' fill saved');});}
+    if(act==='remove-holding'){if(!confirm(`Remove ${t} from the portfolio? (You can add it back later.)`))return;U.removed=(U.removed||[]).concat([t]);U.added=(U.added||[]).filter(h=>h.t!==t);saveU();closeModal();renderTapes();location.hash='#/';renderNav();render();return toast(t+' removed');}
     if(act==='add-journal')return journalForm(t);
     if(act==='del-journal'){U.journal=U.journal.filter(j=>j.id!==v);saveU();return render(true);}
     if(act==='jf'){S.jf=v;return render(true);}
     if(act==='rf'){S.riskFilter=v;return render(true);}
     if(act==='add-event')return eventForm();
     if(act==='del-event'){U.events=U.events.filter(x=>x.id!==v);saveU();return render(true);}
-    if(act==='range'){S.chartRange=v;return render(true);}
+    if(act==='range'){S.chartRange=v;U.range=v;saveU();return render(true);}
     if(act==='export')return download(`portfolio-backup-${new Date().toISOString().slice(0,10)}.json`,JSON.stringify(U,null,2),'application/json');
     if(act==='export-csv'){const rows=[['Ticker','Name','Theme','Shares','AvgCost','Price','Value','Weight%','PL$','PL%']].concat(all().map(h=>[h.t,h.name,h.theme,h.shares,h.cost,price(h.t),val(h).toFixed(2),weight(h).toFixed(2),(val(h)-costB(h)).toFixed(2),((val(h)/costB(h)-1)*100).toFixed(2)]));return download('holdings.csv',rows.map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\n'),'text/csv');}
     if(act==='reset'){if(!confirm('Erase all your edits, journal and events and go back to the defaults?'))return;U={h:{},added:[],removed:[],journal:[],events:[],sel:'BRK.B'};saveU();closeModal();renderNav();render();return toast('Reset complete');}
@@ -1060,7 +1087,7 @@ document.addEventListener('keydown',e=>{
 // =====================================================================
 (function init(){
   try{const c=JSON.parse(localStorage.getItem(LS_PX)||'null');if(c&&c.px&&Date.now()-new Date(c.ts)<36e5*12){S.px=c.px;S.stale=true;S.lastFetch=new Date(c.ts);}}catch{}
-  renderNav();render();
+  renderTapes();renderNav();render();
   refresh(false);
   setInterval(()=>{if(!document.hidden)refresh(false);},REFRESH_SEC*1000);
 })();
