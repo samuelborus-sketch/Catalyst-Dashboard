@@ -145,6 +145,7 @@ tfoot td{font-weight:700;background:var(--alt);border-bottom:none}
 .subtabs a:hover{color:var(--tp)}
 .subtabs a.on{color:var(--tc);border-bottom-color:var(--tc)}
 .two{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px}
+.two>.grid{align-content:start}
 .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
 .stat{background:var(--alt);border:1px solid var(--border);border-radius:9px;padding:10px 12px}
@@ -358,7 +359,7 @@ const HOLDINGS = [
   ]},
  // ---------- PLANNED BUYS (shares set when you log the buy) ----------
  {t:'TER',name:'Teradyne',theme:'Semis & AI Test',style:'Quality Growth',color:'#fb7185',shares:0,cost:0,planned:true,
-  thesis:"The leading maker of the machines that test chips before they ship. AI accelerators and high-bandwidth memory need far more test time per chip, which has driven big earnings growth: Q3 2026 EPS of $2.29 was up about 170% from a year earlier, and it has beaten estimates 7 quarters in a row. Robotics (Universal Robots, MiR) is a smaller second business. Down about 55% from its June high, so you're buying a profitable AI supplier after a major reset.",
+  thesis:"The leading maker of the machines that test chips before they ship. AI accelerators and high-bandwidth memory need far more test time per chip, which has driven big earnings growth: Q3 2026 EPS of $2.29 was up about 170% from a year earlier, and it has beaten estimates 7 quarters in a row. Robotics (Universal Robots, MiR) is a smaller second business that turned profitable in Q3. Q3 revenue was $1.31B, up 70% year over year. Down about 55% from its June high, so you're buying a profitable AI supplier after a major reset.",
   wrong:"AI chip spending pauses and test orders fall for several quarters, or a big customer moves test work elsewhere.",
   catalysts:["Q4 results (~Feb 1, tentative)","AI accelerator and HBM test orders","Robotics segment turnaround"],
   risks:[
@@ -366,7 +367,7 @@ const HOLDINGS = [
    {title:"Customer concentration",cat:"Business",l:3,i:4,status:"open",mit:"A few large chipmakers and foundries drive most semi-test revenue. Track how much revenue the top customers make up.",trip:"Loss of a top customer's test business."},
    {title:"Volatility after a huge run",cat:"Valuation",l:4,i:3,status:"partial",mit:"Already down ~55% from its high, with P/E near 24. Buy in pieces rather than all at once.",trip:""},
    {title:"Export controls / China",cat:"Regulatory",l:3,i:3,status:"open",mit:"Monitor US chip-equipment export rules.",trip:""},
-   {title:"Robotics segment drag",cat:"Execution",l:3,i:2,status:"partial",mit:"Robotics is small next to semi test; a weak year there hurts margins, not the thesis.",trip:""}
+   {title:"Robotics segment drag",cat:"Execution",l:2,i:2,status:"mitigated",mit:"Robotics turned profitable in Q3 2026 on $96M of revenue, and it is small next to semiconductor test.",trip:""}
   ]},
  {t:'CGNX',name:'Cognex',theme:'Industrial Automation',style:'Quality Growth',color:'#e879f9',shares:0,cost:0,planned:true,
   thesis:"Machine-vision leader: cameras, sensors and AI software that inspect products and read barcodes on factory lines and in warehouses. Profitable, no debt worries, a small dividend, and it has beaten EPS estimates 8 quarters running (Q3 2026 EPS $0.53, up about 60% year over year). The stock fell about 18% around its Nov 4 report and is ~35% below its high.",
@@ -386,30 +387,35 @@ const HOLDINGS = [
    {title:"Walmart concentration",cat:"Business",l:4,i:5,status:"open",mit:"Walmart is by far the largest customer. Track how much of revenue it is each year.",trip:"Walmart delays or cuts deployments."},
    {title:"Consistent earnings misses",cat:"Execution",l:4,i:4,status:"open",mit:"Missed EPS estimates in each of the last 6 quarters in my data. Mine: start small; add only after a clean beat.",trip:"Another miss with a lower outlook on 11/23."},
    {title:"Accounting and controls history",cat:"Governance",l:3,i:4,status:"open",mit:"The company restated results in late 2024 over revenue-recognition issues. Check that controls are reported fixed.",trip:"New restatement or delayed filing."},
-   {title:"Rich valuation",cat:"Valuation",l:4,i:3,status:"partial",mit:"P/E is in the hundreds because profits are near zero; this is a revenue-growth bet.",trip:""}
+   {title:"Rich valuation",cat:"Valuation",l:4,i:3,status:"partial",mit:"P/E is in the hundreds because profits are near zero; this is a revenue-growth bet. Analysts still lean Buy (12/5/3) with an average target near $62.",trip:""},
+   {title:"Share sales",cat:"Financial",l:3,i:3,status:"open",mit:"Sold $425M of new stock in Dec 2025, plus a large secondary sale by existing holders. Watch for more.",trip:"Another offering below $40."}
   ]},
  {t:'FLNC',name:'Fluence Energy',theme:'Energy Storage',style:'Speculative',color:'#4ade80',shares:0,cost:0,planned:true,
-  thesis:"Large grid-scale battery storage company, created by Siemens and AES. Storage demand from grids and data centers is growing fast. The stock has collapsed about 84% from its January high and trades near its 52-week low, so this is a turnaround bet on margins and execution.",
+  thesis:"Large grid-scale battery storage company, created by Siemens and AES. Storage demand from grids and data centers is growing fast. The stock has collapsed about 84% from its January high and trades near its 52-week low, so this is a turnaround bet on margins and execution. Analysts are cautious (4 Buy, 15 Hold, 5 Sell) with an average target near $8.",
   wrong:"Losses keep widening, guidance keeps falling, or it has to raise money at these prices.",
   catalysts:["Q4 FY26 results (Mon 11/23, after close; est. EPS −0.59)","Tariff and battery-cell supply decisions","Data-center storage contracts"],
   risks:[
-   {title:"Collapsing results and guidance",cat:"Execution",l:5,i:4,status:"open",mit:"Revenue fell 16% last fiscal year and it missed EPS estimates in 4 of the last 6 quarters. Wait for the 11/23 report before adding more.",trip:"Another guidance cut on 11/23."},
+   {title:"Collapsing results and guidance",cat:"Execution",l:5,i:4,status:"open",mit:"Cut 2026 guidance twice: on Sep 16, revenue went to ~$2.4B from ~$3.0B and adjusted EBITDA to ~−$200M. The cause was its Houston plant making ~3 units/day vs 11 planned. Management says demand is still strong. Wait for the 11/23 report before adding more.",trip:"Another guidance cut on 11/23, or no fix for the Houston ramp."},
+   {title:"Leadership turnover",cat:"Management",l:4,i:3,status:"open",mit:"The CEO and CFO both left on Oct 30; an AES veteran was named COO in September. Watch who is named permanently and what the new team guides for 2027.",trip:"No permanent CEO by the next report."},
+   {title:"Securities class action",cat:"Legal",l:3,i:2,status:"open",mit:"Covers buyers from Nov 2025 to Sep 2026. Usually a cost and a distraction rather than a threat to the business.",trip:""},
    {title:"Tariffs and battery-cell supply",cat:"Macro",l:4,i:4,status:"open",mit:"Building US supply chains; tariff costs hit thin margins hard.",trip:""},
    {title:"Thin margins / competition",cat:"Competitive",l:4,i:3,status:"open",mit:"Competes with Tesla and low-cost Asian integrators; watch gross margin.",trip:""},
    {title:"Clean-energy policy changes",cat:"Regulatory",l:3,i:4,status:"open",mit:"Tax-credit changes can shift project economics.",trip:""}
   ]},
  {t:'EOSE',name:'Eos Energy',theme:'Energy Storage',style:'Speculative',color:'#22d3ee',shares:0,cost:0,planned:true,
-  thesis:"Makes zinc-based batteries for long-duration grid storage, made in the US and without lithium. Revenue jumped to $114M in 2025 from $16M. This is a lottery-ticket position: the stock is ~91% below its high and the company still loses money on every unit it sells.",
+  thesis:"Makes zinc-based batteries for long-duration grid storage, made in the US and without lithium. Revenue jumped to $114M in 2025 from $16M. Backlog is $765M and 2026 revenue guidance is $300–325M, but most orders come from a venture tied to its own lender. This is a lottery-ticket position: the stock is ~91% below its high and the company still loses money on every unit it sells.",
   wrong:"It can't reach positive gross margins before cash runs out, forcing heavy dilution.",
   catalysts:["Q4 results (~Feb 25, tentative)","Path to positive gross margin","New utility orders"],
   risks:[
-   {title:"Negative equity, cash burn & dilution",cat:"Financial",l:5,i:5,status:"open",mit:"Book value is negative (liabilities exceed assets) and 2025 net loss was ~$970M. Mine: smallest position in the portfolio; never average down.",trip:"Large dilutive raise or going-concern warning."},
+   {title:"Negative equity, cash burn & dilution",cat:"Financial",l:5,i:5,status:"open",mit:"Liabilities exceed assets. It used ~$106M of cash in Q3 and has ~$271M left, so it likely needs more money within a year. Cerberus securities convert into more shares the further the stock sits below $5.59; one estimate puts possible dilution above 60%. Mine: smallest position in the portfolio; never average down.",trip:"Large dilutive raise or going-concern warning."},
+   {title:"Backlog depends on related parties",cat:"Business",l:4,i:4,status:"open",mit:"Frontier Power, its joint venture with lender Cerberus, is ~43% of the $765M backlog, and related parties were 83% of Q3 revenue. Watch for more outside utility and developer orders.",trip:"Backlog falls again with no new outside customers."},
+   {title:"Paper profits hide losses",cat:"Accounting",l:5,i:2,status:"partial",mit:"Q3 showed $125M of net income, but it came from non-cash gains as the stock fell. Judge it on gross margin and adjusted EBITDA instead.",trip:""},
    {title:"Negative gross margin",cat:"Execution",l:5,i:4,status:"open",mit:"Gross profit was −$144M in 2025. Needs manufacturing scale to fix it; watch it every quarter.",trip:"Gross margin still negative a year from now."},
    {title:"Technology adoption",cat:"Business",l:3,i:4,status:"open",mit:"Zinc chemistry is unproven at scale versus lithium.",trip:""},
    {title:"Sub-$2 stock / delisting risk",cat:"Market",l:3,i:3,status:"open",mit:"If it trades under $1 for long, a reverse split or listing issue is possible.",trip:"Below $1 for 30 days."}
   ]},
  {t:'NRGV',name:'Energy Vault',theme:'Energy Storage',style:'Speculative',color:'#94a3b8',shares:0,cost:0,planned:true,
-  thesis:"Small energy-storage developer that has moved from gravity storage to batteries and to owning and operating its own projects, including for AI and data centers. Revenue rose to $204M in 2025 from $46M. Still losing money, and the stock is about 51% below its June high.",
+  thesis:"Small energy-storage developer that has moved from gravity storage to batteries and to owning and operating its own projects, including for AI and data centers. Revenue rose to $204M in 2025 from $46M. In August it signed a 1.25 GW AI data-center power deal in Texas, and it reports a $1.5–2B backlog (sources differ). Still losing money, and the stock is about 51% below its June high.",
   wrong:"Projects get delayed, cash runs low, and it has to sell stock at low prices.",
   catalysts:["Q3 results (Mon 11/10, after close) — right after you buy","Own-and-operate project financing","Data-center power contracts"],
   risks:[
@@ -419,13 +425,13 @@ const HOLDINGS = [
    {title:"Very small company",cat:"Operational",l:3,i:3,status:"partial",mit:"About 140 employees, so execution depends on a small team.",trip:""}
   ]},
  {t:'GLPI',name:'Gaming and Leisure Properties',theme:'REIT / Income',style:'Income',color:'#fca5a5',shares:0,cost:0,planned:true,
-  thesis:"Casino-property landlord (a REIT) with long triple-net leases. It pays about $3.28 a year in dividends, roughly an 8.4% yield at $38.89, and cash earnings grew ~7% over the past year with 6 beats in the last 7 quarters. Adds income and real estate, which the portfolio has almost none of.",
+  thesis:"Casino-property landlord (a REIT) with long triple-net leases. It pays about $3.28 a year in dividends, roughly an 8.4% yield at $38.89, and cash earnings grew ~7% over the past year with 6 beats in the last 7 quarters. Q3 2026 was a record quarter, and it raised full-year guidance. Adds income and real estate, which the portfolio has almost none of.",
   wrong:"A big tenant runs into trouble and cuts rent, or the dividend gets cut.",
   catalysts:["Q4 results (~Feb 18, tentative)","Quarterly dividend ($0.82)","New casino property deals"],
   risks:[
    {title:"Tenant concentration",cat:"Business",l:3,i:4,status:"open",mit:"A handful of operators (PENN, Bally's, Boyd, Caesars) pay most of the rent; long master leases protect it. Watch tenant health each quarter.",trip:"A major tenant misses rent or restructures."},
    {title:"Interest-rate sensitivity",cat:"Macro",l:4,i:3,status:"partial",mit:"Already down ~22% from its high; the 8% yield cushions further drops.",trip:""},
-   {title:"Dividend coverage",cat:"Financial",l:2,i:4,status:"partial",mit:"Cash earnings (~$4.10/yr) comfortably cover the $3.28 dividend.",trip:"Dividend cut."},
+   {title:"Dividend coverage",cat:"Financial",l:2,i:4,status:"mitigated",mit:"Raised 2026 AFFO guidance to $4.11–4.12 a share against a $3.28 dividend, so it pays out about 80% of cash earnings. The dividend rose from $0.78 to $0.82 this year.",trip:"Dividend cut."},
    {title:"Taxes on REIT dividends",cat:"Tax",l:5,i:1,status:"partial",mit:"Taxed as ordinary income in a taxable account; better held in an IRA if you can.",trip:""}
   ]},
 ];
@@ -509,6 +515,54 @@ Object.assign(EARN,{
  'NRGV':[['Q1 25','2025-05-12','pm',-.13,-.14,1],['Q2 25','2025-08-07','pm',-.08,-.22,1],['Q3 25','2025-11-10','pm',-.07,-.10,1],['Q4 25','2026-03-17','pm',-.06,.02,1],['Q1 26','2026-05-05','pm',-.11,-.12,1],['Q2 26','2026-08-11','pm',-.14,-.15,1],['Q3 26','2026-11-10','pm',-.16,null,1],['Q4 26','2027-03-16','pm',.10,null,0]],
  'GLPI':[['Q1 25','2025-04-24','pm',.96,.96,1],['Q2 25','2025-07-24','pm',.85,.96,1],['Q3 25','2025-10-30','pm',.83,.97,1],['Q4 25','2026-02-19','pm',.84,.99,1],['Q1 26','2026-04-23','pm',.98,1.02,1],['Q2 26','2026-07-30','pm',1.00,1.03,1],['Q3 26','2026-10-29','pm',1.00,1.04,1],['Q4 26','2027-02-18','pm',1.02,null,0]],
 });
+// Analyst consensus snapshot (Robinhood, Nov 7 2026): [buy, hold, sell, mean target, low, high]
+const ANALYST_AT='Nov 7, 2026';
+const ANALYST={
+ 'TER':[15,5,0,430.77,340,550],'CGNX':[16,7,0,72.63,55,90],'SYM':[12,5,3,61.93,38,85],'FLNC':[4,15,5,8.19,3,15],'EOSE':[4,7,0,5.47,2.25,9],
+ 'GLPI':[15,8,1,48.93,40,63],'BRK.B':[2,3,2,549.08,490.25,628],'OKLO':[13,9,1,56.74,14,100],'CBRS':[13,1,0,276.08,175,325],'RKLB':[21,3,0,103.10,67,150],
+ 'RDW':[6,4,1,12.72,8,15],'ACIW':[5,2,0,69.75,63,74],'GPOR':[9,8,1,218.07,180,245],'ATEN':[4,2,0,34.50,24,45],'ADUS':[11,2,1,139.92,101,160],'SPXC':[14,2,0,238.43,215,310],
+};
+// Recent news, newest first. Each item links to its source.
+const NEWS={
+ 'TER':[
+  {d:'2026-10-27',t:'Q3 revenue $1.31B, up 70% from a year ago: Semiconductor Test $1.07B, Product Test $138M, Robotics $96M. Robotics turned profitable. EPS $2.29 vs $2.05 expected.',src:'Teradyne Q3 release (SEC)',url:'https://www.sec.gov/Archives/edgar/data/0000097210/000119312526434981/ter-ex99_1.htm'},
+  {d:'2026-07-28',t:'Guided Q3 to $1.2–1.3B revenue and $1.85–2.15 EPS on AI-related demand; it then beat the top of that range.',src:'MarketBeat',url:'https://www.marketbeat.com/instant-alerts/teradyne-nasdaqter-issues-q3-2026-earnings-guidance-2026-07-28/'},
+ ],
+ 'CGNX':[
+  {d:'2026-11-05',t:'Stock fell about 18% from the Nov 3 close to Nov 5 around its Q3 report, even though EPS beat ($0.53 vs $0.52). Q4 EPS estimate is $0.39.',src:'Robinhood price & earnings data',url:''},
+  {d:'2026-10-07',t:'Shares fell 7.3% in one session with no clear cause.',src:'MarketBeat',url:'https://www.marketbeat.com/instant-alerts/price-cognex-nasdaq-cgnx-stock-falls-73-time-to-sell-2026-10-07/'},
+  {d:'2026-08-05',t:'Beat Q2 ($0.45 vs $0.42) and guided full-year 2026 EPS to $1.64–1.68.',src:'MarketBeat',url:'https://www.marketbeat.com/instant-alerts/cognex-nasdaqcgnx-issues-fy-2026-earnings-guidance-2026-08-05/'},
+ ],
+ 'SYM':[
+  {d:'2026-11-05',t:'Hit a new 52-week low ($33.17). Down about 58% from its Nov 2025 high. Next report Mon Nov 23 after the close.',src:'Robinhood price data',url:''},
+  {d:'2026-02-15',t:'Analysts split: Barclays rates it Sell, D.A. Davidson Hold. Overall 12 Buy / 5 Hold / 3 Sell.',src:'Stockevents',url:'https://stockevents.app/tw/stock/SYM'},
+  {d:'2025-12-06',t:'Completed a $425M stock offering, plus a 10M-share secondary sale at $55.',src:'Stockevents',url:'https://stockevents.app/tw/stock/SYM'},
+ ],
+ 'FLNC':[
+  {d:'2026-11-05',t:'Securities class action pending for buyers from Nov 24, 2025 to Sep 16, 2026; lead-plaintiff deadline Nov 27.',src:'PR Newswire (Kessler Topaz)',url:'https://www.prnewswire.com/news-releases/fluence-energy-inc-flnc-investors-november-27-2026-filing-deadline-in-securities-fraud-class-action---contact-kessler-topaz-meltzer--check-llp-302929402.html'},
+  {d:'2026-11-04',t:'Goldman cut its target to $7 (Neutral) and Truist to $8. Analysts: 4 Buy, 15 Hold, 5 Sell.',src:'MarketBeat',url:'https://www.marketbeat.com/instant-alerts/price-fluence-energy-nasdaq-flnc-shares-gap-up-should-you-buy-2026-11-04/'},
+  {d:'2026-10-30',t:'CEO Julian Nebreda and CFO Ahmad Pasha left the company; shares fell about 9%.',src:'PR Newswire',url:'https://www.prnewswire.com/news-releases/fluence-energy-flnc-shares-tumble-again--this-time-on-top-executives-departures-securities-class-action-pending-302931634.html'},
+  {d:'2026-09-16',t:'Second guidance cut: 2026 revenue ~$2.4B (from ~$3.0B) and adjusted EBITDA ~−$200M (from ~−$10M). Its Houston plant made ~3 units/day vs 11 planned. Stock fell 22% after hours.',src:'Energy-Storage.News',url:'https://www.energy-storage.news/fluence-cuts-2026-revenue-ebitda-guidance-as-us-production-delays-bite/'},
+ ],
+ 'EOSE':[
+  {d:'2026-11-05',t:'Q3: record revenue $82.7M (+171%). Reported net income of $125M came mostly from non-cash gains on warrants and debt as the stock fell; gross loss was $44.2M and adjusted EBITDA −$63.8M. Reaffirmed 2026 revenue of $300–325M.',src:'Eos Q3 release',url:'https://investors.eose.com/news-releases/news-release-details/eos-energy-enterprises-reports-third-quarter-2026-revenue-827'},
+  {d:'2026-11-05',t:'Backlog $765M (3.2 GWh), down 5% from last quarter. Frontier Power, its joint venture with Cerberus, is ~43% of backlog; related parties were 83% of Q3 revenue. Pipeline $24.9B.',src:'Q3 call transcript (Motley Fool)',url:'https://www.fool.com/earnings/call-transcripts/2026/11/05/eos-energy-eose-q3-2026-earnings-call-transcript/'},
+  {d:'2026-11-05',t:'Ended Q3 with ~$271M unrestricted cash after using ~$106M in the quarter.',src:'MarketBeat',url:'https://www.marketbeat.com/earnings/reports/2026-11-5-eos-energy-enterprises-inc-stock/'},
+  {d:'2026-06-30',t:'Raised money with stock and convertible notes. The prospectus warns of immediate, substantial dilution, and sales below $5.59 a share can let Cerberus convert into more shares.',src:'Prospectus (424B5)',url:'https://investors.eose.com/static-files/a9642d7d-31e0-4d66-a022-4cb2f562664e'},
+  {d:'2026-02-26',t:'Stock fell 61% in February after missing revenue guidance it had repeatedly reaffirmed; 2025 net loss was $970M.',src:'Motley Fool',url:'https://www.fool.com/investing/2026/07/23/why-eos-energy-stock-52-week-low-49-first-half/'},
+ ],
+ 'NRGV':[
+  {d:'2026-10-29',t:'Announced an equipment financing deal with Eagle Point; New South Wales approved its 125 MW / 1 GWh Stoney Creek battery project.',src:'Stock Titan',url:'https://www.stocktitan.net/news/NRGV/'},
+  {d:'2026-08-12',t:'Signed a 1.25 GW AI data-center power deal in Texas targeting $500–600M of revenue in 2026–27; raised 2026 revenue guidance to the top half of its range. Citi later cut its target to $4.75 from $6 (still Buy).',src:'StocksToTrade',url:'https://stockstotrade.com/news/energy-vault-holdings-inc-nrgv-news-2026_08_12/'},
+  {d:'2026-05-18',t:'SoftBank fund SB Investment Advisers sold 3M shares after a ~500% run in the stock.',src:'Motley Fool',url:'https://www.fool.com/coverage/filings/2026/05/18/energy-vault-stock-has-surged-500-one-major-holder-just-sold-3-million-shares/'},
+ ],
+ 'GLPI':[
+  {d:'2026-10-29',t:'Record Q3: revenue $435.4M (vs $397.6M), AFFO $1.04 a share (vs $0.97). Raised 2026 AFFO guidance to $4.11–4.12 a share; 2026 development spending ~$800M.',src:'GLPI Q3 release (SEC)',url:'https://www.sec.gov/Archives/edgar/data/0001575965/000157596526000075/glpi-2026930ex991final.htm'},
+  {d:'2026-09-25',t:'Paid a $0.82 quarterly dividend, up from $0.78 a year earlier ($3.28 a year).',src:'Barchart',url:'https://www.barchart.com/story/news/4375367/gaming-and-leisure-properties-inc-declares-third-quarter-2026-cash-dividend-of-0-82-per-share'},
+ ],
+ 'OKLO':[{d:'2026-11-06',t:'Q3 loss of $0.22 a share beat the −$0.26 estimate, its first beat in over a year; stock rose about 23% on the day.',src:'Robinhood earnings & price data',url:''}],
+ 'ATEN':[{d:'2026-11-05',t:'Q3 EPS $0.31 beat the $0.26 estimate; stock rose about 9% the next day.',src:'Robinhood earnings & price data',url:''}],
+};
 const FIXED_EVENTS = [{d:'2026-11-19',t:'CGNX',label:'Ex-dividend · $0.09/sh (pays 12/3)',kind:'div'},{d:'2026-11-13',t:'FSS',label:'Ex-dividend · $0.15/sh (pays 12/1)',kind:'div'}];
 
 // Hourly closes for the 1W chart (UTC hour stamps), snapshot through Nov 6 close
@@ -839,14 +893,14 @@ function plannedCard(){
   const P=planned();if(!P.length)return'';const B=+(U.planBudget||0);const each=B>0?B/P.length:0;
   const themes={};P.forEach(h=>themes[h.theme]=(themes[h.theme]||0)+1);const topTheme=Object.entries(themes).sort((a,b)=>b[1]-a[1])[0];
   const rows=P.map(h=>{const p=price(h.t),dp=dayPct(h.t),Pr=PROFILE[h.t]||{},e=nextEarn(h.t),rs=riskScore(h);const amt=(U.planAmt||{})[h.t]??each;
-   return`<tr><td><span class="tk" style="cursor:pointer" data-go="#/stock/${encodeURIComponent(h.t)}"><span class="sw" style="background:${h.color}"></span>${esc(h.t)}</span></td><td class="l" style="font-family:var(--body);color:var(--ts)">${esc(h.theme)}</td><td>$${px(p)}</td><td class="${cls(dp)}">${pct(dp)}</td><td class="${cls(Pr.hi?p/Pr.hi-1:0)}">${Pr.hi?pct((p/Pr.hi-1)*100,0):'—'}</td><td>${Pr.pe==null?'—':Pr.pe<0?'n/m':Pr.pe>200?'200+':Pr.pe.toFixed(1)}</td><td>${Pr.dy?Pr.dy.toFixed(1)+'%':'—'}</td><td>${sparkSVG(h.t)}</td><td>${e?`${fdate(e[1])} <span class="dim">(${daysTo(e[1])}d)</span>`:'—'}</td><td><span class="score" style="background:${hexA(scoreColor(rs),.18)};color:${scoreColor(rs)}">${rs.toFixed(0)}</span></td>
+   return`<tr><td><span class="tk" style="cursor:pointer" data-go="#/stock/${encodeURIComponent(h.t)}"><span class="sw" style="background:${h.color}"></span>${esc(h.t)}</span></td><td class="l" style="font-family:var(--body);color:var(--ts)">${esc(h.theme)}</td><td>$${px(p)}</td><td class="${cls(dp)}">${pct(dp)}</td><td class="${cls(Pr.hi?p/Pr.hi-1:0)}">${Pr.hi?pct((p/Pr.hi-1)*100,0):'—'}</td><td>${Pr.pe==null?'—':Pr.pe<0?'n/m':Pr.pe>200?'200+':Pr.pe.toFixed(1)}</td><td>${Pr.dy?Pr.dy.toFixed(1)+'%':'—'}</td><td>${sparkSVG(h.t)}</td><td>${ANALYST[h.t]?`${ANALYST[h.t][0]}/${ANALYST[h.t][1]}/${ANALYST[h.t][2]} <span class="${cls(ANALYST[h.t][3]-p)}">${pct((ANALYST[h.t][3]/p-1)*100,0)}</span>`:'<span class="dim">n/a</span>'}</td><td>${e?`${fdate(e[1])} <span class="dim">(${daysTo(e[1])}d)</span>`:'—'}</td><td><span class="score" style="background:${hexA(scoreColor(rs),.18)};color:${scoreColor(rs)}">${rs.toFixed(0)}</span></td>
    <td><input class="plan-amt" aria-label="Amount for ${esc(h.t)}" data-t="${esc(h.t)}" type="number" min="0" step="1" value="${amt?(+amt).toFixed(2):''}" placeholder="$" style="width:80px;background:var(--alt);border:1px solid var(--border2);color:var(--tp);border-radius:6px;padding:4px 6px;font-family:var(--mono);font-size:12px;text-align:right"></td><td>${amt&&p?shares(+(amt/p).toFixed(6)):'—'}</td><td><button class="btn sm pri" data-act="log-buy" data-t="${esc(h.t)}">Log buy</button></td></tr>`;}).join('');
   const total=P.reduce((a,h)=>a+(+((U.planAmt||{})[h.t]??each)||0),0);
   return`<div class="sec-title" style="margin-top:26px">Planned buys · Monday</div>
   <div class="card" style="margin-bottom:12px;display:flex;gap:16px;align-items:center;flex-wrap:wrap"><label class="mono dim" for="plan-budget" style="font-size:11px">TOTAL BUDGET $</label><input id="plan-budget" type="number" min="0" step="1" value="${B||''}" placeholder="e.g. 150" style="width:110px;background:var(--alt);border:1px solid var(--border2);color:var(--tp);border-radius:7px;padding:6px 8px;font-family:var(--mono)"><span class="dim" style="font-size:12px">Splits evenly across ${P.length} names${each?` ($${each.toFixed(2)} each)`:''}. You can change any row's amount. Planned total: <b class="mono" style="color:var(--tp)">${$(total)}</b></span>${U.planAmt&&Object.keys(U.planAmt).length?'<button class="btn sm ghost" data-act="plan-reset">Reset to even split</button>':''}</div>
   ${topTheme&&topTheme[1]>=3?`<div class="risk" style="--c:#eab308;padding:10px 14px;margin-bottom:12px"><div class="txt"><b style="color:var(--tp)">Heads up:</b> ${topTheme[1]} of your ${P.length} planned buys are <b style="color:var(--tp)">${esc(topTheme[0])}</b> names (${P.filter(h=>h.theme===topTheme[0]).map(h=>h.t).join(', ')}). They're all unprofitable and well below their highs, so they'll tend to move together. Consider sizing them smaller.</div></div>`:''}
-  <div class="tbl-wrap"><table><thead><tr><th class="l">Ticker</th><th class="l">Theme</th><th>Price</th><th>Today</th><th>Off high</th><th>P/E</th><th>Yield</th><th>6 mo</th><th>Next EPS</th><th>Risk</th><th>Amount</th><th>Est. shares</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
-  <div class="dim" style="font-size:11px;margin-top:8px">Estimated shares use the current price. Prices will move at Monday's open. Log the actual fill with "Log buy".</div>`;
+  <div class="tbl-wrap"><table><thead><tr><th class="l">Ticker</th><th class="l">Theme</th><th>Price</th><th>Today</th><th>Off high</th><th>P/E</th><th>Yield</th><th>6 mo</th><th>Analysts</th><th>Next EPS</th><th>Risk</th><th>Amount</th><th>Est. shares</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+  <div class="dim" style="font-size:11px;margin-top:8px">Analysts column: Buy/Hold/Sell counts and the average target vs today's price. Estimated shares use the current price. Prices will move at Monday's open. Log the actual fill with "Log buy".</div>`;
 }
 function closedCard(){
   if(!CLOSED.length)return'';const fills=U.closedPx||{};let tc=0,tp=0;
@@ -979,7 +1033,7 @@ function priceChartCard(h){
   const R=S.chartRange;const w=R==='3M'?13:R==='6M'?26:null;const pts=R==='1W'?intraPoints(h.t):histPoints(h.t,w);
   if(R==='1W')fetchIntra(h.t);
   if(!pts)return`<div class="card"><div class="sec-title">Price</div><div class="dim">No price history for this holding.</div></div>`;
-  return`<div class="card"><div class="sec-title" style="justify-content:space-between">Price · ${R==='1W'?'hourly, past week':'weekly'} <span class="chart-tabs">${['1W','3M','6M','1Y'].map(r=>`<button class="${R===r?'on':''}" data-act="range" data-v="${r}">${r}</button>`).join('')}</span></div>${lineChart(pts,{labelAll:R==='1W',refs:[{y:h.cost,c:'#eab308',l:'my avg cost $'+px(h.cost)}].concat(h.fair?[{y:+h.fair,c:'#7dd3fc',l:'fair value $'+px(+h.fair)}]:[])})}</div>`;
+  return`<div class="card"><div class="sec-title" style="justify-content:space-between">Price · ${R==='1W'?'hourly, past week':'weekly'} <span class="chart-tabs">${['1W','3M','6M','1Y'].map(r=>`<button class="${R===r?'on':''}" data-act="range" data-v="${r}">${r}</button>`).join('')}</span></div>${lineChart(pts,{labelAll:R==='1W',refs:(h.cost>0?[{y:h.cost,c:'#eab308',l:'my avg cost $'+px(h.cost)}]:[]).concat(h.fair?[{y:+h.fair,c:'#7dd3fc',l:'fair value $'+px(+h.fair)}]:[])})}</div>`;
 }
 function epsChart(t){
   const E=(EARN[t]||[]);if(!E.length)return'<div class="dim">No earnings data.</div>';
@@ -995,6 +1049,24 @@ function epsChart(t){
   s+='</svg>';
   const rep=E.filter(e=>e[4]!=null&&e[3]!=null);const beats=rep.filter(e=>e[4]>=e[3]).length;
   return s+`<div style="display:flex;gap:14px;font-family:var(--mono);font-size:10px;color:var(--tm);margin-top:6px;flex-wrap:wrap"><span><span class="sw" style="background:rgba(148,163,184,.4)"></span> estimate</span><span><span class="sw" style="background:#22c55e;border-radius:50%"></span> beat</span><span><span class="sw" style="background:#ef4444;border-radius:50%"></span> miss</span><span>◌ upcoming</span><span style="margin-left:auto;color:var(--ts)">${beats}/${rep.length} beats</span></div>`;
+}
+function analystCard(h){
+  const a=ANALYST[h.t];
+  if(!a)return`<div class="card"><div class="sec-title">Wall Street view</div><div class="dim" style="font-size:12.5px">Not enough analyst coverage to show a consensus.</div></div>`;
+  const[b,hd,sl,mean,lo,hi]=a;const n=b+hd+sl;const p=price(h.t);const up=p?(mean/p-1)*100:null;
+  const verdict=b/n>=.6?'Mostly Buy':sl/n>=.3?'Leaning Sell':hd/n>=.5?'Mostly Hold':'Mixed';
+  const lo_=Math.min(lo,p||lo),hi_=Math.max(hi,p||hi);const X=v=>((v-lo_)/((hi_-lo_)||1)*100).toFixed(1)+'%';
+  return`<div class="card"><div class="sec-title">Wall Street view</div>
+   <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><b style="font-size:14px">${verdict}</b><span class="mono dim" style="font-size:11px">${n} analysts</span></div>
+   <div style="display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--alt2)"><div style="width:${b/n*100}%;background:#22c55e"></div><div style="width:${hd/n*100}%;background:#94a3b8"></div><div style="width:${sl/n*100}%;background:#ef4444"></div></div>
+   <div class="mono" style="display:flex;gap:14px;font-size:10.5px;margin-top:6px"><span class="up">${b} Buy</span><span class="dim">${hd} Hold</span><span class="dn">${sl} Sell</span></div>
+   <div class="stats" style="margin-top:12px"><div class="stat"><div class="l">Avg target</div><div class="v">$${px(mean)}</div></div><div class="stat"><div class="l">vs price</div><div class="v ${cls(up)}">${pct(up,0)}</div></div><div class="stat"><div class="l">Range</div><div class="v" style="font-size:12px">$${px(lo)}–$${px(hi)}</div></div></div>
+   ${p?`<div class="tgt" style="margin-top:6px"><div class="ln" style="background:var(--alt2)"></div><div class="mk" style="left:${X(lo)};color:#94a3b8">low<i></i></div><div class="mk" style="left:${X(mean)};color:#7dd3fc">avg<i></i></div><div class="mk" style="left:${X(hi)};color:#94a3b8">high<i></i></div><div class="mk cur" style="left:${X(p)}"><i></i><div style="margin-top:4px">now</div></div></div><div style="height:18px"></div>`:''}
+   <div class="dim" style="font-size:11px;margin-top:6px">As of ${ANALYST_AT}. Targets often lag big price moves; a huge gap to today's price usually means analysts haven't caught up.</div></div>`;
+}
+function newsCard(h){
+  const N=NEWS[h.t];if(!N||!N.length)return'';
+  return`<div class="card"><div class="sec-title">Recent news</div><div class="grid" style="gap:12px">${N.map(n=>`<div style="display:grid;grid-template-columns:64px 1fr;gap:10px"><div class="mono dim" style="font-size:10.5px;padding-top:2px">${fdate(n.d,{month:'short',day:'numeric'})}<br>${n.d.slice(0,4)}</div><div><div style="font-size:12.5px;line-height:1.55;color:var(--tp)">${esc(n.t)}</div><div class="mono" style="font-size:10px;margin-top:3px">${n.url?`<a href="${esc(n.url)}" target="_blank" rel="noopener" style="color:var(--tm);text-decoration:underline">${esc(n.src)}</a>`:`<span class="dim">${esc(n.src)}</span>`}</div></div></div>`).join('')}</div><div class="dim" style="font-size:11px;margin-top:10px">Collected Nov 7, 2026. Your morning brief covers new headlines each weekday.</div></div>`;
 }
 function stockOverview(h){
   const P=PROFILE[h.t]||{};const pl=val(h)-costB(h);const ne=nextEarn(h.t),le=lastEarn(h.t);const p5=pos52(h.t);
@@ -1013,12 +1085,14 @@ function stockOverview(h){
    <div class="card"><div class="sec-title">Earnings history · EPS</div>${epsChart(h.t)}</div>
   </div>
   <div class="grid">
-   <div class="card"><div class="sec-title">My position</div><div class="stats">
+   ${isPlanned(h)?`<div class="card" style="border-style:dashed"><div class="sec-title">Planned buy</div><div class="prose" style="margin-bottom:10px">Not bought yet. Log the buy on Monday and it joins your wheel, totals and allocation.</div><button class="btn sm pri" data-act="log-buy" data-t="${esc(h.t)}">+ Log buy</button></div>`:`<div class="card"><div class="sec-title">My position</div><div class="stats">
     <div class="stat"><div class="l">Shares</div><div class="v">${shares(h.shares)}</div></div>
     <div class="stat"><div class="l">Avg cost</div><div class="v">${$(h.cost)}</div></div>
     <div class="stat"><div class="l">Value</div><div class="v">${$(val(h))}</div></div>
     <div class="stat"><div class="l">P/L</div><div class="v ${cls(pl)}">${sd$(pl)} <small>${pct(pl/costB(h)*100,1)}</small></div></div>
-   </div><div style="margin-top:10px"><button class="btn sm" data-go="#/stock/${encodeURIComponent(h.t)}/position">Manage position →</button></div></div>
+   </div><div style="margin-top:10px"><button class="btn sm" data-go="#/stock/${encodeURIComponent(h.t)}/position">Manage position →</button></div></div>`}
+   ${analystCard(h)}
+   ${newsCard(h)}
    <div class="card"><div class="sec-title">Thesis in one breath</div><div class="prose">${esc(h.thesis||'No thesis yet.')}</div><div style="margin-top:10px"><button class="btn sm" data-go="#/stock/${encodeURIComponent(h.t)}/thesis">Thesis & catalysts →</button></div></div>
    <div class="card"><div class="sec-title">Top risks</div><div class="mini-list">${topR.map(r=>`<div class="r" data-go="#/stock/${encodeURIComponent(h.t)}/risk"><span>${esc(r.title)} <span class="st ${r.status}">${r.status}</span></span><span class="score" style="background:${hexA(scoreColor(r.l*r.i),.18)};color:${scoreColor(r.l*r.i)}">${r.l*r.i}</span></div>`).join('')||'<div class="dim">None logged</div>'}</div></div>
    <div class="card"><div class="sec-title">Next / last report</div><div class="kv"><dt>Next</dt><dd>${ne?`${ne[0]} · ${fdate(ne[1],{weekday:'short',month:'short',day:'numeric'})} ${ne[2]==='am'?'pre-market':'after close'} <span class="dim">(${daysTo(ne[1])}d${ne[5]?'':', tentative'})</span>${ne[3]!=null?` · est ${ne[3]}`:''}`:'—'}</dd><dt>Last</dt><dd>${le?`${le[0]} · ${fdate(le[1])} · ${le[4]} vs ${le[3]??'—'} est ${le[3]!=null?(le[4]>=le[3]?'<span class="up">beat</span>':'<span class="dn">miss</span>'):''}`:'—'}</dd><dt>52w position</dt><dd>${p5==null?'—':Math.round(p5*100)+'% of range'}</dd></div></div>
@@ -1057,6 +1131,7 @@ function stockValuation(h){
    <div class="card"><div class="sec-title">52-week range</div><div class="tgt"><div class="ln" style="background:var(--alt2)"></div><div class="mk" style="left:0;transform:none;color:#94a3b8">low<br>$${px(P.lo)}<i></i></div><div class="mk" style="left:100%;transform:translateX(-100%);color:#94a3b8;text-align:right">high<br>$${px(P.hi)}<i style="margin-left:auto;margin-right:0"></i></div><div class="mk cur" style="left:${(pos52(h.t)*100).toFixed(1)}%"><i></i><div style="margin-top:4px">$${px(p)}</div></div></div><div style="height:22px"></div></div>
    <div class="card"><div class="sec-title">Earnings vs estimates</div>${epsChart(h.t)}</div>
   </div><div class="grid">
+   ${analystCard(h)}
    <div class="card"><div class="sec-title">Multiples</div><div class="stats">
     <div class="stat"><div class="l">P/E (ttm)</div><div class="v">${P.pe==null?'—':P.pe<0?'n/m (loss)':P.pe.toFixed(1)+'x'}</div></div>
     <div class="stat"><div class="l">Earnings yield</div><div class="v">${ey?ey.toFixed(1)+'%':'—'}</div></div>
