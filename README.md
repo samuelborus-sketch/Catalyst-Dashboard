@@ -118,3 +118,9 @@ A second dashboard for the long-term holdings (BRK.B, OKLO, CBRS, RKLB, RDW, ACI
 - **Editable:** risks and mitigants, thesis, catalysts, conviction, price levels, a buy/sell log that recalculates average cost, and adding or removing holdings. Edits are saved in localStorage. Back them up with ⚙ → Export JSON.
 - **Data:** live prices come from Yahoo Finance (with CORS-proxy fallbacks, refreshed every 5 min). Until they load, the page uses a Nov 5, 2026 snapshot. Fundamentals, earnings dates and 1Y weekly history are embedded from that same snapshot.
 - To change the base holdings, edit the `HOLDINGS` array at the top of the script.
+
+---
+
+## Zach's Portfolio (`zach.html`)
+
+A blank copy of the long-term dashboard for Zach Cheney: same wheel, tapes, risk register, allocation, calendar and journal, with no holdings loaded. It opens to a welcome screen with **+ Add your first holding**. It keeps its own browser storage, so it never mixes with `portfolio.html` on the same site. To make holdings load on every device, list them in the `HOLDINGS` array at the top of the script (there's an example in the comment).
