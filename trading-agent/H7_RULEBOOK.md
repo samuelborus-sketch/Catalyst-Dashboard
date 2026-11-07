@@ -86,7 +86,7 @@ opening prices.
 ## 5. Brakes
 
 - **Weekly brake:** once the **whole account** is 10% down from the week's start (Monday open), no more day trades that week. The QLD holding stays.
-- **H7 loss limit** (Zach's proposal; Sam to confirm): if the account falls below 50% of its value at H7's start (\$105.35 → **\$52.68**):
+- **H7 loss limit** (Zach's proposal; Sam to confirm): if the account falls 50% below its high since H7 started (`h7.equity_hwm`, updated after each close; now \$105.35 → **\$52.68**):
   - Set `h7.halted = true`, sell everything, tell Sam.
   - Only Sam clears it.
 

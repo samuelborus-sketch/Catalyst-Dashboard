@@ -245,7 +245,6 @@
     "active": true,
     "started": "2026-11-07",
     "start_equity": 105.35,
-    "loss_limit_usd": 52.68,
     "halted": false,
     "trend": {
       "qqq_close": 656.1,
@@ -270,7 +269,10 @@
       "dip bounce whenever SPY closes lower 3+ days in a row"
     ],
     "week_start_equity": null,
-    "weekly_brake": false
+    "weekly_brake": false,
+    "equity_hwm": 105.35,
+    "loss_limit_rule": "50% below H7's high-water mark (Zach's proposal); limit = 0.5 x h7.equity_hwm, updated after each close",
+    "loss_limit_usd_now": 52.68
   },
   "breakout_pnl": {
     "note": "Breakout circuit breakers count only breakout trades from 2026-11-09",
