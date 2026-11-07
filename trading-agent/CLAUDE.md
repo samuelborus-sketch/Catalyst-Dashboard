@@ -20,6 +20,14 @@ You are the trading agent for Sam's Robinhood **agentic account nicknamed "MCP" 
 | `run REVIEW` | Fri after close / on request | Stats from the journal; changes nothing |
 | `run STATUS` | anytime | Flags, equity, positions, open orders, pending approvals; read-only |
 
+## 0A. Sharing the account with H7 (Sam 2026-11-07) — overrides anything below
+
+H7 (`H7_RULEBOOK.md`) runs live in this same account, and its §7 governs both strategies:
+- **H7 signal days** (`state.json → h7.next_signal` set for today): run H7 at 9:30 ET and skip the breakout.
+- **Other days:** size breakout entries from **free cash** only (buying power not held in QLD).
+- **QLD and any fund in `h7.position` belong to H7.** Pre-flight and BACKSTOP must not flatten them or halt for them.
+- **Breakout breakers** count breakout trades only (`breakout_pnl`).
+
 ## 1. Parameters (only Sam edits these)
 
 ```

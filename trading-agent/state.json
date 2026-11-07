@@ -240,5 +240,40 @@
   "threshold_overrides_note": "Set by Sam (explicit chat instruction). Use this threshold instead of the caution 8 on these dates only.",
   "manual_trades_note": "2026-10-22: Sam's manual TQQQ trades +0.44 and -1.83 (not system trades; system counters unchanged).",
   "score_scale_note": "From 2026-10-27 the score is out of 14 (volume block S8\u2013S11 added). Standard threshold 10/14, caution 11/14. threshold_overrides before this date are on the old /10 scale.",
-  "mode_note": "2026-11-06: Sam unpaused the agent and turned trade approvals OFF in the app -> AUTO mode (orders execute without Sam's tap). Equity at unpause $105.35."
+  "mode_note": "2026-11-06: Sam unpaused the agent and turned trade approvals OFF in the app -> AUTO mode (orders execute without Sam's tap). Equity at unpause $105.35.",
+  "h7": {
+    "active": true,
+    "started": "2026-11-07",
+    "start_equity": 105.35,
+    "loss_limit_usd": 52.68,
+    "halted": false,
+    "trend": {
+      "qqq_close": 656.1,
+      "sma200": 680.89,
+      "asof": "2026-11-06",
+      "state": "cash"
+    },
+    "size": {
+      "qqq_vol20_pct": 32.7,
+      "qld_share": 0.61,
+      "asof": "2026-11-06",
+      "note": "20%/vol capped at 100%; applies only while above the 200-day average"
+    },
+    "position": null,
+    "pending_change": null,
+    "next_signal": null,
+    "upcoming": [
+      "2026-11-20 options-expiry fade (SQQQ, gap check)",
+      "2026-11-25 pre-holiday (UPRO)",
+      "2026-11-27 early close 13:00 ET",
+      "2026-12-01..03 month start (UPRO if SPY vol20 15-40%)",
+      "dip bounce whenever SPY closes lower 3+ days in a row"
+    ],
+    "week_start_equity": null,
+    "weekly_brake": false
+  },
+  "breakout_pnl": {
+    "note": "Breakout circuit breakers count only breakout trades from 2026-11-09",
+    "week_pnl_usd": 0.0
+  }
 }
