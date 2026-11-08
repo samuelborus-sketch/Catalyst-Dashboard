@@ -256,6 +256,10 @@ ul.bul li:last-child{margin-bottom:0}
 .crit span{font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid var(--border);color:var(--tm);white-space:nowrap}
 .crit span.ok{color:var(--green);border-color:rgba(34,197,94,.35)}
 .crit span.bad{color:var(--orange);border-color:rgba(249,115,22,.4)}
+.mkt{background:linear-gradient(90deg,rgba(34,197,94,.08),rgba(14,165,233,.05));border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:10px 12px;margin-bottom:12px}
+.mkt-k{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:4px}
+.mkt-v{font-size:13px;font-weight:600;line-height:1.5}
+.mkt-n{font-size:12px;color:var(--tm);margin-top:4px;line-height:1.5}
 .plan-grid{display:grid;grid-template-columns:140px 1fr;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:12px}
 .plan-grid>div{padding:9px 11px;font-size:12.5px;line-height:1.5;border-bottom:1px solid rgba(30,58,95,.5)}
 .plan-grid>div:nth-last-child(-n+2){border-bottom:none}
@@ -819,9 +823,10 @@ const CONFIG = {
     {
       ticker:"AQST",company:"Aquestive Therapeutics",drug:"Anaphylm (dibutepinephrine sublingual film)",indication:"Severe allergic reactions (anaphylaxis)",
       catalystType:"PDUFA",catalystDate:"2027-03-16",pathway:"NDA — Class 2 resubmission",
-      refPrice:null,refDate:null,marketCap:"Small cap",cashRunway:"$98.5M (Jun 30) + $95M on approval",
+      refPrice:3.80,refDate:"Nov 4",marketCap:"~$480M (~127M shares)",cashRunway:"$90.3M (Sep 30), >$70M at YE + $95M on approval",
+      market:{size:"US epinephrine auto-injector market (EpiPen, Auvi-Q, generics) plus needle-free newcomers",note:"Medium market. neffy shows the demand is real but adoption is slow: $33.4M/quarter and about 5% share after roughly 2 years."},
       oneLiner:"Small-cap, high-upside binary: a fixable CRL, a validated needle-free market, and funding that unlocks on approval.",
-      reviewStatus:"The CRL (Jan 30, 2026) cited the human-factors study only: pouch opening and film placement. There were no CMC issues, and the FDA didn't require a new PK study. Revised packaging and instructions substantially reduced errors in new validation studies. The resubmission was accepted Oct 15, 2026 as Class 2, with a PDUFA of Mar 16, 2027.",
+      reviewStatus:"The CRL (Jan 30, 2026) cited the human-factors study only: pouch opening and film placement. There were no CMC issues, and the FDA didn't require a new PK study. Revised packaging and instructions substantially reduced errors in new validation studies. The NDA was resubmitted Sep 16, 2026 and accepted Oct 15 as a Class 2 resubmission, with a PDUFA of Mar 16, 2027. Q3 (Nov 3): revenue $7.6M (-41%, lower Suboxone orders), and the 13.5% notes were refinanced with a $55M Oaktree loan.",
       thesis:[
         "This is the most fixable kind of CRL: it was about packaging usability, not efficacy or safety, and the drug's PK package stands.",
         "It would be the first oral or sublingual epinephrine: no needle, no device, fits in a wallet. ARS's neffy nasal spray proved patients want needle-free.",
@@ -837,7 +842,9 @@ const CONFIG = {
       ],
       keyDates:[
         {date:"2026-01-30",label:"CRL — human factors (packaging/administration) only"},
+        {date:"2026-09-16",label:"NDA resubmitted"},
         {date:"2026-10-15",label:"Resubmission accepted (Class 2)"},
+        {date:"2026-11-03",label:"Q3 2026: revenue miss, cash $90.3M"},
         {date:"2027-03-16",label:"PDUFA — Anaphylm"},
       ],
       scenarios:{
@@ -847,8 +854,111 @@ const CONFIG = {
       },
       plan:{entry:"Accumulate from January into early March using limit orders.",size:"Small. This is a micro-to-small-cap binary.",win:"Sell 1/2 on approval and let the rest ride the launch.",loss:"Exit on CRL. Don't average down.",stop:"-40%"},
       criteria:{runway:true,clean:true,liquid:false},
-      sources:[["Resubmission accepted, PDUFA Mar 16 2027","https://www.globenewswire.com/news-release/2026/10/15/3381477/0/en/aquestive-therapeutics-announces-fda-acceptance-of-anaphylm-nda-resubmission-and-pdufa-goal-date-of-march-16-2027.html"],["Q2 2026 call highlights","https://www.nasdaq.com/articles/aquestive-therapeutics-q2-earnings-call-highlights"]],
+      sources:[["Resubmission accepted, PDUFA Mar 16 2027","https://www.globenewswire.com/news-release/2026/10/15/3381477/0/en/aquestive-therapeutics-announces-fda-acceptance-of-anaphylm-nda-resubmission-and-pdufa-goal-date-of-march-16-2027.html"],["Q2 2026 call highlights","https://www.nasdaq.com/articles/aquestive-therapeutics-q2-earnings-call-highlights"],["Q3 2026 earnings release (SEC)","https://www.sec.gov/Archives/edgar/data/0001398733/000139873326000073/q32026-ex991earningsrelease.htm"],["Q3 call transcript","https://www.benzinga.com/news/26/11/62865601/aquestive-therapeutics-q3-2026-earnings-call-transcript"],["neffy Q3 2026 (ARS 8-K)","https://www.sec.gov/Archives/edgar/data/0001671858/000119312526449748/spry-ex99_1.htm"]],
+      deepDive:[
+        {h:"What the market is pricing in",p:"If approval is worth about $6.40 (bull/base average) and a CRL about $1.90, today's ~$3.80 implies roughly a 42% chance of approval: (3.80 − 1.90) ÷ (6.40 − 1.90) ≈ 0.42. My estimate is 75%. The whole trade is that gap. The market is discounting the earlier CRL, the Q3 miss and the funding risk, even though the CRL was about packaging only."},
+        {h:"Stress test: expected value under different assumptions",table:{head:["","Bear −50%","Bear −65%"],rows:[["65% odds, avg win +68%","+26.7%","+21.5%"],["<b>75% odds, avg win +68%</b>","<b>+38.5%</b>","+34.8%"],["85% odds, avg win +68%","+50.3%","+47.8%"],["65% odds, smaller win +42%","+9.8%","+4.6%"],["75% odds, smaller win +42%","+19.0%","+15.3%"]]},p2:"Break-even approval odds: about 42%. Even the worst corner stays positive."},
+        {h:"What approval means",list:["Releases $95M of launch money (RTW $75M + Oaktree $20M, only if approved by Jun 30, 2027). The RTW piece is likely royalty-style, so it may take a cut of sales. Check the terms.","Turns the stock from an FDA bet into a launch-execution story. The first quarters will be small, as neffy's slow ramp shows.","Read the label: age and weight limits, any packaging or handling warnings, and pricing (kept private so far)."]},
+        {h:"Watch before Mar 16",list:["Label discussions (around Feb 2027). They were blocked last cycle, so news that they've started is the best tell.","Late-cycle meeting (around Jan): any new FDA questions?","Year-end cash above $70M as guided.","Health Canada (Q4) and EU (Q1 2027) filings."]},
+        {h:"Sizing",p:"Full Kelly says more than 50% of the book, which is far too much given estimate error. Use 5–8% of the catalyst book. Consider selling a third into any pre-PDUFA run-up to bank part of the EV before the binary."},
+      ],
     },
+    {
+      ticker:"APMD",company:"Apnimed",drug:"Oxnimbi (AD109: aroxybutynin 2.3 mg + atomoxetine 75 mg), nightly pill",indication:"Obstructive sleep apnea (OSA): adults with mild, moderate or severe disease, any weight",
+      catalystType:"PDUFA",catalystDate:"2027-02-28",pathway:"NDA — standard review (filed Apr 2026)",
+      refPrice:14.20,refDate:"early Nov",marketCap:"~$650M (IPO $16 on Jul 31)",cashRunway:"~$330M est. (Jun 30 $172.8M + IPO) + royalty debt",
+      oneLiner:"The first pill for the airway itself in sleep apnea, a 30M-patient US market, from a ~$650M company.",
+      market:{size:"About 30M US adults have OSA, most undiagnosed. Several million are diagnosed, and many can't tolerate CPAP.",note:"Huge market. The only approved drug, Zepbound, covers OSA with obesity only. Oxnimbi would work at any weight and alongside CPAP or GLP-1s."},
+      reviewStatus:"NDA submitted Apr 2026 and accepted Jul 14, 2026 with a PDUFA of Feb 28, 2027 (standard review). No advisory committee has been announced. It is supported by two Phase 3s with about 1,300 patients: SynAIRgy (6-month) and LunAIRo (12-month).",
+      thesis:[
+        "Two positive Phase 3s. AHI fell 55.6% vs 19.1% on placebo (SynAIRgy) and 46.8% vs 6.8% (LunAIRo, durable at 51 weeks). About 22–23% of patients reached complete disease control (AHI under 5), and oxygen measures improved too.",
+        "Both ingredients are known: atomoxetine is the active drug in Strattera, and aroxybutynin is an enantiomer of oxybutynin. Familiar components lower the FDA's safety uncertainty. The FDA has also already accepted AHI as an approval endpoint (Zepbound).",
+        "The valuation is tiny next to the market: about $650M market cap against roughly $330M estimated cash, so the enterprise value is about $320M for a potential first-in-class pill in a 30M-patient disease.",
+        "Analysts see much higher value: Cantor $60, LifeSci $50, BofA $41, average about $50 (3x+ the current price).",
+        "Funded through the launch: Shionogi paid $100M for the sulthiame JV (Apnimed keeps royalties), the IPO raised about $220M, and a $150M Healthcare Royalty facility pays $50M on approval.",
+        "The stock is down about 47% from its September highs (~$27) on post-IPO selling, not on bad news.",
+      ],
+      whyNow:"The decision is 112 days away. The post-IPO slide has reset the price, and the late-January lock-up expiry could create one more dip to buy before the PDUFA.",
+      risks:[
+        "Tolerability: about 21% of patients discontinued for side effects vs about 3% on placebo (dry mouth, insomnia, nausea, urinary hesitation). That could mean a narrower label and weak real-world persistence.",
+        "Modest responder rate: only about 39% of patients cut their AHI in half. The average effect gets it approved, but doctors and payers will look at responders.",
+        "Cardiovascular questions: atomoxetine nudges heart rate and blood pressure up. There were no major cardiac events on AD109 (vs 5 on placebo), but the trials excluded significant heart disease, so a label warning is possible.",
+        "Lock-up: about 180 days after the Jul 31 IPO (around Jan 27, 2027) insiders can sell. The underwriters can also release shares early.",
+        "Competition: Zepbound in obese OSA, retatrutide in Phase 3, Incannex IHL-42X (Phase 2/3), and CPAP/Inspire devices. Primary-care and sleep-doctor launches are expensive.",
+        "The synthetic royalty to Healthcare Royalty takes a slice of future sales.",
+      ],
+      keyDates:[
+        {date:"2026-04-15",label:"NDA submitted (Apr 2026)"},
+        {date:"2026-07-14",label:"NDA accepted — PDUFA set for Feb 28, 2027"},
+        {date:"2026-07-31",label:"IPO priced at $16 (13.8M shares incl. upsizing)"},
+        {date:"2026-11-10",label:"Q3 2026 results (expected — first report as a public company)"},
+        {date:"2027-01-27",label:"IPO lock-up expires (~180 days, estimated)"},
+        {date:"2027-02-28",label:"PDUFA — Oxnimbi (AD109) for OSA"},
+      ],
+      scenarios:{
+        bull:{p:0.55,pct:100,what:"Clean approval with a broad label. Re-rates toward ~$1.3B, still far below analyst targets."},
+        base:{p:0.23,pct:20,what:"Approved with a heart-rate/BP warning, monitoring or a narrow population. Market worries about persistence."},
+        bear:{p:0.22,pct:-55,what:"CRL on tolerability or CV safety. The stock falls toward cash (~$330M)."},
+      },
+      plan:{entry:"Starter in Nov–Dec. Add on weakness around the lock-up expiry (late Jan) if no FDA news has changed the picture.",size:"Standard catalyst slot (one of the biggest in the book). It's a new IPO, so keep it below MLYS-size if you own both.",win:"Sell about 1/3 on the approval pop. Hold the rest, because the market is big enough for launch upside.",loss:"Exit on CRL. Cash supports the stock, but the thesis is over.",stop:"-35%"},
+      criteria:{runway:true,clean:true,liquid:true},
+      sources:[["PDUFA 8-K","https://www.sec.gov/Archives/edgar/data/0001745648/000119312526385355/apmd-ex99_1.htm"],["NDA acceptance (BioSpace)","https://www.biospace.com/press-releases/apnimed-announces-fda-acceptance-of-new-drug-application-for-ad109-an-investigational-oral-pill-to-treat-adults-with-obstructive-sleep-apnea-osa"],["Phase 3 results (Sleep Review)","https://sleepreviewmag.com/sleep-treatments/therapy-devices/emerging-technology/osa-oral-drug-trial-success-apnimed-new-drug-application-2026-phase-3/"],["Tolerability at ATS 2026 (News-Medical)","https://www.news-medical.net/news/20260521/Oral-AD109-improves-sleep-apnea-severity-but-tolerability-remains-a-challenge.aspx"],["IPO prospectus (424B4)","https://www.sec.gov/Archives/edgar/data/0001745648/000119312526328422/apmd_424b4.htm"],["Q2 2026 results","https://finviz.com/news/389899/apnimed-reports-second-quarter-2026-financial-results-and-provides-corporate-update"],["Analyst initiations (MarketBeat)","https://www.marketbeat.com/instant-alerts/price-apnimed-nasdaq-apmd-shares-climb-61-time-to-buy-2026-09-29/"],["RBC: threat to ResMed","https://www.tipranks.com/news/the-fly/apnimed-data-brings-competitive-threat-to-resmed-says-rbc-capital"]],
+      deepDive:[
+        {h:"What the drug does",p:"OSA happens when throat muscles relax during sleep and the airway collapses. AD109 combines atomoxetine (a norepinephrine reuptake inhibitor) with aroxybutynin (an antimuscarinic). Together they keep the upper-airway dilator muscles (mainly the genioglossus) active overnight, which goes after the root cause. CPAP props the airway open with air pressure, and GLP-1s work indirectly through weight loss."},
+        {h:"Phase 3 scorecard",table:{head:["","SynAIRgy (6 mo, n=646)","LunAIRo (12 mo, n=660)"],rows:[["AHI reduction, drug vs placebo","55.6% vs 19.1%","46.8% vs 6.8% (p<0.001)"],["≥50% AHI responders","39.6%","38.3%"],["Complete control (AHI under 5)","22.3%","22.9%"],["Durability","—","Significant at 51 weeks"],["Discontinued for side effects (pooled, one outlet)","21.2% vs 3.1% placebo","(same)"]]},p2:"Major cardiac events across both trials: 0 on AD109 vs 5 on placebo, though the trials weren't powered for this and excluded significant heart disease."},
+        {h:"How big could sales get? (my illustrative math, not company guidance)",list:["About 30M US adults have OSA. Assume about 6M are diagnosed and that 30–50% of them don't stick with CPAP.","2% of 6M diagnosed = 120,000 patients on therapy.","At an assumed ~$5,000 net price per patient per year, that's about $600M a year, roughly 1x today's market cap from 2% share.","neffy and Afrezza show launches can be slow, so assume 3–5 years to get there."]},
+        {h:"Valuation and the money",table:{head:["Item","Value"],rows:[["Price / market cap","~$14 / ~$650M (Nov 3)"],["Cash (est.)","~$330M: $172.8M (Jun 30) + ~$205M net IPO − burn (Q3 figure due ~Nov 10)"],["Enterprise value (est.)","~$320M"],["Royalty debt (Healthcare Royalty)","$150M: $50M drawn, $50M on approval, $50M on sales milestones"],["Analyst targets","$41 (BofA) · $50 (LifeSci) · $60 (Cantor) · avg ~$50"],["Since IPO","$16 → ~$27 (Sep) → ~$14 (Nov)"]]}},
+        {h:"What the market is pricing in",p:"Approval-weighted value ≈ $25 (bull/base average) and CRL value ≈ $6.40 (near cash). At ~$14.20 that implies roughly a 42% approval chance: (14.2 − 6.4) ÷ (25.0 − 6.4) ≈ 0.42. My estimate is 78%: two large positive Phase 3s, known components, an accepted endpoint and no AdCom. The gap is the trade."},
+        {h:"Stress test: expected value under different assumptions",table:{head:["","Bear −55%","Bear −70%"],rows:[["65% odds, avg win +76%","+30.4%","+25.2%"],["<b>78% odds, avg win +76%</b>","<b>+47.5%</b>","+44.2%"],["90% odds, avg win +76%","+63.3%","+61.8%"],["65% odds, smaller win +40%","+6.8%","+1.5%"],["78% odds, smaller win +40%","+19.1%","+15.8%"]]},p2:"Break-even approval odds: about 42%. It only turns negative if approval odds fall below about 60% and the pop is small and the downside is severe."},
+        {h:"Competitive landscape",list:["Zepbound (Lilly): approved Dec 2024 for moderate-to-severe OSA with obesity only. More of a complement than a rival, since AD109 can be added on top.","Retatrutide (Lilly): Phase 3 in obesity-related OSA.","Incannex IHL-42X (dronabinol + acetazolamide): Phase 2/3, years behind.","Sulthiame: Apnimed's own second drug, now with Shionogi. Apnimed keeps royalties.","Devices: CPAP (ResMed) and Inspire's implant. RBC flagged AD109 as a threat to ResMed, while Morgan Stanley sees a modest impact."]},
+        {h:"What to watch before Feb 28",list:["Q3 results (~Nov 10): actual cash, burn and launch build-out.","Any AdCom announcement. None so far, and an AdCom would mean the FDA has questions.","Late-cycle meeting and label discussions (Jan–Feb). The CV warning wording is the key detail.","Lock-up expiry (~Jan 27): watch for heavy selling. It could be a buying chance.","Read-through from Zepbound OSA uptake and Lilly's commentary."]},
+        {h:"Sizing",p:"Use a normal catalyst slot (5–10% of the catalyst book). Feb 28 is 16 days before AQST's Mar 16 decision. Owning both is fine, but size them so that two CRLs together cost under 10% of the book."},
+      ],
+    },
+    {
+      ticker:"SMMT",company:"Summit Therapeutics",drug:"Ivonescimab (PD-1 × VEGF bispecific antibody) + chemo",indication:"EGFR-mutant non-squamous NSCLC after EGFR TKI therapy",
+      catalystType:"PDUFA",catalystDate:"2026-11-14",pathway:"BLA — standard review (HARMONi)",
+      refPrice:null,refDate:null,marketCap:"Large cap",cashRunway:"Well funded",
+      oneLiner:"The biggest market on the board (a potential Keytruda rival), but this first FDA decision is a coin flip. PASS on the binary.",
+      market:{size:"PD-1 drugs are a $30B+ class (Keytruda). PD-1/VEGF bispecifics could take share across lung cancer and beyond.",note:"The market is enormous, but this filing only covers a narrow 2nd-line EGFR-mutant setting. The real value is in first-line trials (HARMONi-3)."},
+      reviewStatus:"BLA accepted Jan 2026 with a PDUFA of Nov 14, 2026. HARMONi missed its pre-specified overall-survival endpoint (HR 0.79, 95% CI 0.62–1.01, p=0.057). Later data cuts improved (Western subgroup HR 0.76 in Jun 2026). The FDA has said statistically significant OS is required in this setting. Summit may have filed a major amendment, which could trigger a 3-month extension (unconfirmed).",
+      thesis:[
+        "Potentially the most valuable drug class in oncology: one molecule hitting both PD-1 and VEGF.",
+        "OS has trended better with every data cut, from HR 0.98 to 0.84 to 0.76 in Western patients.",
+        "It already showed a survival win in another tumor type (HARMONi-GI1), which supports the platform.",
+        "An approval, even a narrow one, would make Summit commercial and validate the drug in the US.",
+      ],
+      whyNow:"The decision is 6 days away. Because of the OS miss, this is close to a coin flip with a large-cap stock, so there's no edge. Better to wait.",
+      risks:[
+        "The primary OS analysis missed, and the FDA has said OS significance is required (Truist: approval needs 'an act of leniency').",
+        "A CRL would push the US timeline back to the first-line HARMONi-3 readouts.",
+        "A possible 3-month extension adds a dead-money period.",
+        "Large cap: even approval moves the stock less than the small-cap ideas.",
+      ],
+      keyDates:[
+        {date:"2026-01-29",label:"BLA accepted"},
+        {date:"2026-06-15",label:"Updated OS cut: Western HR 0.76 (Jun 2026)"},
+        {date:"2026-11-14",label:"PDUFA — ivonescimab (EGFRm NSCLC post-TKI)"},
+      ],
+      scenarios:{
+        bull:{p:0.30,pct:40,what:"Approved on the OS trend plus updated data, validating the class in the US"},
+        base:{p:0.25,pct:-5,what:"3-month extension after a major amendment, so dead money into February"},
+        bear:{p:0.45,pct:-25,what:"CRL requiring a significant OS result, with the focus shifting to HARMONi-3"},
+      },
+      plan:{entry:"PASS on the Nov 14 binary. Re-evaluate after the decision. On a CRL, a 25%+ drop into the HARMONi-3 first-line readouts could be the better big-market entry.",size:"None for this event.",win:"n/a",loss:"n/a",stop:"n/a"},
+      criteria:{runway:true,clean:false,liquid:true},
+      sources:[["BLA acceptance","https://businesswire.com/news/home/20260129109846/en/Summit-Therapeutics-Announces-U.S.-FDA-Acceptance-of-Biologics-License-Application-BLA-Seeking-Approval-for-Ivonescimab-in-Combination-with-Chemotherapy-in-Treatment-of-Patients-with-EGFRm-NSCLC-Post-TKI-Therapy"],["Fierce: OS update before decision","https://www.fiercepharma.com/pharma/summit-therapeutics-updates-ivonescimab-survival-data-ahead-fda-decision-date"],["BioSpace: November date","https://www.biospace.com/fda/summits-potential-keytruda-rival-gets-november-fda-decision-date"],["Kavout: November decides the stock","https://www.kavout.com/financial-agents/smmt-s-survival-win-broadens-ivonescimab-s-case-but-november-still-decides-the-stock"]],
+    },
+  ],
+  // ===================================================================
+  // ON DECK — huge post-approval markets, FDA filing in progress, no
+  // PDUFA date yet. Promote to ideas once the FDA sets a date.
+  // ===================================================================
+  watchlist:[
+    {ticker:"CMPS",company:"Compass Pathways",drug:"COMP360 (psilocybin)",market:"Treatment-resistant depression (~3M US patients)",status:"Rolling NDA, with the final modules in Q4 2026. It holds a Commissioner's National Priority Voucher (1–2 month review once complete).",expected:"Possibly Q1 2027 (the fastest big-market decision here)",why:"Two Phase 3s in TRD. The voucher could compress the FDA clock to weeks once the filing is complete.",risk:"Psilocybin is Schedule I, so DEA rescheduling is needed after approval. In-clinic dosing slows uptake, functional unblinding is a debate point, and one analyst calls a Q4 2027 launch 'optimistic'.",sources:[["Voucher + rolling review","https://s204.q4cdn.com/927483861/files/doc_news/Compass-Pathways-Announces-FDA-Granted-NDA-Rolling-Review-Request-and-Awarded-Commissioners-National-Priority-Voucher-2026.pdf"],["Q1 call","https://www.marketbeat.com/instant-alerts/compass-pathways-q1-earnings-call-highlights-2026-05-13/"]]},
+    {ticker:"ARWR",company:"Arrowhead Pharmaceuticals",drug:"Plozasiran (Redemplo, APOC3 siRNA)",market:"Severe hypertriglyceridemia (~3M US), up from the rare FCS niche it's approved in now",status:"sNDA by YE 2026 under the FDA STAR pilot (6-month review). It also holds a $215M priority review voucher it may not need.",expected:"~Mid-2027",why:"Already approved in FCS, so this is a label expansion. In SHASTA-3, 52% of patients reached normal triglycerides (<150) at 1 year, with dosing every 3 months.",risk:"Ionis's olezarsen (PDUFA was Jun 30, 2026, outcome not verified here) may get to sHTG first. Mid/large cap, so smaller moves.",sources:[["PRV purchase","https://www.biospace.com/press-releases/arrowhead-pharmaceuticals-acquires-fda-priority-review-voucher"],["STAR pilot entry","https://www.webull.com/news/15706757450957824"]]},
+    {ticker:"OCUL",company:"Ocular Therapeutix",drug:"Axpaxli (axitinib intravitreal implant)",market:"Wet AMD (anti-VEGF market $10B+)",status:"NDA planned Q4 2026 (505(b)(2)). The SOL-R non-inferiority readout is expected Q1 2027.",expected:"~Late 2027 (SOL-R in Q1 2027 is the nearer binary)",why:"SOL-1 beat Eylea on superiority (p=0.0006), the first novel agent to do so. Fewer injections could reshape the market.",risk:"SOL-R non-inferiority still has to read out. Commercial launch is costly, and Eylea/Vabysmo are entrenched.",sources:[["Q2 2026 8-K","https://www.sec.gov/Archives/edgar/data/0001393434/000110465926089443/tm2621618d1_ex99-1.htm"],["SOL-1 superiority","https://ophthalmologymanagement.com/news/2026/axpaxli-shows-superiority-over-aflibercept-in-phase-3-trial/"]]},
+    {ticker:"ALMS",company:"Alumis",drug:"Envudeucitinib (ESK-001, oral TYK2)",market:"Moderate-to-severe plaque psoriasis (multi-$B oral market)",status:"NDA submission on track for Q4 2026.",expected:"~Late 2027 (standard review)",why:"Hit all primary and secondary endpoints in two Phase 3s. A potentially best-in-class oral TYK2.",risk:"Crowded: BMS Sotyktu, Takeda zasocitinib (decision ~Q1 2027) and J&J icotrokinra. Long wait to the PDUFA.",sources:[["Q1 2026 results","https://finviz.com/news/354599/alumis-reports-first-quarter-2026-financial-results-and-highlights-recent-achievements"],["Phase 3 + NDA plan","https://www-web.itiger.com/news/2620714082"]]},
   ],
   timezone:"America/Chicago",
   refreshInterval:300,
@@ -972,7 +1082,7 @@ async function getJSON(url){
   for(const i of order){try{const r=await fetch(PROXIES[i](url),{signal:AbortSignal.timeout(8000)});if(!r.ok)continue;const j=await r.json();goodProxy=i;return j;}catch{}}
   return null;
 }
-function allSyms(){return[...new Set([...myPositions().map(p=>p.ticker),...CONFIG.ideas.map(i=>i.ticker)])];}
+function allSyms(){return[...new Set([...myPositions().map(p=>p.ticker),...CONFIG.ideas.map(i=>i.ticker),...(CONFIG.watchlist||[]).map(w=>w.ticker)])];}
 async function fetchPrices(){
   if(S.fetching)return false;S.fetching=true;
   const syms=allSyms();let got=0;const fresh=new Set();
@@ -1147,11 +1257,17 @@ function viewIdeas(){
   const ideas=sortItems(ideaList(),S.settings.ideaSort);
   const seg=[['date','Soonest catalyst'],['ev','Best expected value']].map(([k,l])=>`<button class="${S.settings.ideaSort===k?'on':''}" onclick="S.settings.ideaSort='${k}';saveSettings();renderAll()">${l}</button>`).join('');
   const cluster=ideas.filter(i=>{const d=daysTo(i.catalystDate);return d!=null&&d>=0&&d<=50;});
-  return`<div class="page-h"><div><h1>10 New Ideas</h1><p>Biotech stocks that fit the Catalyst Lab rules: a <b>dated FDA decision</b> within about 4 months, <b>enough cash</b> to get past it without a forced raise, a <b>clean review</b> so far, and a <b>positive expected value</b> at my starting estimates. Each card has the full thesis, a bull/base/bear scenario planner with price targets, a trade plan and sources. Drag the probability slider if you disagree with my numbers. Press <b>+ Track</b> once you buy.</p></div><span class="asof">Researched ${fmtDate(CONFIG.asOf)}</span></div>
+  return`<div class="page-h"><div><h1>${CONFIG.ideas.length} New Ideas</h1><p>Biotech stocks that fit the Catalyst Lab rules: a <b>dated FDA decision</b> within about 4 months, <b>enough cash</b> to get past it without a forced raise, a <b>clean review</b> so far, and a <b>positive expected value</b> at my starting estimates. Each card has the full thesis, a bull/base/bear scenario planner with price targets, a trade plan and sources. Drag the probability slider if you disagree with my numbers. Press <b>+ Track</b> once you buy.</p></div><span class="asof">Researched ${fmtDate(CONFIG.asOf)}</span></div>
 ${cluster.length>=4?`<div class="info-warn">⚠ <b>${cluster.length} of these decisions fall within 50 days</b> (${cluster.map(i=>i.ticker).join(', ')}). Pick your favorite 2–3 rather than all of them, or use half sizes.</div>`:''}
 <div class="toolbar"><span class="lbl">Sort by</span><div class="seg">${seg}</div></div>
 <div class="pos-grid">${ideas.map(i=>renderCard(i,true)).join('')}</div>
+${watchlistHtml()}
 <p class="note" style="margin-top:16px">Not financial advice. Probabilities and price moves are judgment calls, starting estimates for you to edit. Prices load live from Yahoo Finance. When the feed is down, scenario targets use the dated reference price where one exists.</p>`;
+}
+
+function watchlistHtml(){
+  const w=CONFIG.watchlist||[];if(!w.length)return'';
+  return`<div class="sec" style="margin-top:26px"><div class="sec-hd"><span class="sec-dot" style="background:var(--purple)"></span><span class="sec-title">On deck · huge markets, FDA filing in progress (no decision date yet)</span></div><p class="note" style="margin-bottom:12px">These get promoted to full idea cards once the FDA accepts the filing and sets a PDUFA date. Until then, there's no dated binary to trade under the Catalyst Lab rules.</p><div class="pos-grid">${w.map(x=>{const px=price(x.ticker),chg=S.prices[x.ticker]?.changePct;return`<div class="pcard idea-card" id="card-${x.ticker}" style="border-left-style:dashed"><div class="ch"><div class="ch-top"><div><div class="ticker">${x.ticker}${px?` <span style="font-size:13px;color:var(--tp)">${fmtUSD(px)}</span>`:''}${chg!=null?` <span class="${chg>=0?'pos':'neg'}" style="font-size:11px">${fmtPct(chg)}</span>`:''}</div><div class="co-name">${esc(x.company)}</div></div><div class="badges"><span class="badge bo">On deck</span></div></div><div class="drug-line">${esc(x.drug)}</div></div><div class="tcon active"><div class="mkt" style="margin-bottom:10px"><div class="mkt-k">📈 Market</div><div class="mkt-v">${esc(x.market)}</div></div><div class="plan-grid"><div class="pk">Status</div><div>${esc(x.status)}</div><div class="pk">Likely decision</div><div><b>${esc(x.expected)}</b></div><div class="pk">Why it matters</div><div>${esc(x.why)}</div><div class="pk">Main risk</div><div>${esc(x.risk)}</div></div><div class="src">${x.sources.map(([l,u])=>`↗ <a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(' &nbsp; ')}</div></div></div>`;}).join('')}</div></div>`;
 }
 
 // =====================================================================
@@ -1160,7 +1276,7 @@ ${cluster.length>=4?`<div class="info-warn">⚠ <b>${cluster.length} of these de
 function renderCard(p,asIdea){
   const ep=effPos(p),days=daysTo(p.catalystDate),act=isActive(p);
   const key=(asIdea?'i-':'p-')+p.ticker;
-  const tabsDef=asIdea?[['overview','Thesis'],['scen','Scenarios'],['plan','Trade plan'],['risk','Risks & dates']]:act?[['overview','Position'],['scen','Catalyst & scenarios'],['thesis','Thesis & journal']]:[['overview','Position'],['scen','What happened'],['thesis','Thesis & journal']];
+  const tabsDef=asIdea?[['overview','Thesis'],['scen','Scenarios'],...(p.deepDive?[['deep','Deep dive']]:[]),['plan','Trade plan'],['risk','Risks & dates']]:act?[['overview','Position'],['scen','Catalyst & scenarios'],['thesis','Thesis & journal']]:[['overview','Position'],['scen','What happened'],['thesis','Thesis & journal']];
   const def=asIdea?'overview':(S.settings.defaultTab||'overview');
   let at=S.activeTabs[key]||def;if(!tabsDef.some(t=>t[0]===at))at=tabsDef[0][0];
   const tracked=asIdea&&S.tracked[p.ticker];
@@ -1207,6 +1323,7 @@ function tabBody(p,ep,k,asIdea){
     if(k==='scen')return catalystBlock(p,ep,true);
     if(k==='plan')return ideaPlan(p);
     if(k==='risk')return ideaRisks(p);
+    if(k==='deep')return deepDiveHtml(p);
   }
   if(k==='overview')return posTab(p,ep);
   if(k==='scen')return isActive(p)?catalystBlock(p,ep,false):resolvedBlock(p);
@@ -1293,14 +1410,18 @@ function resetProb(t){delete S.overrides[t];try{localStorage.removeItem(LS+'over
 function decisionNote(p){const d=S.decisions[p.ticker];return d?.finalDecision?`<div class="decision-note">📋 Your decision: <b>${esc(d.finalDecision)}</b> (${new Date(d.updatedAt).toLocaleDateString()})${d.exitApproval?` · win exit: ${esc(d.exitApproval)}`:''}${d.exitRejection?` · lose exit: ${esc(d.exitRejection)}`:''}</div>`:'';}
 
 // ---------- Idea tabs ----------
+function deepDiveHtml(p){
+  return p.deepDive.map(d=>`<div class="thesis-lbl">${esc(d.h)}</div><div class="thesis-txt" style="border-left-color:var(--tc)">${d.p?`<div>${esc(d.p)}</div>`:''}${d.list?`<ul class="bul">${d.list.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}${d.table?`<div class="tbl-wrap"><table style="margin:${d.p?'8px':'0'} 0 0"><thead><tr>${d.table.head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${d.table.rows.map(r=>`<tr>${r.map(c=>`<td>${String(c).replace(/<(?!\/?b>)/g,'&lt;')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:''}${d.p2?`<div style="margin-top:8px;color:var(--tm)">${esc(d.p2)}</div>`:''}</div>`).join('')+`<div class="note">Illustrative math uses my assumptions where noted. Not company guidance, not financial advice.</div>`;
+}
+function marketBox(p){return p.market?`<div class="mkt"><div class="mkt-k">📈 Market after approval</div><div class="mkt-v">${esc(p.market.size)}</div><div class="mkt-n">${esc(p.market.note)}</div></div>`:'';}
 function ideaThesis(p){
-  return`<div class="thesis-lbl">Bull thesis</div><div class="thesis-txt green-txt"><ul class="bul">${p.thesis.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+  return marketBox(p)+`<div class="thesis-lbl">Bull thesis</div><div class="thesis-txt green-txt"><ul class="bul">${p.thesis.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
 <div class="thesis-lbl">Why now</div><div class="thesis-txt purple-txt">${esc(p.whyNow)}</div>
 <div class="dg dg3"><div class="dc"><div class="dc-lbl">FDA pathway</div><div class="dc-val" style="font-size:11px">${esc(p.pathway)}</div></div><div class="dc"><div class="dc-lbl">Market cap</div><div class="dc-val" style="font-size:11.5px">${esc(p.marketCap)}</div></div><div class="dc"><div class="dc-lbl">Cash</div><div class="dc-val" style="font-size:11px">${esc(p.cashRunway)}</div></div></div>`;
 }
 function ideaPlan(p){
-  const pl=p.plan,ep=effPos(p),px=refPx(p),stopPct=parseFloat(pl.stop)||-30;
-  return`<div class="plan-grid"><div class="pk">Entry</div><div>${esc(pl.entry)}</div><div class="pk">Position size</div><div>${esc(pl.size)}</div><div class="pk">If it works</div><div>${esc(pl.win)}${px?` <span style="color:var(--tm)">(bull target ≈ ${fmtUSD(px*(1+ep.upside/100))})</span>`:''}</div><div class="pk">If it fails</div><div>${esc(pl.loss)}</div><div class="pk">Stop loss</div><div>${esc(pl.stop)} from entry${px?` <span style="color:var(--tm)">(≈ ${fmtUSD(px*(1+stopPct/100))} if bought at ${fmtUSD(px)})</span>`:''}</div></div>
+  const pl=p.plan,ep=effPos(p),px=refPx(p),stopPct=parseFloat(pl.stop),hasStop=!isNaN(stopPct);
+  return`<div class="plan-grid"><div class="pk">Entry</div><div>${esc(pl.entry)}</div><div class="pk">Position size</div><div>${esc(pl.size)}</div><div class="pk">If it works</div><div>${esc(pl.win)}${px&&hasStop?` <span style="color:var(--tm)">(bull target ≈ ${fmtUSD(px*(1+ep.upside/100))})</span>`:''}</div><div class="pk">If it fails</div><div>${esc(pl.loss)}</div><div class="pk">Stop loss</div><div>${esc(pl.stop)}${hasStop?' from entry':''}${px&&hasStop?` <span style="color:var(--tm)">(≈ ${fmtUSD(px*(1+stopPct/100))} if bought at ${fmtUSD(px)})</span>`:''}</div></div>
 <div class="note">Before the decision date, run the <b>Decision Framework</b> from the card footer once you're tracking it. It asks you to write down both exits in advance.</div>`;
 }
 function ideaRisks(p){

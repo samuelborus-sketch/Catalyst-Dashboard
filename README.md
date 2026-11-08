@@ -29,7 +29,11 @@ Other features: live prices from Yahoo Finance (with CORS-proxy fallbacks, refre
 - **NVAX**: no binary catalyst left. Reclassify or exit.
 
 ### New ideas
-COGT (Nov 30 / Dec 30) · VNDA (Dec 12) · CORT (Dec 17) · MLYS (Dec 22) · PRAX (Dec 27 / Jan 29) · IBRX (Jan 6) · DYN (Jan 21) · BLTE (Feb 12) · CGEM (Feb 27) · AQST (Mar 16)
+SMMT (Nov 14, marked PASS) · COGT (Nov 30 / Dec 30) · VNDA (Dec 12) · CORT (Dec 17) · MLYS (Dec 22) · PRAX (Dec 27 / Jan 29) · IBRX (Jan 6) · DYN (Jan 21) · BLTE (Feb 12) · CGEM (Feb 27) · **APMD (Feb 28)** · AQST (Mar 16)
+
+**Deep dive tab** (APMD, AQST): what the market is pricing in, an EV stress test, valuation, competition, a watch list and sizing.
+
+**On deck** (huge markets, no PDUFA date yet): CMPS (TRD), ARWR (sHTG), OCUL (wet AMD), ALMS (psoriasis). They get promoted to idea cards once the FDA sets a date. Add more in the `watchlist` array.
 
 Press **+ Track (I bought this)** on an idea and enter your shares and cost. It then appears under My Positions with live P&L. Tracked trades are saved in your browser.
 
