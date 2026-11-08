@@ -1,64 +1,77 @@
 # ⚗️ CATALYST LAB
 
-Personal biotech catalyst tracking and analysis terminal. Tracks active FDA/trial catalyst positions, models probability and expected value, and logs pre/post analysis to improve decision-making over time.
+Personal biotech catalyst tracking and analysis terminal. It tracks active FDA and trial catalyst positions, surfaces new researched catalyst ideas, models probability and expected value with bull/base/bear scenarios, and logs results so your decisions improve over time.
 
 ---
 
 ## What This Is
 
-A single `index.html` file that runs in any browser — no server, no npm, no build tools. Double-click to open locally or deploy to Cloudflare Pages for access anywhere.
+A single `index.html` file that runs in any browser: no server, no npm, no build tools. Double-click it to open locally, or deploy it to Cloudflare Pages to reach it anywhere.
 
-**Key features:**
-- Live prices from Yahoo Finance (auto-refreshes every 5 min)
-- Probability gauge + EV calculator per position
-- Catalyst countdown rings with urgency color system
-- Scenario planner (Bull / Base / Bear) per card
-- Inline probability editor with real-time sliders
-- Decision Framework modal (6-step pre-catalyst checklist)
-- Trade journal with timestamps (persists in localStorage)
-- Pre-catalyst checklist per position
-- Performance log with EV calibration chart
-- Risk exposure summary by catalyst type and time bucket
-- Full export/import of all journal + decision data
+**v2.0 (research refreshed Nov 8, 2026).** The page is split into six tabs (keys `1`–`6`):
+
+| Tab | What it's for |
+|-----|---------------|
+| **Overview** | A **To do** list of everything that needs a decision (catalysts that resolved, decisions within 30 days, stops hit, new ideas coming up), key stats, a timeline of positions and ideas, and the next 8 events |
+| **My Positions** | Cards for trades you own. Each card has a summary strip (price, return, days to decision, odds, EV) and a plain-English verdict. Resolved catalysts show what happened and a suggested next step |
+| **New Ideas** | 10 researched catalyst candidates, each with a bull thesis, why-now, a bull/base/bear **scenario planner** with price targets and an "if I invest $X" calculator, a trade plan (entry, size, exits, stop), risks, key dates and sources |
+| **Calendar** | Every dated event, grouped by month, with a warning when decisions cluster |
+| **Performance** | Closed trades (now saved, with undo), win rate, odds calibration and risk exposure |
+| **How it works** | Daily routine, selection rules and a glossary (PDUFA, CRL, Class 2, AdCom, EV…) |
+
+Other features: live prices from Yahoo Finance (with CORS-proxy fallbacks, refreshed every 5 min), an editable probability and upside/downside slider on every card, the Decision Framework, a pre-catalyst checklist, a trade journal, and export/import of all your data.
+
+### Current positions (as of Nov 8, 2026)
+- **CAPR**: live. The deramiocel PDUFA moved to **Nov 22, 2026** after a 9-3 negative AdCom and a major amendment (upper-limb indication).
+- **CING**: CRL on Jun 2 (CMC only). Waiting for the resubmission.
+- **NMRA**, **VTGN**: catalysts failed. Log your exits.
+- **MNKD**: pediatric Afrezza approved May 29. Take profit or move to the long-term portfolio.
+- **NVAX**: no binary catalyst left. Reclassify or exit.
+
+### New ideas
+COGT (Nov 30 / Dec 30) · VNDA (Dec 12) · CORT (Dec 17) · MLYS (Dec 22) · PRAX (Dec 27 / Jan 29) · IBRX (Jan 6) · DYN (Jan 21) · BLTE (Feb 12) · CGEM (Feb 27) · AQST (Mar 16)
+
+Press **+ Track (I bought this)** on an idea and enter your shares and cost. It then appears under My Positions with live P&L. Tracked trades are saved in your browser.
 
 ---
 
-## How to Add a New Position
+## How to Add or Update a Position
 
-Open `index.html` in any text editor. Find the `CONFIG` block at the top of the `<script>` tag. Add a new entry to the `positions` array:
+Open `index.html` in a text editor and find the `CONFIG` block at the top of the `<script>` tag. Add an entry to `positions` (things you own) or `ideas` (candidates):
 
 ```javascript
 {
-  ticker: "ACME",
-  company: "ACME Therapeutics",
-  drug: "Drug Name (compound)",
-  indication: "Disease — patient population",
+  ticker: "ACME", company: "ACME Therapeutics",
+  drug: "Drug Name (compound)", indication: "Disease — patient population",
+  status: "active",                // active | won | failed | delayed | reclassify
+  outcome: "",                     // what happened (for resolved statuses)
+  nextStep: "",                    // suggested action (for resolved statuses)
   catalystType: "PDUFA",           // PDUFA | PhaseData | AdCom | Earnings | Other
-  catalystDate: "2026-09-15",      // YYYY-MM-DD
-  pathway: "NDA",                  // FDA pathway or trial phase
-  myProbability: 0.60,             // 0–1, your estimate
-  upside: 120,                     // % gain on success
-  downside: 50,                    // % loss on failure
-  shares: 10,
-  avgCost: 5.00,
-  stopPct: 0.30,                   // stop loss % below avg cost
-  reviewStatus: "NDA under review. No InfoRequest issued.",
-  thesis: "Your bull case here.",
-  risks: "Key risks here.",
-  keyDates: [
-    { date: "2026-09-15", label: "PDUFA Decision" },
-  ],
-  analystTarget: 18.00,            // null if none
-  marketCap: "~$200M",
-  cashRunway: "Q2 2027",
+  catalystDate: "2027-03-15",      // YYYY-MM-DD, or null if TBD
+  pathway: "NDA",
+  myProbability: 0.60, upside: 120, downside: 50,
+  shares: 10, avgCost: 5.00, stopPct: 0.30,
+  reviewStatus: "NDA under review. No AdCom planned.",
+  thesis: "Your bull case.",       // string or array of bullet strings
+  risks: "Key risks.",             // string or array
+  keyDates: [{ date: "2027-03-15", label: "PDUFA decision" }],
+  scenarios: {                     // optional: bull/base/bear planner
+    bull: { p: 0.50, pct: 120, what: "Clean approval" },
+    base: { p: 0.10, pct: 10,  what: "Approval, narrow label" },
+    bear: { p: 0.40, pct: -50, what: "CRL" },
+  },
+  marketCap: "~$200M", cashRunway: "Q2 2027",
+  sources: [["Press release", "https://..."]],
 },
 ```
+
+Ideas use the same fields minus `shares/avgCost/status`, plus `oneLiner`, `whyNow`, `refPrice`/`refDate` (fallback price), `plan` (entry/size/win/loss/stop) and `criteria` (runway/clean/liquid).
 
 ---
 
 ## How to Mark a Position Closed
 
-Click the **✅ Close** button in the card footer. Enter your exit price, outcome (Win / Loss / Mixed), and final notes. The position moves to the Performance Log automatically and your EV calibration chart updates.
+Click **✅ Log exit** in the card footer. Enter the exit price, date and outcome (Win / Loss / Mixed) plus notes. The trade moves to the **Performance** tab and is saved in your browser. Use ↩ there to undo it.
 
 ---
 
@@ -90,10 +103,9 @@ Do this before clearing browser data or switching machines.
 
 | Key | Action |
 |-----|--------|
+| `1`–`6` | Switch tab (Overview, My Positions, New Ideas, Calendar, Performance, How it works) |
 | `R` | Refresh all prices |
 | `?` | Show shortcuts overlay |
-| `1`–`6` | Jump to position card by index |
-| `D` | Open Decision Framework |
 | `Esc` | Close any modal/overlay |
 
 ---
