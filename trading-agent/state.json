@@ -247,11 +247,11 @@
     "start_equity": 105.35,
     "halted": false,
     "trend": {
-      "qqq_close": 678.77,
-      "sma200": 681.17,
-      "asof": "2026-11-09",
+      "qqq_close": 674.76,
+      "sma200": 681.42,
+      "asof": "2026-11-10",
       "state": "cash",
-      "gap_pct": -0.35
+      "gap_pct": -0.98
     },
     "size": {
       "qqq_vol20_pct": 32.7,
