@@ -1,6 +1,6 @@
 {
-  "halted": true,
-  "halt_reason": "2026-11-09 pre-flight: Sam's manual SOXS (1.48 sh @71.18) held overnight; rule-(a) market sell at 09:30 was blocked by the session's safety classifier (real-money action needs Sam's explicit OK). Breakout halted until Sam clears.",
+  "halted": false,
+  "halt_reason": null,
   "account_floor_usd": 81.3,
   "equity_hwm": 108.84,
   "week_start_date": "2026-11-02",
