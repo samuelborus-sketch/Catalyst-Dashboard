@@ -110,7 +110,7 @@ Add this to your main dashboard's nav or footer:
 
 ## ◎ Long-Term Portfolio (`portfolio.html`)
 
-A second dashboard for the long-term holdings (BRK.B, OKLO, CBRS, RKLB, RDW, ACIW, GPOR, ATEN, ADUS, SPXC; FSS and AYI sold Nov 9 and listed under Closed positions; planned buys TER, CGNX, SYM, FLNC, EOSE, NRGV and GLPI appear on the Holdings tab with a budget planner until each buy is logged). Open `portfolio.html`, or use the **◎ Portfolio** button in Catalyst Lab's top bar.
+A second dashboard for the long-term holdings (16 holdings as of Nov 11: BRK.B, OKLO, CBRS, RKLB, RDW, ACIW, GPOR, ATEN, SPXC, TER, CGNX, GLPI, RIO, PFE, AQST, APMD. FSS, AYI, ADUS and an NVDA day trade are under Closed positions; SYM, FLNC and NRGV are planned buys on the Holdings tab). Open `portfolio.html`, or use the **◎ Portfolio** button in Catalyst Lab's top bar.
 
 - **Three NYSE-style tapes:** equities and indices, ETFs, and FX, Treasury yields and bond ETFs. They stay pinned to the top of the screen as you scroll. Hover to pause.
 - **Command Wheel:** the outer ring has one slice per holding, sized by weight, with a tick for today's move. Click a slice to load it in the center. The four inner quadrants (Position · Risk & Mitigants · Thesis & Catalysts · Valuation) each open their page. The center opens the full stock overview.
