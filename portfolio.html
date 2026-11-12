@@ -174,6 +174,10 @@ tfoot td{font-weight:700;background:var(--alt);border-bottom:none}
 .st{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid}
 .st.open{color:#fca5a5;border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.1)}
 .st.partial{color:#fde68a;border-color:rgba(234,179,8,.5);background:rgba(234,179,8,.1)}
+.play{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid;white-space:nowrap;vertical-align:middle}
+.play.fda{color:#f9a8d4;border-color:rgba(244,114,182,.55);background:rgba(244,114,182,.12)}
+.play.earn{color:#7dd3fc;border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.12)}
+.play.done{opacity:.75;border-style:dashed}
 .st.mitigated{color:#86efac;border-color:rgba(34,197,94,.5);background:rgba(34,197,94,.1)}
 .matrix{display:grid;grid-template-columns:28px repeat(5,1fr);grid-template-rows:repeat(5,minmax(54px,auto)) 26px;gap:3px}
 .matrix .cell{border-radius:6px;padding:4px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start}
@@ -253,20 +257,10 @@ tfoot td{font-weight:700;background:var(--alt);border-bottom:none}
 //  CONFIG — your holdings. Shares + avg cost are the base values;
 //  anything you edit in the app is saved on top of these in localStorage.
 // =====================================================================
-const SNAP_AT = '2026-11-11T18:31:00Z'; // snapshot used until live prices load
+const SNAP_AT = '2026-11-12T18:59:00Z'; // snapshot used until live prices load
 const REFRESH_SEC = 300;
 
 const HOLDINGS = [
- {t:'BRK.B',y:'BRK-B',name:'Berkshire Hathaway',theme:'Core / Conglomerate',style:'Quality Compounder',color:'#facc15',shares:.179859,cost:555.99,
-  thesis:"The portfolio's anchor. Diversified, cash-generating businesses (insurance float, BNSF rail, BHE utilities, manufacturing, McLane) with a fortress balance sheet and a large cash pile that can be deployed when markets panic. Lower volatility ballast against the speculative names.",
-  wrong:"Capital allocation under new leadership turns undisciplined, or the insurance segment takes a large, repeated underwriting hit.",
-  catalysts:["Q3 results (Sat 11/7)","Buyback activity / large cash deployment","Capital allocation signals under CEO Greg Abel"],
-  risks:[
-   {title:"Succession & capital allocation",cat:"Management",l:3,i:3,status:"partial",mit:"Greg Abel is CEO with a long track record running BHE; decentralised operating model limits key-person risk. Mine: watch first major acquisitions and buyback cadence.",trip:"A large, off-strategy acquisition at a rich price."},
-   {title:"Catastrophe insurance losses",cat:"Industry",l:3,i:3,status:"partial",mit:"Massive capital base and conservative reserving; reinsurance is priced for risk. A bad cat year hurts earnings, rarely book value.",trip:"Multi-year underwriting losses at GEICO or reinsurance."},
-   {title:"Cash drag in a strong market",cat:"Valuation",l:3,i:2,status:"mitigated",mit:"Cash earns T-bill yields and is optionality in a downturn — this is the role BRK plays in my portfolio.",trip:""},
-   {title:"Single-name concentration (~30% of portfolio)",cat:"Portfolio",l:4,i:2,status:"partial",mit:"BRK is itself highly diversified, so the concentration is far lower risk than 30% in any other name. Mine: let new money go to other holdings to drift weight down.",trip:"Weight above 35%."}
-  ]},
  {t:'OKLO',name:'Oklo Inc.',theme:'Nuclear / AI Power',style:'Speculative',color:'#a3e635',shares:.96588,cost:19.93,
   thesis:"A call option on small fast-fission powerhouses (Aurora) sold as power-as-a-service to data centers, industry and defense. If Oklo converts licensing into a first operating plant, its long pipeline of AI/data-center power demand could re-rate the business. Sized as a high-risk, high-optionality bet.",
   wrong:"Licensing slips by years, fuel can't be secured, or cash runs low enough to force heavy dilution at depressed prices.",
@@ -433,6 +427,7 @@ const HOLDINGS = [
    {title:"GAAP vs adjusted earnings gap",cat:"Accounting",l:3,i:2,status:"partial",mit:"GAAP P/E looks high (~42) because of one-time charges, such as a $650M R&D charge; adjusted EPS is the better guide but watch the gap.",trip:""}
   ]},
  {t:'AQST',name:'Aquestive Therapeutics',theme:'Biotech',style:'Biotech',color:'#f472b6',shares:7.173601,cost:3.49,
+  play:{kind:'fda',d:'2027-03-16',what:'FDA decision on Anaphylm'},
   thesis:"A binary bet on FDA approval of Anaphylm, an epinephrine film that dissolves under the tongue for severe allergic reactions: a needle-free alternative to auto-injectors. The FDA rejected the first application in January 2026; the resubmission was accepted as a Class 2 response with a decision due March 16, 2027. Also has existing film products and manufacturing revenue.",
   wrong:"The FDA rejects Anaphylm a second time, or approval comes but sales disappoint against established auto-injectors and nasal sprays.",
   catalysts:["FDA decision (PDUFA) on Anaphylm: Mar 16, 2027","Health Canada submission (Q4 2026) and EU filing (Q1 2027)","Q4 results (~Mar 3, tentative)"],
@@ -443,6 +438,7 @@ const HOLDINGS = [
    {title:"Sell-off into the decision",cat:"Market",l:4,i:2,status:"partial",mit:"Binary stocks often swing hard before the date. Decide ahead of time whether to hold through 3/16.",trip:""}
   ]},
  {t:'APMD',name:'Apnimed',theme:'Biotech',style:'Biotech',color:'#a78bfa',shares:1.620913,cost:15.42,
+  play:{kind:'fda',d:'2027-02-28',what:'FDA decision on AD109'},
   thesis:"Clinical-stage company whose lead drug AD109 (aroxybutynin plus atomoxetine) would be the first daily pill for obstructive sleep apnea, a huge market mostly treated with CPAP machines today. The FDA accepted the application, with a decision due February 28, 2027. IPO'd at $16 in July 2026 and reports cash runway into mid-2028.",
   wrong:"The FDA rejects AD109, or doctors and insurers stick with CPAP and GLP-1 drugs.",
   catalysts:["FDA decision (PDUFA) on AD109: Feb 28, 2027","Q3 results (~Nov 24, tentative)","IPO lock-up expiry (~late Jan 2027, estimated)"],
@@ -452,6 +448,27 @@ const HOLDINGS = [
    {title:"Post-IPO volatility",cat:"Market",l:4,i:3,status:"partial",mit:"Already down ~53% from its August high ($35.29) and hit a low of $13.88 on 11/5, so a lot of hype is gone.",trip:""},
    {title:"Lock-up expiry",cat:"Market",l:3,i:2,status:"open",mit:"Early investors can usually sell ~180 days after the IPO, around late January 2027; that can pressure the price right before the FDA decision.",trip:""}
   ]},
+// ---------- EARNINGS PLAYS (bought Nov 12 ahead of the report) ----------
+ {t:'NVDA',name:'NVIDIA',theme:'AI Chips',style:'Quality Growth',color:'#76b900',shares:.606682,cost:160.00,
+  play:{kind:'earn',d:'2026-11-17',what:'Q3 FY27 earnings, after the close'},
+  thesis:"Earnings play. Bought on the 11/12 dip (two buys: $156.63 and $163.75, average $160) after the stock fell about 39% from its $243 October high to a new 52-week low of $148.80 that morning. NVIDIA sells most of the chips that AI data centers run on, trades at about 22x trailing earnings, and has beaten EPS estimates 6 quarters in a row. Q3 is due Tue 11/17 after the close, with an EPS estimate of $2.48. Proceeds came from selling BRK.B the same morning.",
+  wrong:"It beats but guides below what investors hope for, or AI spending shows signs of slowing, and the stock keeps sliding after the report.",
+  catalysts:["Q3 FY27 results: Tue 11/17, after the close (est. EPS $2.48)","Next-quarter revenue guidance and data-center demand comments","Export rules for chip sales to China"],
+  risks:[
+   {title:"Sell-the-news after earnings",cat:"Event",l:3,i:3,status:"open",mit:"NVDA has fallen after several past beats because guidance didn't top the highest hopes. A ±8–10% move after the report is normal. Decide before 11/17 whether this is a hold or a sell after the report, and don't panic-sell the next morning.",trip:"Down more than 10% from $160 after the report."},
+   {title:"AI spending slowdown",cat:"Industry",l:2,i:4,status:"partial",mit:"Big cloud companies are still raising AI budgets, but the 39% drop from the October high shows the market is worried about it.",trip:"Large customers cut data-center spending plans."},
+   {title:"Overlap with other AI holdings",cat:"Portfolio",l:3,i:2,status:"open",mit:"CBRS, TER, SPXC, ATEN and OKLO also depend on AI data-center spending, so a bad NVDA report can pull them down too.",trip:""}
+  ]},
+ {t:'PONY',name:'Pony AI',theme:'Robotaxis / Autonomy',style:'Speculative Growth',color:'#f97316',shares:11.163206,cost:4.48,
+  play:{kind:'earn',d:'2026-11-18',what:'Q3 earnings, before the open'},
+  thesis:"Earnings play. Chinese robotaxi company that runs paid, fully driverless rides in Beijing, Shanghai, Guangzhou and Shenzhen, with Toyota and Uber as partners. Bought 11/12 at $4.48, down about 75% from its $17.67 January high and near its 52-week low. Analysts are 20 Buy / 1 Hold with an average target of about $18. Its losses came in smaller than expected in each of the last two quarters. Q3 is due Wed 11/18 before the open, with an EPS estimate of −$0.18.",
+  wrong:"Losses widen, it raises money by selling shares at low prices, or US–China tension hits Chinese stocks.",
+  catalysts:["Q3 results: Wed 11/18, before the open (est. EPS −$0.18)","Fleet size and cost per car","New cities and partnerships (Toyota, Uber)"],
+  risks:[
+   {title:"US–China and delisting risk",cat:"Regulatory",l:3,i:4,status:"open",mit:"It's a Chinese company listed in the US, so it's exposed to US delisting rules and trade tension. It also lists in Hong Kong. Mine: keep the position small.",trip:"New US restrictions on Chinese self-driving or auto-tech companies."},
+   {title:"Cash burn and dilution",cat:"Financial",l:4,i:3,status:"open",mit:"It loses money every quarter and is years from a profit, so expect it to sell more shares.",trip:"Share sale at a low price."},
+   {title:"Earnings-day move",cat:"Event",l:3,i:3,status:"open",mit:"Small, volatile stock near its lows, so a ±15% move after the report is possible. Decide ahead of time whether to hold or sell after the report.",trip:""}
+  ]},
 ];
 
 // Positions you've sold. Set the actual fill price in the app (Holdings → Closed positions).
@@ -460,9 +477,10 @@ const CLOSED = [
  {t:'AYI',name:'Acuity Inc.',color:'#67e8f9',shares:.069684,cost:315.71,sold:'2026-11-09',px:331.31,note:'Sold at market open'},
  {t:'ADUS',name:'Addus HomeCare',color:'#f472b6',shares:.184447,cost:119.28,sold:'2026-11-09',px:124.71,note:'Sold 11/9'},
  {t:'NVDA',name:'NVIDIA (day trade)',color:'#76b900',shares:.239205,cost:167.22,sold:'2026-11-10',px:168.52,note:'Bought and sold 11/10'},
+ {t:'BRK.B',name:'Berkshire Hathaway',color:'#facc15',shares:.179859,cost:555.99,sold:'2026-11-12',px:593.58,note:'Sold at the 11/12 open to fund the NVDA earnings play'},
 ];
-// Cash in the account (Robinhood, Nov 11). Deposit on 11/9 was $200.
-const CASH = 40.31;
+// Cash in the account (Robinhood, Nov 12). Deposit on 11/9 was $200. All cash is invested after the 11/12 trades.
+const CASH = 0;
 
 // Fundamentals snapshot (Nov 5, 2026)
 const PROFILE = {
@@ -480,6 +498,8 @@ const PROFILE = {
  'AYI':{mcap:9.670e9,pe:19.78,pb:3.39,hi:380.17,hiD:'2026-01-05',lo:257.04,loD:'2026-03-12',dy:.24,avgVol:.315e6,ceo:'Neil M. Ashe',hq:'Atlanta, GA',emp:13900,fy:2001,sector:'Producer Manufacturing',ind:'Electrical Products',desc:'Acuity is an industrial technology company: Acuity Brands Lighting (lighting and controls) and Acuity Intelligent Spaces (building management systems and software).'},
 };
 Object.assign(PROFILE,{
+ 'NVDA':{mcap:4058e9,pe:21.96,pb:18.32,hi:243.37,hiD:'2026-10-06',lo:148.80,loD:'2026-11-12',dy:.30,avgVol:232.4e6,ceo:'Jensen Huang',hq:'Santa Clara, CA',emp:42000,fy:1993,sector:'Electronic Technology',ind:'Semiconductors',desc:'NVIDIA designs GPUs and networking for AI data centers, gaming and cars, plus the CUDA software and DGX Cloud services built on them.'},
+ 'PONY':{mcap:2.09e9,pe:-13.11,pb:1.27,hi:17.666,hiD:'2026-01-09',lo:4.272,loD:'2026-11-05',dy:null,avgVol:3.44e6,ceo:'Jun (James) Peng',hq:'Guangzhou, China',emp:1669,fy:2016,sector:'Technology Services',ind:'Autonomous driving',desc:'Pony.ai develops self-driving technology and runs fully driverless robotaxi services in major Chinese cities, plus autonomous trucking.'},
  'RIO':{mcap:106.8e9,pe:11.26,pb:2.08,hi:112.58,hiD:'2026-05-13',lo:68.185,loD:'2025-11-07',dy:5.51,avgVol:3.66e6,ceo:'Simon C. Trott',hq:'London, UK',emp:61230,fy:1873,sector:'Non-Energy Minerals',ind:'Diversified Mining',desc:'Rio Tinto explores for, mines and processes minerals through its Iron Ore, Aluminium & Lithium, and Copper segments (with gold, silver and molybdenum by-products).'},
  'PFE':{mcap:167.5e9,pe:42.03,pb:1.88,hi:31.44,hiD:'2026-11-05',lo:23.62,loD:'2026-06-25',dy:5.85,avgVol:41.3e6,ceo:'Albert Bourla',hq:'New York, NY',emp:75000,fy:1849,sector:'Health Technology',ind:'Pharmaceuticals',desc:'Pfizer discovers, develops, manufactures and sells biopharmaceutical products worldwide, from vaccines to oncology and internal medicine.'},
  'AQST':{mcap:.453e9,pe:-5.63,pb:-6.41,hi:6.735,hiD:'2025-12-08',lo:2.93,loD:'2026-01-30',dy:null,avgVol:2.40e6,ceo:'Daniel Barber',hq:'Warren, NJ',emp:147,fy:2004,sector:'Health Technology',ind:'Pharmaceuticals (drug films)',desc:'Aquestive develops and sells drugs delivered as dissolving films, including Libervant, and is seeking approval for Anaphylm, an epinephrine film for severe allergic reactions.'},
@@ -495,20 +515,21 @@ Object.assign(PROFILE,{
 
 // [price, prev close] snapshot — replaced by live data when available
 const SNAP = {
- 'OKLO':[26.54,25.09],'CBRS':[102.58,93.66],'RKLB':[67.02,62.71],'BRK.B':[581.86,583.34],'RDW':[8.525,8.13],'ACIW':[61.37,61.45],
- 'GPOR':[162.815,161.91],'ATEN':[28.84,27.79],'ADUS':[124.31,126.81],'SPXC':[155.125,150.12],'FSS':[113.425,112.08],'AYI':[323.16,323.31],
- 'AAPL':[342.36,344.17],'MSFT':[530.54,535.93],'NVDA':[186.68,181.60],'AMZN':[259.35,260.21],'GOOGL':[284.68,282.57],'META':[610.12,605.08],
+ 'OKLO':[24.83,25.86],'CBRS':[100.44,101.08],'RKLB':[65.36,66.15],'BRK.B':[591.22,588.24],'RDW':[8.229,8.4],'ACIW':[61.37,61.85],
+ 'GPOR':[164.185,163.99],'ATEN':[29.38,28.74],'ADUS':[124.31,126.81],'SPXC':[151.795,153.86],'FSS':[113.425,112.08],'AYI':[323.16,323.31],
+ 'AAPL':[342.36,344.17],'MSFT':[530.54,535.93],'NVDA':[164.903,173.73],'AMZN':[259.35,260.21],'GOOGL':[284.68,282.57],'META':[610.12,605.08],
  'TSLA':[358.16,343.69],'AVGO':[293.23,291.53],'JPM':[334.51,337.34],'V':[422.70,422.59],'XOM':[165.86,165.30],'LLY':[1353.99,1364.73],
  'SPY':[762.18,749.92],'QQQ':[656.18,647.05],'DIA':[512.22,514.27],'IWM':[273.64,270.98],'VTI':[361.88,360.52],'XLK':[164.79,162.38],
  'XLF':[57.17,57.50],'XLE':[61.64,61.63],'XLI':[162.71,162.47],'XLV':[184.81,184.91],'SMH':[463.73,447.73],'URA':[32.335,30.98],
  'ITA':[69.00,68.11],'ARKX':[28.42,27.045],'GLD':[372.555,375.49],'SLV':[46.875,46.93],'USO':[148.41,148.21],'IBIT':[42.87,43.03],
  'TLT':[81.925,81.93],'IEF':[91.84,91.97],'SHY':[81.62,81.67],'AGG':[96.55,96.62],'LQD':[104.535,104.66],'HYG':[77.24,77.28],'TIP':[106.29,106.26],
- 'TER':[271.67,245.4],'CGNX':[53.0,50.8],'SYM':[37.755,37.62],'FLNC':[5.265,4.91],'EOSE':[1.75,1.88],'NRGV':[3.935,3.53],'GLPI':[39.005,39.24],
- 'RIO':[85.01,84.54],
- 'PFE':[29.245,29.36],
- 'AQST':[3.5999,3.52],
- 'APMD':[16.635,15.86],
+ 'TER':[264.78,265.78],'CGNX':[50.85,51.72],'SYM':[37.755,37.62],'FLNC':[5.265,4.91],'EOSE':[1.75,1.88],'NRGV':[3.935,3.53],'GLPI':[39.28,39.27],
+ 'RIO':[83.42,84.97],
+ 'PFE':[29.0326,29.45],
+ 'AQST':[3.555,3.58],
+ 'APMD':[16.685,16.78],
  'UUP':[29.145,28.92],'FXE':[102.79,103.50],'FXY':[57.79,58.05],
+ 'PONY':[4.4514,4.72],
 };
 
 // Three NYSE-style tapes
@@ -537,6 +558,8 @@ const EARN = {
  'AYI':[['FQ2 25','2025-04-03','am',3.70,3.73,1],['FQ3 25','2025-06-26','am',4.44,5.12,1],['FQ4 25','2025-10-01','am',4.63,5.20,1],['FQ1 26','2026-01-08','am',4.42,4.69,1],['FQ2 26','2026-04-02','am',3.96,4.14,1],['FQ3 26','2026-06-25','am',5.12,5.31,1],['FQ4 26','2026-10-01','am',5.59,5.77,1],['FQ1 27','2027-01-07','am',5.03,null,0]],
 };
 Object.assign(EARN,{
+ 'NVDA':[['Q1 26','2025-05-28','pm',.75,.96,1],['Q2 26','2025-08-27','pm',.98,1.04,1],['Q3 26','2025-11-19','pm',1.22,1.30,1],['Q4 26','2026-02-25','pm',1.50,1.62,1],['Q1 27','2026-05-20','pm',1.76,1.87,1],['Q2 27','2026-08-26','pm',2.09,2.22,1],['Q3 27','2026-11-17','pm',2.48,null,1],['Q4 27','2027-02-24','pm',2.75,null,0]],
+ 'PONY':[['Q1 25','2025-05-20','am',null,-.10,1],['Q2 25','2025-08-12','am',null,-.13,1],['Q3 25','2025-11-25','am',null,-.14,1],['Q4 25','2026-03-26','am',.22,-.12,1],['Q1 26','2026-05-26','am',-.13,-.09,1],['Q2 26','2026-08-18','am',-.17,-.10,1],['Q3 26','2026-11-18','am',-.18,null,1],['Q4 26','2027-03-25','am',-.21,null,0]],
  'PFE':[['Q1 25','2025-04-29','am',.67,.92,1],['Q2 25','2025-08-05','am',.58,.78,1],['Q3 25','2025-11-04','am',.65,.87,1],['Q4 25','2026-02-03','am',.56,.66,1],['Q1 26','2026-05-05','am',.72,.75,1],['Q2 26','2026-08-04','am',.68,.77,1],['Q3 26','2026-11-03','am',.73,.87,1],['Q4 26','2027-02-02','am',.69,null,0]],
  'AQST':[['Q1 25','2025-05-12','pm',-.16,-.24,1],['Q2 25','2025-08-11','pm',-.18,-.14,1],['Q3 25','2025-11-05','pm',-.12,-.14,1],['Q4 25','2026-03-04','pm',-.12,-.15,1],['Q1 26','2026-05-13','pm',-.13,-.07,1],['Q2 26','2026-08-11','pm',-.12,-.18,1],['Q3 26','2026-11-03','pm',-.13,-.13,1],['Q4 26','2027-03-03','pm',-.10,null,0]],
  'APMD':[['Q3 26','2026-11-24','pm',-.60,null,0],['Q4 26','2027-02-03','pm',-.72,null,0]],
@@ -549,8 +572,9 @@ Object.assign(EARN,{
  'GLPI':[['Q1 25','2025-04-24','pm',.96,.96,1],['Q2 25','2025-07-24','pm',.85,.96,1],['Q3 25','2025-10-30','pm',.83,.97,1],['Q4 25','2026-02-19','pm',.84,.99,1],['Q1 26','2026-04-23','pm',.98,1.02,1],['Q2 26','2026-07-30','pm',1.00,1.03,1],['Q3 26','2026-10-29','pm',1.00,1.04,1],['Q4 26','2027-02-18','pm',1.02,null,0]],
 });
 // Analyst consensus snapshot (Robinhood, Nov 7 2026): [buy, hold, sell, mean target, low, high]
-const ANALYST_AT='Nov 7–11, 2026';
+const ANALYST_AT='Nov 7–12, 2026';
 const ANALYST={
+ 'NVDA':[62,10,1,304.87,180,710.29],'PONY':[20,1,0,18.22,10,32.8],
  'RIO':[4,5,2,96.25,74,117],'PFE':[9,18,3,30.07,25,37],'AQST':[9,0,0,9.33,6,11],
  'TER':[15,5,0,430.77,340,550],'CGNX':[16,7,0,72.63,55,90],'SYM':[12,5,3,61.93,38,85],'FLNC':[4,15,5,8.19,3,15],'EOSE':[4,7,0,5.47,2.25,9],
  'GLPI':[15,8,1,48.93,40,63],'BRK.B':[2,3,2,549.08,490.25,628],'OKLO':[13,9,1,56.74,14,100],'CBRS':[13,1,0,276.08,175,325],'RKLB':[21,3,0,103.10,67,150],
@@ -628,6 +652,7 @@ const INTRA = {"t":["2026-11-03T15","2026-11-03T16","2026-11-03T17","2026-11-03T
 // Weekly closes, 1 year (split-adjusted)
 const HIST = {"OKLO":{"start":"2025-11-03","c":[112.65,97.57,88.17,91.38,104.67,87.42,83.23,76.92,77.8,105.31,94.95,87.63,79.62,71.1,65.69,63.83,62.95,58.25,58.37,53.97,50.23,48.13,50.25,66.81,71.0,70.4,72.51,62.25,65.88,66.88,58.09,57.49,61.17,50.0,52.36,48.85,41.11,40.25,38.83,48.42,44.38,42.09,40.14,41.27,36.22,38.0,38.04,35.87,34.7,27.97,26.35,25.25]},"CBRS":{"start":"2026-05-11","c":[279.72,256.78,236.99,201.01,214.0,234.71,181.59,204.86,215.08,172.86,199.12,198.71,226.73,218.98,196.13,179.08,210.05,191.93,198.37,206.75,166.43,164.17,127.21,110.82,109.18]},"RKLB":{"start":"2025-11-03","c":[51.64,45.54,40.3,42.14,49.05,61.49,70.52,70.65,75.99,84.85,96.3,88.9,80.07,72.32,67.44,70.86,69.1,70.11,68.41,67.23,60.93,67.73,68.05,84.8,79.68,78.81,105.47,124.77,135.76,143.48,110.08,102.39,107.24,84.54,100.46,81.04,67.62,63.91,64.95,82.83,80.25,72.57,64.39,64.26,62.95,64.57,73.95,73.92,68.21,50.84,52.6,54.73]},"BRK.B":{"start":"2025-11-03","c":[499.06,508.94,504.04,513.81,504.34,499.52,494.53,498.3,496.85,499.1,493.29,478.97,480.53,508.09,497.55,498.2,504.95,498.98,490.03,480.94,468.49,477.35,479.9,474.58,469.32,473.01,475.94,482.7,486.38,474.48,488.13,489.25,489.46,498.66,507.78,493.71,490.91,494.93,511.54,521.8,504.03,495.82,505.0,506.03,510.37,509.77,505.48,502.65,515.62,532.02,542.19,542.49]},"RDW":{"start":"2025-11-03","c":[6.56,5.41,5.3,5.51,6.39,7.29,8.0,7.15,9.03,10.98,11.71,12.52,11.75,10.04,8.02,7.99,9.07,8.55,9.59,9.2,8.16,9.73,9.29,10.34,9.68,9.34,11.07,14.06,17.49,24.57,18.45,15.12,14.35,10.93,11.31,10.18,8.45,8.69,8.62,13.59,13.58,12.02,10.87,10.53,10.62,10.74,11.62,10.88,9.58,8.39,8.36,8.39]},"ACIW":{"start":"2025-11-03","c":[48.96,46.97,46.61,46.86,45.91,47.53,48.14,48.73,45.67,46.77,42.99,44.03,43.36,42.28,39.56,40.88,39.68,42.55,39.77,39.44,39.88,41.33,39.89,44.47,43.19,43.86,45.51,41.66,42.72,43.67,42.8,45.24,44.09,49.26,54.88,56.42,58.07,56.31,57.33,53.67,53.44,51.86,53.83,52.95,52.09,50.27,49.51,50.15,50.87,52.8,55.88,56.34]},"GPOR":{"start":"2025-11-03","c":[201.91,210.41,204.68,222.49,216.57,208.08,201.26,210.18,206.16,174.05,178.94,194.12,204.17,212.22,203.97,205.06,208.66,211.45,196.64,204.92,216.42,207.0,203.59,193.48,187.6,189.9,178.28,182.78,178.22,168.59,168.06,166.41,160.71,162.87,168.87,152.1,152.91,157.27,161.37,162.76,170.03,173.45,176.37,179.4,173.25,159.7,154.62,154.4,162.66,166.0,166.18,166.53]},"ATEN":{"start":"2025-11-03","c":[17.23,17.49,16.84,17.22,17.77,18.12,17.96,18.07,17.35,17.23,17.31,17.38,17.44,19.67,20.7,19.98,19.26,20.47,20.97,21.46,22.34,23.99,24.0,27.55,27.56,26.85,27.8,27.95,29.16,30.14,30.57,31.76,33.26,34.98,36.3,37.17,35.96,34.27,29.57,26.84,27.4,26.12,25.7,24.59,24.74,26.15,25.73,27.63,29.63,24.46,25.45,24.48]},"ADUS":{"start":"2025-11-03","c":[113.08,109.07,112.7,120.2,113.19,114.59,112.82,110.16,106.58,109.72,107.5,110.37,103.48,105.88,113.8,115.48,103.53,103.21,101.35,99.28,95.19,91.59,92.21,94.32,95.71,99.56,99.57,90.98,92.65,91.68,92.1,93.28,94.23,96.95,105.17,108.21,114.52,114.55,115.48,119.68,116.06,120.81,115.55,118.76,117.09,117.07,113.19,111.27,114.33,115.98,121.81,125.54]},"SPXC":{"start":"2025-11-03","c":[221.92,211.43,204.57,215.04,208.67,219.94,203.17,208.48,203.26,207.51,217.65,211.03,208.41,222.32,239.0,242.29,226.94,204.62,199.45,186.77,200.0,197.29,215.97,223.52,222.82,208.13,202.84,200.99,207.8,216.66,227.8,230.05,242.97,231.87,227.74,219.87,211.73,220.07,219.62,215.68,217.32,207.2,198.73,196.37,191.82,181.77,172.79,173.09,169.46,166.04,160.33,159.95]},"FSS":{"start":"2025-11-03","c":[110.71,109.74,108.69,114.0,110.84,110.83,112.56,113.44,111.44,116.57,114.51,111.95,108.09,116.71,120.49,118.74,116.43,108.77,105.42,105.57,106.47,109.25,115.04,114.24,116.01,121.61,118.33,111.33,112.61,106.7,106.49,109.11,118.52,125.37,131.09,115.23,116.63,118.89,124.95,128.21,125.85,122.51,118.13,119.28,113.98,113.83,114.75,116.34,113.57,112.39,113.23,112.67]},"AYI":{"start":"2025-11-03","c":[360.49,350.47,349.36,366.42,371.99,364.68,362.84,373.32,373.33,325.55,320.43,315.25,309.24,328.39,305.5,310.8,301.59,275.42,260.83,267.87,269.69,265.39,278.45,292.63,289.57,289.29,293.33,281.63,287.59,305.11,302.04,297.24,317.62,362.48,359.04,333.11,333.72,330.14,328.39,359.58,358.43,343.1,335.16,334.05,318.96,302.96,319.42,308.76,298.34,303.25,318.72,318.14]},"SPY":{"start":"2025-11-03","c":[670.97,671.93,659.03,683.39,685.69,681.76,680.59,690.31,683.17,694.07,691.66,689.23,691.97,690.62,681.75,689.43,685.99,672.38,662.29,648.57,634.09,655.83,679.46,710.14,713.94,720.65,737.62,739.17,745.64,756.48,737.55,741.75,746.74,728.99,744.78,754.95,743.29,738.93,747.03,773.26,776.34,765.72,769.35,770.19,764.29,761.69,771.35,769.64,778.57,763.25,759.97,755.72]}};
 Object.assign(HIST,{"RIO":{"start":"2025-11-03","c":[69.33,70.63,69.99,71.95,73.06,75.66,78.32,82.24,81.43,81.13,85.13,90.43,91.03,93.41,98.07,97.09,99.34,90.21,87.83,83.15,86.64,94.45,98.26,100.15,99.61,100.58,105.38,103.69,104.23,106.39,100.69,105.35,100.08,93.74,94.42,90.54,90.15,91.22,96.85,101.1,95.68,105.3,103.3,103.27,99.96,97.37,94.56,94.21,94.78,90.32,83.42,81.89,83.73]},"PFE":{"start":"2025-11-03","c":[24.43,25.06,25.04,25.74,26.03,25.85,25.19,25.09,25.18,25.48,25.65,25.65,26.44,27.22,27.58,26.65,27.65,27.05,26.58,26.97,27.04,28.32,26.92,27.56,27.0,26.33,25.68,25.33,25.9,26.18,26.04,26.21,25.21,24.29,24.32,24.17,25.05,24.54,25.01,26.76,26.79,28.07,27.96,28.45,27.72,27.66,28.67,27.8,28.28,29.58,30.03,30.52,29.39]},"AQST":{"start":"2025-11-03","c":[6.04,5.39,5.72,6.19,6.38,6.21,5.8,5.99,6.45,3.91,3.31,3.24,2.95,4.11,3.65,3.95,4.0,4.22,4.02,3.98,4.02,4.13,4.08,4.32,4.08,4.2,4.32,4.17,4.12,4.02,3.93,4.17,4.71,4.39,4.18,4.12,4.12,3.68,3.695,3.94,4.27,4.66,5.02,5.34,4.78,4.61,4.68,4.55,4.78,3.78,4.0,3.89,3.61]},"APMD":{"start":"2026-07-27","c":[25.0,27.0,31.5,28.03,29.71,27.45,26.23,29.0,21.09,21.51,18.52,17.76,18.99,16.4,15.1]}});
+Object.assign(HIST,{"NVDA":{"start":"2025-11-03","c":[188.15,190.17,178.88,177.0,182.41,175.02,180.99,190.53,188.85,184.86,186.23,187.67,191.13,185.41,182.81,189.82,177.19,177.82,180.25,172.7,167.52,177.39,188.63,201.68,208.27,198.45,215.2,225.32,215.33,211.14,205.1,205.19,210.69,192.53,194.83,210.96,202.81,206.84,200.75,223.96,225.16,214.72,217.55,230.36,218.29,222.27,225.07,233.95,229.28,214.13,210.96,204.64,186.64]},"PONY":{"start":"2025-11-03","c":[14.04,12.98,11.19,13.67,14.2,14.32,15.94,14.96,16.07,17.22,16.3,16.44,13.88,14.31,14.07,13.61,14.34,12.48,11.44,10.53,9.14,9.22,9.56,11.69,10.69,9.89,9.29,8.29,8.92,10.03,8.62,8.15,8.34,6.87,6.83,6.59,6.66,7.13,7.87,8.15,8.14,8.23,7.58,7.35,6.635,6.805,6.89,6.07,6.04,4.93,5.14,4.64,4.75]}});
 Object.assign(HIST,{"TER":{"start":"2025-11-03","c":[182.28,169.97,158.91,181.89,200.77,193.37,195.18,198.9,207.56,217.26,228.145,229.18,241.05,300.11,314.66,324.85,320.03,273.05,286.42,290.83,295.61,309.61,367.99,380.38,418.08,345.42,359.77,337.88,358.44,374.31,357.93,403.2,437.92,436.86,369.09,359.6,322.355,349.92,367.69,379.31,417.61,375.74,354.97,357.03,379.72,371.47,398.38,449.04,402.68,325.0,308.85,274.37]},"CGNX":{"start":"2025-11-03","c":[39.27,36.77,36.89,38.1,38.42,35.65,36.8,36.55,36.93,39.01,40.92,39.76,38.74,42.37,58.79,56.03,54.4,49.45,47.98,49.24,47.59,49.17,53.41,55.5,54.26,55.94,65.66,64.26,66.09,65.85,60.82,63.61,66.1,66.56,67.8,66.8,64.07,62.05,65.24,66.89,65.63,60.54,60.46,62.25,64.22,61.56,58.66,64.97,62.92,53.99,55.55,56.15]},"SYM":{"start":"2025-11-03","c":[69.8,58.18,53.64,83.77,59.7,61.43,59.0,57.99,64.87,70.82,67.41,62.08,54.37,59.74,54.95,53.795,54.78,48.61,49.43,50.12,50.42,53.37,53.83,63.17,59.39,58.89,52.29,47.32,54.03,46.425,44.02,41.63,41.68,41.24,42.74,43.64,41.25,40.15,43.05,40.18,42.66,41.83,39.875,42.94,42.13,41.89,43.47,43.28,42.63,38.77,39.28,37.93]},"FLNC":{"start":"2025-11-03","c":[20.79,17.91,15.4,19.64,23.96,22.19,19.96,20.21,23.01,23.2,27.08,26.94,30.77,19.44,18.46,16.55,15.54,14.78,16.38,15.13,14.15,13.3,13.78,13.535,13.38,12.19,24.16,20.77,21.49,18.88,22.91,23.71,24.8,19.27,17.0,16.16,14.07,13.44,13.93,13.195,13.14,11.34,10.88,10.35,9.93,7.32,7.85,7.61,7.43,5.8,5.59,5.72]},"EOSE":{"start":"2025-11-03","c":[18.26,13.8,12.36,15.05,14.99,14.84,13.07,11.85,12.97,15.28,17.45,17.11,14.64,12.31,11.1,10.7,5.695,6.13,5.71,5.19,4.86,4.97,5.62,7.16,7.67,6.45,8.01,7.865,8.06,8.43,7.08,6.06,7.65,5.93,5.23,4.4,4.13,3.47,3.38,4.15,4.02,3.81,3.26,3.88,3.95,3.96,3.165,3.21,2.52,1.82,1.73,1.89]},"NRGV":{"start":"2025-11-03","c":[3.53,3.1,3.01,3.44,4.26,4.92,4.78,4.87,4.89,5.29,5.72,5.44,4.7,4.21,3.19,3.06,3.0,3.02,3.3,3.34,3.52,3.2,3.26,3.6,4.46,4.38,4.53,5.93,5.13,5.05,5.47,4.3,4.1,4.21,4.04,3.44,3.08,2.88,2.85,3.49,3.79,3.8,3.54,3.84,4.31,4.49,4.4,3.94,3.25,2.84,2.55,3.09]},"GLPI":{"start":"2025-11-03","c":[44.95,44.54,43.04,43.53,41.89,43.49,44.67,44.63,44.42,44.52,46.34,45.41,44.75,45.32,46.4,47.25,48.91,48.91,47.58,46.04,43.93,44.42,46.7,47.73,47.31,47.76,48.22,46.38,47.78,46.97,47.17,47.47,44.59,45.88,43.95,43.18,45.08,45.17,44.79,44.14,43.57,43.55,42.56,41.92,40.24,39.59,38.79,37.68,38.28,39.28,39.55,38.98]}});
 
 // =====================================================================
@@ -643,7 +668,7 @@ const EXTRA_COLORS=['#fde047','#4ade80','#fb7185','#93c5fd','#d8b4fe','#fdba74',
 let _rid=0;const rid=()=>'r'+Date.now().toString(36)+(_rid++);
 HOLDINGS.forEach(h=>h.risks.forEach(r=>r.id=r.id||rid()));
 
-function baseList(){return HOLDINGS.concat(U.added||[]).filter(h=>!(U.removed||[]).includes(h.t));}
+function baseList(){const own=new Set(HOLDINGS.map(h=>h.t));return HOLDINGS.concat((U.added||[]).filter(h=>!own.has(h.t))).filter(h=>!(U.removed||[]).includes(h.t));}
 function H(t){
   const b=baseList().find(x=>x.t===t);if(!b)return null;
   const o=U.h[t]||{};
@@ -652,6 +677,12 @@ function H(t){
 function setH(t,patch){U.h[t]=Object.assign({},U.h[t]||{},patch);saveU();}
 function allAll(){return baseList().map(b=>H(b.t));}
 function isPlanned(h){return !(h.shares>0);}
+// Catalyst plays: positions bought for one specific event (an FDA decision or an earnings report)
+const PLAY_KIND={fda:{lbl:'FDA catalyst',short:'FDA'},earn:{lbl:'Earnings play',short:'EARN'}};
+function plays(){return all().filter(h=>h.play&&PLAY_KIND[h.play.kind]);}
+function playWhen(h){const d=daysTo(h.play.d);return d<0?'event passed':d===0?'today':d===1?'tomorrow':d+'d';}
+function playBadge(h,full){if(!h||!h.play||!PLAY_KIND[h.play.kind])return'';const k=PLAY_KIND[h.play.kind];const d=daysTo(h.play.d);
+  return`<span class="play ${h.play.kind}${d<0?' done':''}" title="${esc(k.lbl)}: ${esc(h.play.what)} on ${fdate(h.play.d,{month:'short',day:'numeric',year:'numeric'})}">${full?esc(k.lbl)+' · '+fdate(h.play.d)+' · '+playWhen(h):esc(k.short)+' '+(d<0?'✓':playWhen(h))}</span>`;}
 function all(){return allAll().filter(h=>!isPlanned(h));}
 function planned(){return allAll().filter(isPlanned);}
 
@@ -938,15 +969,22 @@ function viewDashboard(){
         <div class="kpi"><div class="v dn">${esc(sorted[sorted.length-1].t)}</div><div class="s dn">${pct(dayPct(sorted[sorted.length-1].t))}</div><div class="l">Worst today</div></div>
       </div>
       <div class="card"><div class="sec-title">Next up</div><div class="mini-list">${upcoming.map(e=>`<div class="r" data-go="#/stock/${encodeURIComponent(e.t)}/thesis"><span><span class="t">${esc(e.t)}</span> <span class="dim">${esc(e.label)}</span></span><span class="cd" style="color:${e.days<=3?'#f97316':'#94a3b8'}">${e.days===0?'TODAY':e.days===1?'TMRW':e.days+'d'}</span></div>`).join('')||'<div class="dim">Nothing scheduled</div>'}</div></div>
+      ${playsCard()}
       <div class="card"><div class="sec-title">High-severity open risks</div><div class="mini-list">${alerts.map(({h,r})=>`<div class="r" data-go="#/stock/${encodeURIComponent(h.t)}/risk"><span><span class="t">${esc(h.t)}</span> <span class="dim">${esc(r.title)}</span></span><span class="score" style="background:${hexA(scoreColor(r.l*r.i),.18)};color:${scoreColor(r.l*r.i)}">${r.l*r.i}</span></div>`).join('')||'<div class="dim">None. Nice.</div>'}</div></div>
     </div>
   </div>
   ${planned().length?`<div class="sec-title" style="margin-top:28px">Planned buys · ${planned().length} · not in the wheel until you log the buy</div>
   <div class="orbs">${planned().map(h=>`<div class="orb" style="border-style:dashed">${orbSVG(h)}<div class="orb-foot"><span class="st partial">planned</span><span>${esc(h.theme)}</span></div></div>`).join('')}</div>`:''}
   <div class="sec-title" style="margin-top:28px">Every holding · 4 quadrants each</div>
-  <div class="orbs">${L.map(h=>`<div class="orb${h.t===U.sel?' sel':''}">${orbSVG(h)}<div class="orb-foot"><span>${(weight(h)).toFixed(1)}% wt</span><span>${esc(h.theme)}</span></div></div>`).join('')}</div>`;
+  <div class="orbs">${L.map(h=>`<div class="orb${h.t===U.sel?' sel':''}">${orbSVG(h)}<div class="orb-foot"><span>${(weight(h)).toFixed(1)}% wt</span><span>${h.play?playBadge(h):esc(h.theme)}</span></div></div>`).join('')}</div>`;
 }
 
+function playsCard(){
+  const P=plays().sort((a,b)=>daysTo(a.play.d)-daysTo(b.play.d));if(!P.length)return'';const T=totals().v;
+  const w=P.reduce((a,h)=>a+val(h),0);
+  return`<div class="card"><div class="sec-title">Catalyst plays · ${P.length} · ${T?(w/T*100).toFixed(1):0}% of portfolio</div><div class="mini-list">${P.map(h=>{const pl=val(h)-costB(h);const d=daysTo(h.play.d);
+   return`<div class="r" data-go="#/stock/${encodeURIComponent(h.t)}/thesis"><span>${playBadge(h)} <span class="t">${esc(h.t)}</span> <span class="dim">${esc(h.play.what)} · ${fdate(h.play.d)}</span></span><span class="mono ${cls(pl)}" style="font-size:11px">${sd$(pl)}</span></div>`;}).join('')}</div><div class="dim" style="font-size:11px;margin-top:8px">Each was bought for one event. Decide before the date whether you'll hold or sell after it.</div></div>`;
+}
 function plannedCard(){
   const P=planned();if(!P.length)return'';const B=+(U.planBudget||0);const each=B>0?B/P.length:0;
   const themes={};P.forEach(h=>themes[h.theme]=(themes[h.theme]||0)+1);const topTheme=Object.entries(themes).sort((a,b)=>b[1]-a[1])[0];
@@ -975,7 +1013,7 @@ function viewHoldings(){
   return`<div class="page-h"><div><h1>Holdings</h1><p>Click a column to sort, or click a row to open that stock. Edit shares and cost on each stock's Position page.</p></div><div style="display:flex;gap:8px"><button class="btn" data-act="export-csv">⬇ CSV</button><button class="btn pri" data-act="add-holding">+ Add holding</button></div></div>
   <div class="tbl-wrap"><table><thead><tr>${cols.map(([c,l,a])=>`<th class="${a||''} ${k===c?'sorted':''}" data-sort="${c}">${l}${k===c?(d>0?' ▲':' ▼'):''}</th>`).join('')}</tr></thead><tbody>
   ${rows.map(h=>{const p=price(h.t),dp=dayPct(h.t),pl=val(h)-costB(h),plp=(val(h)/costB(h)-1)*100,p5=pos52(h.t),e=nextEarn(h.t),rs=riskScore(h),P=PROFILE[h.t];
-   return`<tr class="click" data-go="#/stock/${encodeURIComponent(h.t)}"><td><span class="tk"><span class="sw" style="background:${h.color}"></span>${esc(h.t)}</span></td><td class="l" style="font-family:var(--body);color:var(--ts)">${esc(h.theme)}</td><td>${shares(h.shares)}</td><td>${$(h.cost)}</td><td>${$(p)}</td><td class="${cls(dp)}">${pct(dp)}</td><td>${$(val(h))}</td><td>${weight(h).toFixed(1)}%</td><td class="${cls(pl)}">${sd$(pl)}</td><td class="${cls(pl)}">${pct(plp)}</td>
+   return`<tr class="click" data-go="#/stock/${encodeURIComponent(h.t)}"><td><span class="tk"><span class="sw" style="background:${h.color}"></span>${esc(h.t)}</span> ${playBadge(h)}</td><td class="l" style="font-family:var(--body);color:var(--ts)">${esc(h.theme)}</td><td>${shares(h.shares)}</td><td>${$(h.cost)}</td><td>${$(p)}</td><td class="${cls(dp)}">${pct(dp)}</td><td>${$(val(h))}</td><td>${weight(h).toFixed(1)}%</td><td class="${cls(pl)}">${sd$(pl)}</td><td class="${cls(pl)}">${pct(plp)}</td>
    <td>${p5==null?'—':`<span class="dim" style="font-size:10px">${P?px(P.lo):''}</span> <span class="range"><i style="left:calc(${(p5*100).toFixed(0)}% - 1px)"></i></span> <span class="dim" style="font-size:10px">${P?px(P.hi):''}</span>`}</td>
    <td>${sparkSVG(h.t)}</td><td>${e?`${fdate(e[1])} <span class="dim">(${daysTo(e[1])}d)</span>`:'—'}</td><td><span class="score" style="background:${hexA(scoreColor(rs),.18)};color:${scoreColor(rs)}">${rs.toFixed(0)}</span></td></tr>`;}).join('')}
   </tbody><tfoot><tr><td>TOTAL</td><td class="l" style="font-family:var(--body);color:var(--ts)">+ ${$(CASH)} cash = ${$(T.v+CASH)}</td><td></td><td></td><td></td><td class="${cls(T.d)}">${pct(T.dp)}</td><td>${$(T.v)}</td><td>100%</td><td class="${cls(T.pl)}">${sd$(T.pl)}</td><td class="${cls(T.pl)}">${pct(T.plp)}</td><td></td><td></td><td></td><td></td></tr></tfoot></table></div>${plannedCard()}${closedCard()}`;
@@ -999,10 +1037,12 @@ function portfolioRisks(){
   out.push({title:`Speculative bucket: ${sw.toFixed(1)}% (${spec.map(h=>h.t).join(', ')})`,lvl:sw>40?'open':sw>25?'partial':'mitigated',txt:'Pre-profit, high-volatility names. A common guide is 20–30% of a long-term portfolio. These names tend to move together on risk-off days.'});
   const themes={};L.forEach(h=>themes[h.theme]=(themes[h.theme]||0)+val(h));const[tt,tv]=Object.entries(themes).sort((a,b)=>b[1]-a[1])[0];
   out.push({title:`Top theme: ${tt} at ${(tv/T*100).toFixed(1)}%`,lvl:tv/T>.4?'open':tv/T>.3?'partial':'mitigated',txt:'Theme concentration means one macro shock can hit several holdings at once.'});
-  const ai=L.filter(h=>['OKLO','CBRS','SPXC','ATEN','TER','NRGV'].includes(h.t));const aw=ai.reduce((a,h)=>a+val(h),0)/T*100;
+  const ai=L.filter(h=>['OKLO','CBRS','SPXC','ATEN','TER','NRGV','NVDA'].includes(h.t));const aw=ai.reduce((a,h)=>a+val(h),0)/T*100;
   out.push({title:`AI / data-center linked: ${aw.toFixed(1)}%`,lvl:aw>35?'open':aw>20?'partial':'mitigated',txt:`${ai.map(h=>h.t).join(', ')} all lean on data-center capex: a hidden correlation across different "themes".`});
   const bio=L.filter(h=>h.style==='Biotech');const bw=bio.reduce((a,h)=>a+val(h),0)/T*100;
   if(bio.length)out.push({title:`Binary biotech bets: ${bw.toFixed(1)}% (${bio.map(h=>h.t).join(', ')})`,lvl:bw>12?'open':bw>6?'partial':'mitigated',txt:'Each rides on a single FDA decision (APMD 2/28, AQST 3/16). A rejection can cut a position by half or more overnight; a common guide is under ~10% combined.'});
+  const ep=L.filter(h=>h.play&&h.play.kind==='earn');const ew=ep.reduce((a,h)=>a+val(h),0)/T*100;
+  if(ep.length)out.push({title:`Earnings plays: ${ew.toFixed(1)}% (${ep.map(h=>h.t+' '+fdate(h.play.d)).join(', ')})`,lvl:ew>30?'open':ew>15?'partial':'mitigated',txt:'Bought ahead of a single earnings report. Moves of ±8–15% the next day are normal, and back-to-back reports stack the risk. Decide ahead of time whether each one is a hold or a sell after the report.'});
   const unp=L.filter(h=>(PROFILE[h.t]?.pe??1)<0);const uw=unp.reduce((a,h)=>a+val(h),0)/T*100;
   out.push({title:`Unprofitable companies: ${uw.toFixed(1)}%`,lvl:uw>35?'open':uw>20?'partial':'mitigated',txt:`${unp.map(h=>h.t).join(', ')} have negative trailing earnings, so they're exposed to funding markets and dilution.`});
   return out;
@@ -1084,7 +1124,7 @@ function viewStock(t,sub){
   sub=SUBS.some(s=>s[0]===sub)?sub:'overview';
   const L=allAll();const i=L.findIndex(x=>x.t===t);const prev=L[(i-1+L.length)%L.length],next=L[(i+1)%L.length];
   const p=price(t),q=quote(t),dp=dayPct(t);
-  const head=`<div class="stock-h"><div class="orb-nav">${orbSVG(h)}</div><div><h1>${esc(t)}</h1><div class="nm">${esc(h.name)}</div><div class="px">$${px(p)}<small class="${cls(dp)}">${q&&q.pc?sd$((p-q.pc)).replace('$','')+' ('+pct(dp)+')':''}</small></div><div class="meta"><span class="chip"><span class="sw" style="background:${h.color}"></span>${esc(h.theme)}</span><span class="chip">${esc(h.style)}</span>${isPlanned(h)?'<span class="st partial" style="font-size:10px;padding:3px 9px">Planned buy</span>':`<span class="chip">${weight(h).toFixed(1)}% of portfolio</span>`}${q&&q.snap?'<span class="chip" title="Live feed unavailable">snapshot</span>':''}</div></div>
+  const head=`<div class="stock-h"><div class="orb-nav">${orbSVG(h)}</div><div><h1>${esc(t)}</h1><div class="nm">${esc(h.name)}</div><div class="px">$${px(p)}<small class="${cls(dp)}">${q&&q.pc?sd$((p-q.pc)).replace('$','')+' ('+pct(dp)+')':''}</small></div><div class="meta"><span class="chip"><span class="sw" style="background:${h.color}"></span>${esc(h.theme)}</span><span class="chip">${esc(h.style)}</span>${playBadge(h,true)}${isPlanned(h)?'<span class="st partial" style="font-size:10px;padding:3px 9px">Planned buy</span>':`<span class="chip">${weight(h).toFixed(1)}% of portfolio</span>`}${q&&q.snap?'<span class="chip" title="Live feed unavailable">snapshot</span>':''}</div></div>
    <div class="nav-btns"><button class="btn sm" data-go="#/stock/${encodeURIComponent(prev.t)}/${sub}">◀ ${esc(prev.t)}</button><button class="btn sm" data-go="#/stock/${encodeURIComponent(next.t)}/${sub}">${esc(next.t)} ▶</button></div></div>
    <div class="subtabs">${SUBS.map(([k,l])=>`<a href="#/stock/${encodeURIComponent(t)}/${k}" class="${k===sub?'on':''}">${l}</a>`).join('')}</div>`;
   return head+({overview:stockOverview,risk:stockRisk,thesis:stockThesis,valuation:stockValuation,position:stockPosition}[sub])(h);
