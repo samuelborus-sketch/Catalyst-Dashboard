@@ -174,6 +174,19 @@ tfoot td{font-weight:700;background:var(--alt);border-bottom:none}
 .st{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid}
 .st.open{color:#fca5a5;border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.1)}
 .st.partial{color:#fde68a;border-color:rgba(234,179,8,.5);background:rgba(234,179,8,.1)}
+.stars{color:#facc15;letter-spacing:1px;font-size:13px}.stars i{color:#334155;font-style:normal}
+.stg{display:inline-block;min-width:30px;text-align:center;padding:2px 7px;border-radius:6px;font-family:var(--mono);font-size:11px;font-weight:700}
+.stg.s1{background:#3b0764;color:#e9d5ff}.stg.s2{background:#7c2d12;color:#fed7aa}.stg.s3{background:#713f12;color:#fde68a}.stg.s4{background:#14532d;color:#bbf7d0}.stg.s5{background:#1e3a8a;color:#bfdbfe}
+tr.grp td{background:var(--alt);color:var(--tm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:7px 12px}
+.chk{display:inline-flex;gap:3px}.chk span{width:20px;height:20px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;font-size:11px}
+.chk .y{background:rgba(34,197,94,.18);color:#86efac}.chk .w{background:rgba(234,179,8,.18);color:#fde68a}.chk .n{background:rgba(239,68,68,.18);color:#fca5a5}.chk .u{background:var(--alt2);color:var(--tm)}
+.phase{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:5px;border:1px solid}
+.phase.up{color:#86efac;border-color:rgba(34,197,94,.5);background:rgba(34,197,94,.1)}.phase.mid{color:#fde68a;border-color:rgba(234,179,8,.5);background:rgba(234,179,8,.1)}.phase.dn{color:#fca5a5;border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.1)}
+.cyc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.cyc h4{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 6px;font-size:15px}
+.cyc .drv{font-family:var(--mono);font-size:10px;color:var(--tm);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.cyc .txt{font-size:12.5px;color:var(--ts);line-height:1.5}.cyc ul{margin:8px 0 0;padding-left:18px;font-size:12px;color:var(--ts);line-height:1.5}
+.cyc .lbl{font-family:var(--mono);font-size:9.5px;color:var(--tm);letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
 .play{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid;white-space:nowrap;vertical-align:middle}
 .play.fda{color:#f9a8d4;border-color:rgba(244,114,182,.55);background:rgba(244,114,182,.12)}
 .play.earn{color:#7dd3fc;border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.12)}
@@ -457,7 +470,7 @@ const HOLDINGS = [
   catalysts:["Q3 FY27 results: Tue 11/17, after the close (est. EPS $2.48)","Next-quarter revenue guidance and data-center demand comments","Export rules for chip sales to China"],
   risks:[
    {title:"Sell-the-news after earnings",cat:"Event",l:3,i:3,status:"open",mit:"NVDA has fallen after several past beats because guidance didn't top the highest hopes. A ±8–10% move after the report is normal. Decide before 11/17 whether this is a hold or a sell after the report, and don't panic-sell the next morning.",trip:"Down more than 10% from $160 after the report."},
-   {title:"AI spending slowdown",cat:"Industry",l:2,i:4,status:"partial",mit:"Big cloud companies are still raising AI budgets, but the 39% drop from the October high shows the market is worried about it.",trip:"Large customers cut data-center spending plans."},
+   {title:"AI spending slowdown",cat:"Industry",l:2,i:4,status:"partial",mit:"Big cloud companies are still raising AI budgets, but the 32–39% drop from the October high shows the market is worried about it.",trip:"Large customers cut data-center spending plans."},
    {title:"Overlap with other AI holdings",cat:"Portfolio",l:3,i:2,status:"open",mit:"CBRS, TER, SPXC, ATEN and OKLO also depend on AI data-center spending, so a bad NVDA report can pull them down too.",trip:""}
   ]},
  {t:'PONY',name:'Pony AI',theme:'Robotaxis / Autonomy',style:'Speculative Growth',color:'#f97316',shares:11.163206,cost:4.48,
@@ -661,6 +674,55 @@ Object.assign(HIST,{"RIO":{"start":"2025-11-03","c":[69.33,70.63,69.99,71.95,73.
 Object.assign(HIST,{"NVDA":{"start":"2025-11-03","c":[188.15,190.17,178.88,177.0,182.41,175.02,180.99,190.53,188.85,184.86,186.23,187.67,191.13,185.41,182.81,189.82,177.19,177.82,180.25,172.7,167.52,177.39,188.63,201.68,208.27,198.45,215.2,225.32,215.33,211.14,205.1,205.19,210.69,192.53,194.83,210.96,202.81,206.84,200.75,223.96,225.16,214.72,217.55,230.36,218.29,222.27,225.07,233.95,229.28,214.13,210.96,204.64,186.64]},"PONY":{"start":"2025-11-03","c":[14.04,12.98,11.19,13.67,14.2,14.32,15.94,14.96,16.07,17.22,16.3,16.44,13.88,14.31,14.07,13.61,14.34,12.48,11.44,10.53,9.14,9.22,9.56,11.69,10.69,9.89,9.29,8.29,8.92,10.03,8.62,8.15,8.34,6.87,6.83,6.59,6.66,7.13,7.87,8.15,8.14,8.23,7.58,7.35,6.635,6.805,6.89,6.07,6.04,4.93,5.14,4.64,4.75]}});
 Object.assign(HIST,{"FCX":{"start":"2025-11-03","c":[39.81,40.16,39.87,42.98,45.2,47.38,49.15,53.04,51.93,56.53,58.71,60.41,60.23,60.67,62.84,64.34,68.08,59.36,56.38,52.09,56.24,61.38,67.8,70.21,61.05,56.55,61.65,63.01,61.99,65.71,63.37,68.41,68.68,62.45,60.97,61.52,58.38,62.6,62.63,69.62,66.49,76.66,76.45,72.73,71.07,71.54,72.31,72.04,73.69,69.54,65.18,62.47,59.42]}});
 Object.assign(HIST,{"TER":{"start":"2025-11-03","c":[182.28,169.97,158.91,181.89,200.77,193.37,195.18,198.9,207.56,217.26,228.145,229.18,241.05,300.11,314.66,324.85,320.03,273.05,286.42,290.83,295.61,309.61,367.99,380.38,418.08,345.42,359.77,337.88,358.44,374.31,357.93,403.2,437.92,436.86,369.09,359.6,322.355,349.92,367.69,379.31,417.61,375.74,354.97,357.03,379.72,371.47,398.38,449.04,402.68,325.0,308.85,274.37]},"CGNX":{"start":"2025-11-03","c":[39.27,36.77,36.89,38.1,38.42,35.65,36.8,36.55,36.93,39.01,40.92,39.76,38.74,42.37,58.79,56.03,54.4,49.45,47.98,49.24,47.59,49.17,53.41,55.5,54.26,55.94,65.66,64.26,66.09,65.85,60.82,63.61,66.1,66.56,67.8,66.8,64.07,62.05,65.24,66.89,65.63,60.54,60.46,62.25,64.22,61.56,58.66,64.97,62.92,53.99,55.55,56.15]},"SYM":{"start":"2025-11-03","c":[69.8,58.18,53.64,83.77,59.7,61.43,59.0,57.99,64.87,70.82,67.41,62.08,54.37,59.74,54.95,53.795,54.78,48.61,49.43,50.12,50.42,53.37,53.83,63.17,59.39,58.89,52.29,47.32,54.03,46.425,44.02,41.63,41.68,41.24,42.74,43.64,41.25,40.15,43.05,40.18,42.66,41.83,39.875,42.94,42.13,41.89,43.47,43.28,42.63,38.77,39.28,37.93]},"FLNC":{"start":"2025-11-03","c":[20.79,17.91,15.4,19.64,23.96,22.19,19.96,20.21,23.01,23.2,27.08,26.94,30.77,19.44,18.46,16.55,15.54,14.78,16.38,15.13,14.15,13.3,13.78,13.535,13.38,12.19,24.16,20.77,21.49,18.88,22.91,23.71,24.8,19.27,17.0,16.16,14.07,13.44,13.93,13.195,13.14,11.34,10.88,10.35,9.93,7.32,7.85,7.61,7.43,5.8,5.59,5.72]},"EOSE":{"start":"2025-11-03","c":[18.26,13.8,12.36,15.05,14.99,14.84,13.07,11.85,12.97,15.28,17.45,17.11,14.64,12.31,11.1,10.7,5.695,6.13,5.71,5.19,4.86,4.97,5.62,7.16,7.67,6.45,8.01,7.865,8.06,8.43,7.08,6.06,7.65,5.93,5.23,4.4,4.13,3.47,3.38,4.15,4.02,3.81,3.26,3.88,3.95,3.96,3.165,3.21,2.52,1.82,1.73,1.89]},"NRGV":{"start":"2025-11-03","c":[3.53,3.1,3.01,3.44,4.26,4.92,4.78,4.87,4.89,5.29,5.72,5.44,4.7,4.21,3.19,3.06,3.0,3.02,3.3,3.34,3.52,3.2,3.26,3.6,4.46,4.38,4.53,5.93,5.13,5.05,5.47,4.3,4.1,4.21,4.04,3.44,3.08,2.88,2.85,3.49,3.79,3.8,3.54,3.84,4.31,4.49,4.4,3.94,3.25,2.84,2.55,3.09]},"GLPI":{"start":"2025-11-03","c":[44.95,44.54,43.04,43.53,41.89,43.49,44.67,44.63,44.42,44.52,46.34,45.41,44.75,45.32,46.4,47.25,48.91,48.91,47.58,46.04,43.93,44.42,46.7,47.73,47.31,47.76,48.22,46.38,47.78,46.97,47.17,47.47,44.59,45.88,43.95,43.18,45.08,45.17,44.79,44.14,43.57,43.55,42.56,41.92,40.24,39.59,38.79,37.68,38.28,39.28,39.55,38.98]}});
+
+// =====================================================================
+//  GROWTH SCORECARD & CYCLICAL OUTLOOK (Nov 13, 2026) — judgment calls; refresh after each earnings season
+// =====================================================================
+const SCORE_AT='Nov 13, 2026';
+// stage 1 Story · 2 First revenue · 3 Scaling · 4 Profitable growth · 5 Mature. g/s = growth/stability 1–5 (0 = n/a)
+const SCORE={
+ 'NVDA':{grp:'core',st:'4',g:5,s:5,v:'Core compounder',why:'Revenue +106% y/y ($96.2B), 62% net margin, ~75% gross margin.'},
+ 'TER':{grp:'core',st:'4',g:5,s:4,v:'Core compounder',why:'Revenue +70% y/y; net margin up from 15.5% to 26.2%.'},
+ 'SPXC':{grp:'core',st:'4',g:4,s:4,v:'Quality grower on sale',why:'EPS +20% y/y, beat 8 of 8 quarters; stock −40% from June high.'},
+ 'CGNX':{grp:'core',st:'4',g:3,s:4,v:'Solid compounder',why:'EPS +61% y/y as factory automation recovers; beat 8 of 8.'},
+ 'ATEN':{grp:'core',st:'4',g:3,s:5,v:'Steady, small, clean balance sheet',why:'EPS +35% y/y, beats every quarter, buybacks.'},
+ 'CBRS':{grp:'emerging',st:'3',g:5,s:2,v:'Closest to “graduating”',why:'Revenue +55% (+70% core), cloud +265%, guidance raised; expects to triple revenue in 2027. Deep losses.',
+   chk:['y','u','n','u','u','y','y','w'],note:'Customer concentration has historically been high. Watch whether 2027 tripling holds.'},
+ 'RKLB':{grp:'emerging',st:'3',g:5,s:3,v:'Real business, priced high',why:'Revenue +73%, record $3.57B backlog; losses widening on Neutron spend; ~46x sales.',
+   chk:['y','n','n','u','u','y','u','w'],note:'Key test: Neutron first launch. Gross margin slipped from 37% to 33.6%.'},
+ 'RDW':{grp:'emerging',st:'2→3',stn:2,g:2,s:2,v:'Turnaround in progress',why:'Revenue +5% only, but gross margin doubled (16%→32%) and losses shrank (−$23M vs −$41M). ~4.6x sales.',
+   chk:['n','y','y','u','u','u','u','w'],note:'Needs revenue growth to pick up to move up a stage.'},
+ 'OKLO':{grp:'emerging',st:'1',g:0,s:2,v:'Story stage, cash-backed',why:'Pre-revenue; losses growing as it builds. Trades ~1.4x book, mostly cash, so runway is long.',
+   chk:['n','u','n','y','w','w','u','u'],note:'Add only after a licensing milestone or signed power contract.'},
+ 'FCX':{grp:'cyc',st:'5',g:3,s:3,v:'Cyclical (moves with copper)',why:'Revenue +8% y/y; net margin swings 10–22% with copper.'},
+ 'GPOR':{grp:'cyc',st:'5',g:2,s:3,v:'Cyclical (moves with gas), cheap',why:'~6x earnings; EPS +11% y/y.'},
+ 'ACIW':{grp:'cyc',st:'5',g:2,s:4,v:'Steady, lumpy quarters',why:'Payments software near 52-week high; license timing makes EPS lumpy; ~38x earnings.'},
+ 'GLPI':{grp:'cyc',st:'5',g:2,s:4,v:'Income',why:'~8% dividend, ~80% of cash earnings; cash earnings growing ~7%.'},
+ 'PFE':{grp:'cyc',st:'5',g:1,s:3,v:'Income with a patent cliff',why:'Revenue flat y/y; 5.8% dividend; patent cliff later this decade.'},
+ 'PONY':{grp:'bet',st:'2',g:5,s:2,v:'Trade only · exit by ~11/25',why:'Robotaxi revenue +691% (Q2); ~70% of value is cash. Non-US, so trade only.',
+   chk:['y','u','w','y','w','u','y','u'],note:'Quick trade per Sam\'s no-long-term-foreign rule.'},
+ 'APMD':{grp:'bet',st:'1',g:0,s:1,v:'FDA decision Feb 28',why:'Binary on AD109 approval; runway into mid-2028.'},
+ 'AQST':{grp:'bet',st:'1',g:0,s:1,v:'FDA decision Mar 16',why:'Binary on Anaphylm approval; negative book value.'},
+};
+const SCORE_GRP=[['core','🏆 Core compounders','~60% of new money'],['emerging','🚀 Emerging','~25% (CBRS, RKLB) · ~10% (RDW, OKLO) after a milestone'],['cyc','🔁 Cyclical & 💵 Income','~5% cyclicals when out of favor · 0% income'],['bet','🎲 Binary bets & trades','0% · already sized']];
+const CHECKS=['Revenue growth >30% and holding','Gross margin rising','Losses shrinking as % of revenue','2+ years of cash or self-funding','Share count growing <5%/yr','Large, growing contracted backlog','Meets or beats its own guidance','No single customer dominates'];
+
+// Cyclical outlook. type: commodity | growth | defensive | event. phase: up | mid | dn
+const CYCLE={
+ 'FCX':{type:'commodity',drv:'Copper prices',phase:'mid',pl:'Mid-cycle pullback',out:'Earnings are still rising (Q4 EPS est. $0.99, up from $0.47 a year ago) but the stock is ~24% below its August high. Long-term demand from AI data centers, the power grid and EVs is the tailwind; China construction is the swing factor.',watch:['Copper price trend','China industrial data','Grasberg (Indonesia) output','Q4 report ~Jan 21']},
+ 'GPOR':{type:'commodity',drv:'Natural gas prices',phase:'mid',pl:'Recovering',out:'Priced like a downturn at ~6x earnings and ~27% below its 52-week high, yet EPS grew 11% and beat. LNG export capacity and data-center power demand support gas prices; mild winters hurt.',watch:['Henry Hub gas price','Winter weather / storage draws','New LNG export capacity','Buyback pace']},
+ 'NVDA':{type:'growth',drv:'AI data-center spending',phase:'up',pl:'Expansion, market doubting',out:'Revenue is still growing 100%+ but the stock is ~32% off its October high (−39% at the 11/12 low) on fears that AI spending peaks. As long as big cloud companies keep raising budgets, the cycle is up.',watch:['11/17 guidance for next quarter','Big-tech capex plans','China export rules']},
+ 'TER':{type:'growth',drv:'Chip-testing order waves',phase:'mid',pl:'Peak earnings, stock correcting',out:'Revenue +70% and record margins, but the stock is ~46% off its June high. Test orders come in waves, so the market is pricing a slowdown before it shows up in results.',watch:['Orders / bookings in Q4 report (~Feb 1)','AI chip and memory test demand','Robotics segment']},
+ 'CGNX':{type:'growth',drv:'Factory spending on new lines',phase:'up',pl:'Early recovery',out:'EPS +61% coming out of a 2024–25 slump. Logistics, EV and electronics automation orders are picking back up.',watch:['Logistics and electronics orders','China demand','Q4 report ~Feb 10']},
+ 'SPXC':{type:'growth',drv:'Construction and data-center HVAC',phase:'mid',pl:'Mid-cycle, stock reset',out:'EPS +20% and 8 straight beats, but the stock is ~40% off its June high. Data-center cooling orders are the growth driver; non-residential construction is the risk.',watch:['Data-center cooling orders','Non-residential construction','Q4 report ~Feb 23']},
+ 'PFE':{type:'defensive',drv:'Steady drug demand',out:'Holds up in recessions; the risk is patents, not the economy.'},
+ 'GLPI':{type:'defensive',drv:'Long-term leases with rent escalators',out:'Rent comes in regardless of the economy; rising interest rates are the main pressure.'},
+ 'ACIW':{type:'defensive',drv:'Recurring payment processing',out:'Banks keep processing payments in any economy.'},
+ 'ATEN':{type:'defensive',drv:'Recurring security contracts',out:'Security spending is among the last budgets cut.'},
+ 'CBRS':{type:'event',drv:'Company-specific: contracts, 2027 ramp'},'RKLB':{type:'event',drv:'Company-specific: launches, Neutron'},'RDW':{type:'event',drv:'Company-specific: defense/space contracts'},
+ 'OKLO':{type:'event',drv:'Company-specific: licensing'},'PONY':{type:'event',drv:'Company-specific: earnings, China headlines'},'APMD':{type:'event',drv:'FDA decision'},'AQST':{type:'event',drv:'FDA decision'},
+};
+const AI_LINKED=['NVDA','TER','FCX','CBRS','SPXC','ATEN','OKLO'];
 
 // =====================================================================
 //  STATE & PERSISTENCE
@@ -924,7 +986,7 @@ function sparkSVG(t){
 // =====================================================================
 //  NAV + TAPES
 // =====================================================================
-const TABS=[['#/','Dashboard','1'],['#/holdings','Holdings','2'],['#/risk','Risk Register','3'],['#/allocation','Allocation','4'],['#/calendar','Calendar','5'],['#/journal','Journal','6']];
+const TABS=[['#/','Dashboard','1'],['#/holdings','Holdings','2'],['#/risk','Risk','3'],['#/allocation','Allocation','4'],['#/calendar','Calendar','5'],['#/journal','Journal','6'],['#/scorecard','Scorecard','7'],['#/cycles','Cycles','8']];
 function tapeItem(sym){
   if(sym[0]==='|')return`<span class="ti sep">${esc(sym.slice(1))}</span>`;
   const q=quote(sym);if(!q)return'';
@@ -1116,6 +1178,46 @@ function viewCalendar(){
   <div class="card" style="padding:6px 4px"><div class="sec-title" style="padding:10px 12px 0">Recently reported</div>${past.map(row).join('')||'<div class="dim" style="padding:14px">—</div>'}</div></div>`;
 }
 
+
+function starsHTML(n){if(!n)return'<span class="dim">—</span>';return`<span class="stars">${'★'.repeat(n)}<i>${'★'.repeat(5-n)}</i></span>`;}
+function stgHTML(sc){const n=sc.stn||+sc.st;return`<span class="stg s${n}">${esc(sc.st)}</span>`;}
+function chkHTML(c){const m={y:['y','✓'],w:['w','!'],n:['n','✕'],u:['u','?']};return`<span class="chk">${c.map((x,i)=>`<span class="${m[x][0]}" title="${esc(CHECKS[i])}">${m[x][1]}</span>`).join('')}</span>`;}
+function viewScorecard(){
+  const L=all();const T=totals().v||1;const byT={};L.forEach(h=>byT[h.t]=h);
+  const rows=SCORE_GRP.map(([g,lbl,plan])=>{const names=Object.keys(SCORE).filter(t=>SCORE[t].grp===g&&byT[t]);if(!names.length)return'';
+    const w=names.reduce((a,t)=>a+val(byT[t]),0)/T*100;
+    return`<tr class="grp"><td colspan="7">${lbl} · ${w.toFixed(1)}% of portfolio · new money: ${esc(plan)}</td></tr>`+names.map(t=>{const sc=SCORE[t],h=byT[t];const pl=val(h)-costB(h);
+      return`<tr class="click" data-go="#/stock/${encodeURIComponent(t)}"><td><span class="tk"><span class="sw" style="background:${h.color}"></span>${esc(t)}</span> ${playBadge(h)}</td><td class="l">${stgHTML(sc)}</td><td class="l">${starsHTML(sc.g)}</td><td class="l">${starsHTML(sc.s)}</td><td class="l" style="font-family:var(--body);color:var(--tp)">${esc(sc.v)}<div class="dim" style="font-size:11px;white-space:normal;min-width:260px;margin-top:2px">${esc(sc.why)}</div></td><td>${weight(h).toFixed(1)}%</td><td class="${cls(pl)}">${pct(costB(h)?pl/costB(h)*100:0,1)}</td></tr>`;}).join('');}).join('');
+  const missing=L.filter(h=>!SCORE[h.t]).map(h=>h.t);
+  const em=Object.keys(SCORE).filter(t=>SCORE[t].chk&&byT[t]);
+  const chkRows=em.map(t=>{const sc=SCORE[t];const pass=sc.chk.filter(x=>x==='y').length;
+    return`<tr class="click" data-go="#/stock/${encodeURIComponent(t)}"><td><span class="tk"><span class="sw" style="background:${byT[t].color}"></span>${esc(t)}</span></td><td class="l">${chkHTML(sc.chk)}</td><td><b style="color:${pass>=6?'#86efac':pass>=4?'#fde68a':'#fca5a5'}">${pass}/8</b></td><td class="l" style="font-family:var(--body);white-space:normal;color:var(--ts);font-size:12px;min-width:240px">${esc(sc.note||'')}</td></tr>`;}).join('');
+  return`<div class="page-h"><div><h1>Growth Scorecard</h1><p>Where each holding sits on the path from speculative story to durable business, scored on growth and stability (1–5). Scores are judgment calls as of ${SCORE_AT}; refresh them after each earnings season.</p></div><div style="display:flex;gap:8px"><button class="btn" data-go="#/cycles">Cyclical outlook →</button></div></div>
+  <div class="card" style="margin-bottom:16px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--ts)"><b class="mono" style="font-size:10px;color:var(--tm);letter-spacing:.1em">STAGES</b>${[['1','Story'],['2','First revenue'],['3','Scaling'],['4','Profitable growth'],['5','Mature']].map(([n,l])=>`<span><span class="stg s${n}">${n}</span> ${l}</span>`).join('')}</div>
+  <div class="tbl-wrap"><table><thead><tr><th class="l">Ticker</th><th class="l">Stage</th><th class="l">Growth</th><th class="l">Stability</th><th class="l">Verdict</th><th>Weight</th><th>P/L %</th></tr></thead><tbody>${rows}</tbody></table></div>
+  ${missing.length?`<div class="dim" style="font-size:11px;margin-top:8px">Not scored yet: ${missing.map(esc).join(', ')}.</div>`:''}
+  <div class="sec-title" style="margin-top:28px">Graduation checklist · speculative names · run after every report</div>
+  <div class="tbl-wrap"><table><thead><tr><th class="l">Ticker</th><th class="l">8 checks</th><th>Pass</th><th class="l">What to watch</th></tr></thead><tbody>${chkRows}</tbody></table></div>
+  <div class="card" style="margin-top:12px"><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;font-size:12px;color:var(--ts)">${CHECKS.map((c,i)=>`<div><b class="mono" style="color:var(--tc)">${i+1}</b> ${esc(c)}</div>`).join('')}</div>
+  <div class="dim" style="font-size:11px;margin-top:10px">✓ pass · ! partial · ✕ fail · ? not confirmed yet (counted as not passing, so totals are conservative). 6+ passes = turning into a real business. Add when a name moves up a stage; stop adding when it fails 3+ checks. 🚩 Red flags: guidance cuts, CFO exits, share sales near the lows, slowing growth with widening losses.</div></div>`;
+}
+function viewCycles(){
+  const L=all();const T=totals().v||1;const byT={};L.forEach(h=>byT[h.t]=h);
+  const types=[['commodity','🔁 Commodity cyclicals','Profits follow a commodity price the company can’t control.'],['growth','⚙️ Cyclical growth','Great companies in industries that order in waves.'],['defensive','🛡️ Defensive','Hold up in downturns.'],['event','🎲 Event-driven','Move on company news more than the economy.']];
+  const wOf=ts=>ts.filter(t=>byT[t]).reduce((a,t)=>a+val(byT[t]),0)/T*100;
+  const kpi=types.map(([k,l])=>{const ts=Object.keys(CYCLE).filter(t=>CYCLE[t].type===k);return`<div class="kpi"><div class="l">${l}</div><div class="v">${wOf(ts).toFixed(1)}%</div><div class="s dim">${ts.filter(t=>byT[t]).join(' · ')}</div></div>`;}).join('');
+  const cycW=wOf(Object.keys(CYCLE).filter(t=>['commodity','growth'].includes(CYCLE[t].type)));const aiW=wOf(AI_LINKED);
+  const card=t=>{const c=CYCLE[t],h=byT[t];if(!h)return'';const P=PROFILE[t],p=price(t);const off=P&&P.hi&&p?(p/P.hi-1)*100:null;
+    return`<div class="card cyc"><h4><span class="tk" style="cursor:pointer" data-go="#/stock/${encodeURIComponent(t)}"><span class="sw" style="background:${h.color}"></span>${esc(t)}</span>${c.phase?`<span class="phase ${c.phase}">${esc(c.pl)}</span>`:''}</h4><div class="drv">Driver: ${esc(c.drv)}${off!=null?` · ${pct(off,0)} from 52-wk high`:''} · ${weight(h).toFixed(1)}% wt</div><div class="txt">${esc(c.out||'')}</div>${c.watch?`<div class="lbl">Watch</div><ul>${c.watch.map(w=>`<li>${esc(w)}</li>`).join('')}</ul>`:''}</div>`;};
+  const sec=([k,l,d])=>{const ts=Object.keys(CYCLE).filter(t=>CYCLE[t].type===k&&byT[t]);if(!ts.length)return'';
+    if(k==='event')return`<div class="sec-title" style="margin-top:26px">${l}</div><div class="card"><div class="dim" style="font-size:12px;margin-bottom:8px">${d} A recession still hurts them indirectly: funding gets harder and investors avoid risk.</div><div class="mini-list">${ts.map(t=>`<div class="r" data-go="#/stock/${encodeURIComponent(t)}"><span><span class="t">${esc(t)}</span> <span class="dim">${esc(CYCLE[t].drv)}</span></span><span class="mono dim">${weight(byT[t]).toFixed(1)}%</span></div>`).join('')}</div></div>`;
+    return`<div class="sec-title" style="margin-top:26px">${l} · ${d}</div><div class="cyc-grid">${ts.map(card).join('')}</div>`;};
+  return`<div class="page-h"><div><h1>Cyclical Outlook</h1><p>Which holdings rise and fall with an economic or industry cycle, where each one is in its cycle, and what to watch. As of ${SCORE_AT}.</p></div><div style="display:flex;gap:8px"><button class="btn" data-go="#/scorecard">← Growth scorecard</button></div></div>
+  <div class="kpis" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:14px">${kpi}</div>
+  <div class="risk" style="--c:${aiW>40?'#ef4444':'#eab308'};padding:12px 16px"><div class="txt"><b style="color:var(--tp)">Cycle exposure:</b> ${cycW.toFixed(1)}% of the portfolio is cyclical in some form, and <b style="color:var(--tp)">${aiW.toFixed(1)}% is tied to AI spending</b> (${AI_LINKED.filter(t=>byT[t]).join(', ')}). If AI budgets slow, these can fall together. When adding money, weigh more AI exposure against steadier names.</div></div>
+  ${types.map(sec).join('')}
+  <div class="dim" style="font-size:11px;margin-top:14px">Phase legend: <span class="phase up">up</span> expanding · <span class="phase mid">mid</span> mixed or correcting · <span class="phase dn">down</span> contracting. Phases are judgment calls from recent results and price action.</div>`;
+}
 function viewJournal(){
   const f=S.jf||'ALL';const J=(U.journal||[]).filter(j=>f==='ALL'||j.t===f).sort((a,b)=>b.ts.localeCompare(a.ts));
   return`<div class="page-h"><div><h1>Investment Journal</h1><p>Write down why you bought, added or trimmed, and what you were thinking at the time. Future you will thank you.</p></div><button class="btn pri" data-act="add-journal">+ New entry</button></div>
@@ -1282,6 +1384,8 @@ function render(keepScroll){
   else if(r[0]==='allocation')html=viewAllocation();
   else if(r[0]==='calendar')html=viewCalendar();
   else if(r[0]==='journal')html=viewJournal();
+  else if(r[0]==='scorecard')html=viewScorecard();
+  else if(r[0]==='cycles')html=viewCycles();
   else if(r[0]==='stock')html=viewStock(r[1],r[2]);
   else html=viewDashboard();
   document.getElementById('view').innerHTML=html+`<div class="foot">Prices: Yahoo Finance (live, every ${REFRESH_SEC/60} min) with a Nov 11, 2026 snapshot fallback · Fundamentals & earnings: Nov 5, 2026 snapshot<br>Your edits are saved in this browser. Back them up with ⚙ → Export · Not investment advice</div>`;
@@ -1379,7 +1483,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){if(document.getElementById('ov').classList.contains('on'))closeModal();else location.hash='#/';}
   else if(e.key==='ArrowRight')cycle(1);else if(e.key==='ArrowLeft')cycle(-1);
   else if(e.key==='r'||e.key==='R')refresh(true);
-  else if(/^[1-6]$/.test(e.key))location.hash=TABS[+e.key-1][0];
+  else if(/^[1-8]$/.test(e.key))location.hash=TABS[+e.key-1][0];
 });
 
 // =====================================================================
