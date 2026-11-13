@@ -39,6 +39,8 @@ This note lets a fresh session pick up the dashboard work without the old chat. 
 | `ANALYST` / `ANALYST_AT` | `[buy, hold, sell, mean target, low, high]` |
 | `NEWS` | Dated, sourced items `{d, t, src, url}` per ticker, newest first |
 | `HIST` / `INTRA` | Weekly closes for 1Y charts; hourly closes for the 1W chart (`{t:[UTC hour stamps], c:{TICKER:[...]}}`) |
+| `SCORE` / `SCORE_GRP` / `CHECKS` | Growth Scorecard tab (`#/scorecard`): stage 1–5, growth/stability stars, verdict, and the 8-point graduation checklist (`chk`: y/w/n/u) for speculative names. Judgment calls; refresh after each earnings season and bump `SCORE_AT`. |
+| `CYCLE` / `AI_LINKED` | Cyclical Outlook tab (`#/cycles`): type (commodity/growth/defensive/event), driver, phase (up/mid/dn), outlook and what to watch. |
 | `TAPES` | Symbols in the three top tapes (holdings are appended automatically) |
 
 **Status is derived, not stored:**
