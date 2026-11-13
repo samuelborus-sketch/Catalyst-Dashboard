@@ -83,7 +83,7 @@ This note lets a fresh session pick up the dashboard work without the old chat. 
 
 ## Pending
 1. **Merge the branch to main** once Sam OKs it, so the live site shows the Nov 12 holdings and catalyst-play tags.
-2. **Morning brief ticker list:** scheduled task `trig_012iDbqBpktjqbQ3tkzE13ez` ("Morning brief", weekdays 15:00 UTC) was updated 11/12 for NVDA/PONY and the catalyst-play countdown, but still lists RIO instead of FCX. Update its prompt only with Sam's direct OK. It now has the Robinhood connector.
+2. **Morning brief:** scheduled task `trig_012iDbqBpktjqbQ3tkzE13ez` (weekdays 15:00 UTC) lists the current holdings, including FCX. Edit its prompt only with Sam's direct OK.
 3. **Live prices are broken.** The Yahoo feed through free CORS proxies fails and the badge shows SNAPSHOT. Ideas: a free Finnhub key, or a daily scheduled run that writes `prices.json` to the repo.
 4. **Upcoming dates:**
 
