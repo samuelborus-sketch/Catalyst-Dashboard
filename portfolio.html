@@ -271,7 +271,7 @@ tr.grp td{background:var(--alt);color:var(--tm);font-size:10px;letter-spacing:.1
 //  CONFIG — your holdings. Shares + avg cost are the base values;
 //  anything you edit in the app is saved on top of these in localStorage.
 // =====================================================================
-const SNAP_AT = '2026-11-12T19:35:00Z'; // snapshot used until live prices load
+const SNAP_AT = '2026-11-13T17:48:00Z'; // snapshot used until live prices load
 const REFRESH_SEC = 300;
 
 const HOLDINGS = [
@@ -295,7 +295,7 @@ const HOLDINGS = [
    {title:"Post-IPO volatility & lock-ups",cat:"Market",l:4,i:3,status:"partial",mit:"Already ~79% off its high. Avoid adding right before lock-up expiry windows.",trip:""},
    {title:"Export controls / geopolitics",cat:"Regulatory",l:3,i:4,status:"open",mit:"Monitor US export policy toward key international customers.",trip:"Restrictions that block a major customer."}
   ]},
- {t:'RKLB',name:'Rocket Lab',theme:'Space & Defense',style:'Speculative Growth',color:'#38bdf8',shares:.380388,cost:58.23,
+ {t:'RKLB',name:'Rocket Lab',theme:'Space & Defense',style:'Speculative Growth',color:'#38bdf8',shares:0.62865,cost:59.09,
   thesis:"The most credible end-to-end space company after SpaceX: Electron launch cadence plus a fast-growing Space Systems business (satellites, components). Neutron medium-lift is the big unlock for constellation and national-security launches.",
   wrong:"Neutron is delayed for years or fails early flights, and Space Systems growth stalls.",
   catalysts:["Q3 results (Mon 11/9, after close)","Neutron first launch","Defense / SDA contract awards","Electron launch cadence"],
@@ -305,7 +305,7 @@ const HOLDINGS = [
    {title:"Cash burn & dilution",cat:"Financial",l:3,i:3,status:"partial",mit:"Has raised capital ahead of need; watch burn vs. backlog conversion.",trip:"Large equity raise at depressed prices."},
    {title:"Launch failure",cat:"Operational",l:2,i:3,status:"mitigated",mit:"Electron has a long flight record; one failure is a setback, not fatal.",trip:""}
   ]},
- {t:'RDW',name:'Redwire',theme:'Space & Defense',style:'Speculative',color:'#60a5fa',shares:2.480672,cost:8.93,
+ {t:'RDW',name:'Redwire',theme:'Space & Defense',style:'Speculative',color:'#60a5fa',shares:4.482005,cost:8.29,
   thesis:"Picks-and-shovels on the space build-out (solar arrays, deployables, sensors, payloads) plus a defense and autonomy push. A cheap way to own space infrastructure if execution and margins improve.",
   wrong:"Repeated earnings misses continue and the balance sheet forces dilution.",
   catalysts:["Q3 results reported 11/4 (EPS beat: −0.06 vs −0.09 est)","Defense / autonomy contract wins","Margin improvement toward profitability"],
@@ -345,7 +345,7 @@ const HOLDINGS = [
    {title:"Valuation (~40x P/E)",cat:"Valuation",l:3,i:3,status:"partial",mit:"Already ~41% off its 52-week high.",trip:""},
    {title:"Post-earnings volatility",cat:"Event",l:2,i:2,status:"mitigated",mit:"Q3 beat (0.31 vs 0.26) and the stock rose ~9%. Long-term holder, so no trading around prints.",trip:""}
   ]},
- {t:'SPXC',name:'SPX Technologies',theme:'Industrials',style:'Quality Compounder',color:'#a8a29e',shares:.137545,cost:159.95,
+ {t:'SPXC',name:'SPX Technologies',theme:'Industrials',style:'Quality Compounder',color:'#a8a29e',shares:0.234733,cost:157.63,
   thesis:"HVAC (cooling towers, engineered air movement) plus detection & measurement. Replacement demand and data-center cooling drive steady growth, and it has beaten EPS estimates 8 quarters in a row.",
   wrong:"Data-center capex slows sharply and the premium multiple de-rates further.",
   catalysts:["Q3 reported 10/29 (EPS beat: 2.21 vs 2.10 est)","Data-center cooling orders","Bolt-on M&A"],
@@ -367,7 +367,7 @@ const HOLDINGS = [
    {title:"Export controls / China",cat:"Regulatory",l:3,i:3,status:"open",mit:"Monitor US chip-equipment export rules.",trip:""},
    {title:"Robotics segment drag",cat:"Execution",l:2,i:2,status:"mitigated",mit:"Robotics turned profitable in Q3 2026 on $96M of revenue, and it is small next to semiconductor test.",trip:""}
   ]},
- {t:'CGNX',name:'Cognex',theme:'Industrial Automation',style:'Quality Growth',color:'#e879f9',shares:.44044,cost:49.95,
+ {t:'CGNX',name:'Cognex',theme:'Industrial Automation',style:'Quality Growth',color:'#e879f9',shares:0.64082,cost:49.94,
   thesis:"Machine-vision leader: cameras, sensors and AI software that inspect products and read barcodes on factory lines and in warehouses. Profitable, no debt worries, a small dividend, and it has beaten EPS estimates 8 quarters running (Q3 2026 EPS $0.53, up about 60% year over year). The stock fell about 18% around its Nov 4 report and is ~35% below its high.",
   wrong:"Factory and logistics spending stays weak and low-cost competitors take share.",
   catalysts:["Ex-dividend 11/19 ($0.09): bought 11/9, so you qualify","Q4 results (~Feb 10, tentative)","Logistics and EV/electronics automation orders"],
@@ -531,22 +531,22 @@ Object.assign(PROFILE,{
 
 // [price, prev close] snapshot — replaced by live data when available
 const SNAP = {
- 'OKLO':[24.83,25.86],'CBRS':[100.44,101.08],'RKLB':[65.36,66.15],'BRK.B':[591.22,588.24],'RDW':[8.229,8.4],'ACIW':[61.37,61.85],
- 'GPOR':[164.185,163.99],'ATEN':[29.38,28.74],'ADUS':[124.31,126.81],'SPXC':[151.795,153.86],'FSS':[113.425,112.08],'AYI':[323.16,323.31],
- 'AAPL':[342.36,344.17],'MSFT':[530.54,535.93],'NVDA':[164.903,173.73],'AMZN':[259.35,260.21],'GOOGL':[284.68,282.57],'META':[610.12,605.08],
+ 'OKLO':[23.415,24.45],'CBRS':[109.3984,97.75],'RKLB':[60.9,64.07],'BRK.B':[591.22,588.24],'RDW':[7.5099,8.03],'ACIW':[61.45,61.26],
+ 'GPOR':[165.1075,163.3],'ATEN':[28.7,29.3],'ADUS':[124.31,126.81],'SPXC':[155.54,150.6],'FSS':[113.425,112.08],'AYI':[323.16,323.31],
+ 'AAPL':[342.36,344.17],'MSFT':[530.54,535.93],'NVDA':[160.94,166.19],'AMZN':[259.35,260.21],'GOOGL':[284.68,282.57],'META':[610.12,605.08],
  'TSLA':[358.16,343.69],'AVGO':[293.23,291.53],'JPM':[334.51,337.34],'V':[422.70,422.59],'XOM':[165.86,165.30],'LLY':[1353.99,1364.73],
- 'SPY':[762.18,749.92],'QQQ':[656.18,647.05],'DIA':[512.22,514.27],'IWM':[273.64,270.98],'VTI':[361.88,360.52],'XLK':[164.79,162.38],
+ 'SPY':[752.0,757.12],'QQQ':[677.38,688.17],'DIA':[512.22,514.27],'IWM':[273.64,270.98],'VTI':[361.88,360.52],'XLK':[164.79,162.38],
  'XLF':[57.17,57.50],'XLE':[61.64,61.63],'XLI':[162.71,162.47],'XLV':[184.81,184.91],'SMH':[463.73,447.73],'URA':[32.335,30.98],
  'ITA':[69.00,68.11],'ARKX':[28.42,27.045],'GLD':[372.555,375.49],'SLV':[46.875,46.93],'USO':[148.41,148.21],'IBIT':[42.87,43.03],
  'TLT':[81.925,81.93],'IEF':[91.84,91.97],'SHY':[81.62,81.67],'AGG':[96.55,96.62],'LQD':[104.535,104.66],'HYG':[77.24,77.28],'TIP':[106.29,106.26],
- 'TER':[264.78,265.78],'CGNX':[50.85,51.72],'SYM':[37.755,37.62],'FLNC':[5.265,4.91],'EOSE':[1.75,1.88],'NRGV':[3.935,3.53],'GLPI':[39.28,39.27],
+ 'TER':[249.5,263.75],'CGNX':[50.21,50.77],'SYM':[37.755,37.62],'FLNC':[5.265,4.91],'EOSE':[1.75,1.88],'NRGV':[3.935,3.53],'GLPI':[39.36,39.1],
  'RIO':[83.42,84.97],
- 'PFE':[29.0326,29.45],
- 'AQST':[3.555,3.58],
- 'APMD':[16.685,16.78],
+ 'PFE':[28.785,28.83],
+ 'AQST':[3.895,3.57],
+ 'APMD':[17.13,16.63],
  'UUP':[29.145,28.92],'FXE':[102.79,103.50],'FXY':[57.79,58.05],
- 'PONY':[4.4514,4.72],
- 'FCX':[60.885,62.12],
+ 'PONY':[4.41,4.43],
+ 'FCX':[59.28,60.45],
 };
 
 // Three NYSE-style tapes

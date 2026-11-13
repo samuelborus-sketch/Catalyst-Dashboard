@@ -71,17 +71,19 @@ This note lets a fresh session pick up the dashboard work without the old chat. 
 - Look to replace holdings with under ~30%/yr expected return. The large-dividend rule was dropped on 11/12.
 - Sam works in PNC corporate banking. Never use or ask about work information, and flag that personal trades may need compliance pre-clearance.
 
-## Current state (Nov 12, 2026)
+## Current state (Nov 13, 2026)
 - **Owned (17):** NVDA, FCX, PONY, GLPI, CBRS, PFE, APMD, ATEN, AQST, TER, RKLB, ACIW, OKLO, GPOR, CGNX, SPXC, RDW.
 - **Catalyst plays:** NVDA (earnings 11/17 pm) and PONY (earnings 11/18 am, quick trade: exit by ~11/25), both bought 11/12; APMD (FDA 2/28/27) and AQST (FDA 3/16/27).
-- **Cash:** $0. **Account value:** ~$588.
+- **11/13 buys ($55 deposit):** RDW +2.001333 @ $7.50, RKLB +0.248262 @ $60.42, SPXC +0.097188 @ $154.34, CGNX +0.20038 @ $49.90.
+- **Cash:** $0. **Account value:** ~$639 (11/13 midday).
+- **News 11/13:** NVDA CEO Jensen Huang resigned 11/12 (CFO Colette Kress interim) right before the 11/17 earnings play.
 - **Planned:** SYM and FLNC (wait for their 11/23 reports), NRGV.
 - **Closed:** FSS, AYI, ADUS (sold 11/9), NVDA round trip (11/10), BRK.B (sold 11/12 at $593.58 to fund NVDA), RIO (sold 11/12 at $83.38, swapped into FCX at $60.85).
 - **Dropped:** EOSE.
 
 ## Pending
 1. **Merge the branch to main** once Sam OKs it, so the live site shows the Nov 12 holdings and catalyst-play tags.
-2. **Morning brief ticker list:** scheduled task `trig_012iDbqBpktjqbQ3tkzE13ez` ("Morning brief", weekdays 15:00 UTC) was updated 11/12 for NVDA/PONY and the catalyst-play countdown, but still lists RIO instead of FCX. Update its prompt only with Sam's direct OK. It now has the Robinhood connector.
+2. **Morning brief:** scheduled task `trig_012iDbqBpktjqbQ3tkzE13ez` (weekdays 15:00 UTC) lists the current holdings, including FCX. Edit its prompt only with Sam's direct OK.
 3. **Live prices are broken.** The Yahoo feed through free CORS proxies fails and the badge shows SNAPSHOT. Ideas: a free Finnhub key, or a daily scheduled run that writes `prices.json` to the repo.
 4. **Upcoming dates:**
 
