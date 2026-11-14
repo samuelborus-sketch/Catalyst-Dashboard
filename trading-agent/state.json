@@ -242,7 +242,7 @@
   "score_scale_note": "From 2026-10-27 the score is out of 14 (volume block S8\u2013S11 added). Standard threshold 10/14, caution 11/14. threshold_overrides before this date are on the old /10 scale.",
   "mode_note": "2026-11-06: Sam unpaused the agent and turned trade approvals OFF in the app -> AUTO mode (orders execute without Sam's tap). Equity at unpause $105.35.",
   "h7": {
-    "active": false,
+    "active": true,
     "started": "2026-11-07",
     "start_equity": 105.35,
     "halted": false,
@@ -274,11 +274,12 @@
     "equity_hwm": 105.35,
     "loss_limit_rule": "50% below H7's high-water mark (Zach's proposal); limit = 0.5 x h7.equity_hwm, updated after each close",
     "loss_limit_usd_now": 52.68,
-    "week_pnl_pct": -8.6
+    "week_pnl_pct": -8.6,
+    "note": "Sam 11/14: H7 only from Mon 11/16, permanent. Breakout and options off. Account $101.30 cash."
   },
   "breakout_pnl": {
     "note": "Breakout circuit breakers count only breakout trades from 2026-11-09",
     "week_pnl_usd": 0.0
   },
-  "active_strategy": "options_0dte_1400"
+  "active_strategy": "h7_only"
 }
