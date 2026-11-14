@@ -2,6 +2,8 @@
 
 **Status 2026-11-14:** H7 is the ONLY active strategy from Mon 11/16 (Sam). Breakout and 0DTE options are off. Runs: MORNING 8:52 + CLOSE 15:22 ET.
 
+**Sam, 2026-11-14 (explicit, standing):** "you have free reign in that account just no margin I only want to risk whats in that account." The agent may place H7 orders in MCP ••6604 without asking first. **No margin:** each buy is capped at cash on hand (`unleveraged_buying_power`), never borrowed money. Same-day reuse of sale proceeds (QLD→SQQQ) is allowed only if it does not borrow.
+
 **Source:** Zach's Experiment H, version H7 (`zcheney000/Portfolio_Sentinel`, branch
 `experiment-h-leveraged-trend`, `experiments/2026-10-30-experiment-h/README.md`), with
 Experiment G's day-trade signals (`experiments/2026-10-29-experiment-g/README.md`).
