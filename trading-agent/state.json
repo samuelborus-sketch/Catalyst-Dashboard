@@ -247,11 +247,12 @@
     "start_equity": 105.35,
     "halted": false,
     "trend": {
-      "qqq_close": 674.76,
-      "sma200": 681.42,
-      "asof": "2026-11-10",
+      "qqq_close": 679.89,
+      "sma200": 682.24,
+      "asof": "2026-11-13",
       "state": "cash",
-      "gap_pct": -0.98
+      "gap_pct": -0.34,
+      "note": "Above SMA200 on 11/11-11/12 (runs were off, no QLD bought); back below 11/13 -> cash is correct."
     },
     "size": {
       "qqq_vol20_pct": 32.7,
@@ -261,7 +262,11 @@
     },
     "position": null,
     "pending_change": null,
-    "next_signal": null,
+    "next_signal": {
+      "date": "2026-11-16",
+      "signal": null,
+      "note": "SPY down 2 days (11/12, 11/13), not 3; no calendar signal"
+    },
     "upcoming": [
       "2026-11-20 options-expiry fade (SQQQ, gap check)",
       "2026-11-25 pre-holiday (UPRO)",
@@ -269,12 +274,12 @@
       "2026-12-01..03 month start (UPRO if SPY vol20 15-40%)",
       "dip bounce whenever SPY closes lower 3+ days in a row"
     ],
-    "week_start_equity": 105.35,
+    "week_start_equity": 101.3,
     "weekly_brake": false,
     "equity_hwm": 105.35,
     "loss_limit_rule": "50% below H7's high-water mark (Zach's proposal); limit = 0.5 x h7.equity_hwm, updated after each close",
     "loss_limit_usd_now": 52.68,
-    "week_pnl_pct": -8.6,
+    "week_pnl_pct": 0.0,
     "note": "Sam 11/14: H7 only from Mon 11/16, permanent. Breakout and options off. Account $101.30 cash."
   },
   "breakout_pnl": {
