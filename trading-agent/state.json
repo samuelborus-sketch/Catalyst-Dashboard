@@ -247,12 +247,10 @@
     "start_equity": 105.35,
     "halted": false,
     "trend": {
-      "qqq_close": 679.89,
-      "sma200": 682.24,
-      "asof": "2026-11-13",
-      "state": "cash",
-      "gap_pct": -0.34,
-      "note": "Above SMA200 on 11/11-11/12 (runs were off, no QLD bought); back below 11/13 -> cash is correct."
+      "qqq_close": 661.82,
+      "sma200": 682.5,
+      "asof": "2026-11-16",
+      "state": "cash"
     },
     "size": {
       "qqq_vol20_pct": 32.7,
@@ -263,9 +261,12 @@
     "position": null,
     "pending_change": null,
     "next_signal": {
-      "date": "2026-11-16",
-      "signal": null,
-      "note": "SPY down 2 days (11/12, 11/13), not 3; no calendar signal"
+      "date": "2026-11-17",
+      "signal": "dip_bounce",
+      "fund": "UPRO",
+      "size": "99% of unleveraged buying power (cash, below SMA200 so full size)",
+      "gap_rule": "skip if SPY opens > 0.3% above 740.04 (i.e. > 742.26)",
+      "why": "SPY down 3 closes: 757.12, 754.37, 740.04"
     },
     "upcoming": [
       "2026-11-20 options-expiry fade (SQQQ, gap check)",
