@@ -271,7 +271,7 @@ tr.grp td{background:var(--alt);color:var(--tm);font-size:10px;letter-spacing:.1
 //  CONFIG — your holdings. Shares + avg cost are the base values;
 //  anything you edit in the app is saved on top of these in localStorage.
 // =====================================================================
-const SNAP_AT = '2026-11-13T17:48:00Z'; // snapshot used until live prices load
+const SNAP_AT = '2026-11-17T18:40:00Z'; // snapshot used until live prices load
 const REFRESH_SEC = 300;
 
 const HOLDINGS = [
@@ -453,9 +453,9 @@ const HOLDINGS = [
   ]},
  {t:'APMD',name:'Apnimed',theme:'Biotech',style:'Biotech',color:'#a78bfa',shares:1.620913,cost:15.42,
   play:{kind:'fda',d:'2027-02-28',what:'FDA decision on AD109'},
-  thesis:"Clinical-stage company whose lead drug AD109 (aroxybutynin plus atomoxetine) would be the first daily pill for obstructive sleep apnea, a huge market mostly treated with CPAP machines today. The FDA accepted the application, with a decision due February 28, 2027. IPO'd at $16 in July 2026 and reports cash runway into mid-2028.",
+  thesis:"Clinical-stage company whose lead drug AD109 (aroxybutynin plus atomoxetine) would be the first daily pill for obstructive sleep apnea, a huge market mostly treated with CPAP machines today. The FDA accepted the application, with a decision due February 28, 2027. IPO'd at $16 in July 2026. Q3 (11/16): cash $351.8M, enough to fund the launch and operations into Q2 2028.",
   wrong:"The FDA rejects AD109, or doctors and insurers stick with CPAP and GLP-1 drugs.",
-  catalysts:["FDA decision (PDUFA) on AD109: Feb 28, 2027","Q3 results (~Nov 24, tentative)","IPO lock-up expiry (~late Jan 2027, estimated)"],
+  catalysts:["FDA decision (PDUFA) on AD109: Feb 28, 2027","Q3 reported 11/16: cash $351.8M, net loss $29.5M, PDUFA on track","IPO lock-up expiry (~late Jan 2027, estimated)"],
   risks:[
    {title:"FDA rejection",cat:"Regulatory",l:3,i:5,status:"open",mit:"The application was accepted for review. Mine: small binary position sized to be able to go to near zero.",trip:"Complete Response Letter on 2/28."},
    {title:"Competition from CPAP and GLP-1 drugs",cat:"Competitive",l:3,i:4,status:"open",mit:"Zepbound is already approved for sleep apnea in people with obesity; AD109 targets a pill for a broader group. Watch how payers respond.",trip:""},
@@ -463,9 +463,9 @@ const HOLDINGS = [
    {title:"Lock-up expiry",cat:"Market",l:3,i:2,status:"open",mit:"Early investors can usually sell ~180 days after the IPO, around late January 2027; that can pressure the price right before the FDA decision.",trip:""}
   ]},
 // ---------- EARNINGS PLAYS (bought Nov 12 ahead of the report) ----------
- {t:'NVDA',name:'NVIDIA',theme:'AI Chips',style:'Quality Growth',color:'#76b900',shares:.606682,cost:160.00,
+ {t:'NVDA',name:'NVIDIA',theme:'AI Chips',style:'Quality Growth',color:'#76b900',shares:1.38759,cost:160.04,
   play:{kind:'earn',d:'2026-11-17',what:'Q3 FY27 earnings, after the close'},
-  thesis:"Earnings play. Bought on the 11/12 dip (two buys: $156.63 and $163.75, average $160) after the stock fell about 39% from its $243 October high to a new 52-week low of $148.80 that morning. NVIDIA sells most of the chips that AI data centers run on, trades at about 22x trailing earnings, and has beaten EPS estimates 6 quarters in a row. Q3 is due Tue 11/17 after the close, with an EPS estimate of $2.48. Proceeds came from selling BRK.B the same morning.",
+  thesis:"Earnings play. Bought on the 11/12 dip (two buys: $156.63 and $163.75, average $160), then added more before the report; now 1.388 shares at a $160.04 average after the stock fell about 39% from its $243 October high to a new 52-week low of $148.80 that morning. NVIDIA sells most of the chips that AI data centers run on, trades at about 22x trailing earnings, and has beaten EPS estimates 6 quarters in a row. Q3 is due Tue 11/17 after the close, with an EPS estimate of $2.48. Proceeds came from selling BRK.B the same morning.",
   wrong:"It beats but guides below what investors hope for, or AI spending shows signs of slowing, and the stock keeps sliding after the report.",
   catalysts:["Q3 FY27 results: Tue 11/17, after the close (est. EPS $2.48)","Next-quarter revenue guidance and data-center demand comments","Export rules for chip sales to China"],
   risks:[
@@ -482,6 +482,29 @@ const HOLDINGS = [
    {title:"US–China and delisting risk",cat:"Regulatory",l:3,i:4,status:"open",mit:"It's a Chinese company listed in the US, so it's exposed to US delisting rules and trade tension. It also lists in Hong Kong. Mine: keep the position small.",trip:"New US restrictions on Chinese self-driving or auto-tech companies."},
    {title:"Cash burn and dilution",cat:"Financial",l:4,i:3,status:"open",mit:"It loses money every quarter and is years from a profit, so expect it to sell more shares.",trip:"Share sale at a low price."},
    {title:"Earnings-day move",cat:"Event",l:3,i:3,status:"open",mit:"Small, volatile stock near its lows, so a ±15% move after the report is possible. Decide ahead of time whether to hold or sell after the report.",trip:""}
+  ]},
+ {t:'HD',name:'Home Depot',theme:'Retail / Housing',style:'Quality Compounder',color:'#f59e0b',shares:.2153,cost:348.35,
+  thesis:"Largest US home-improvement retailer, a quality dividend payer tied to the housing cycle and pro contractor spending. Lower mortgage rates and an aging housing stock support demand for repairs and remodels.",
+  wrong:"Housing turnover stays frozen and big-ticket remodeling keeps shrinking, so sales and margins slide.",
+  catalysts:["Quarterly results and same-store sales","Mortgage-rate moves and existing-home sales","Pro (contractor) business growth"],
+  risks:[
+   {title:"Housing slowdown",cat:"Macro",l:3,i:3,status:"open",mit:"Repair and maintenance spending is steadier than big remodels.",trip:"Same-store sales negative for several quarters."},
+   {title:"Valuation",cat:"Market",l:2,i:2,status:"partial",mit:"Trades at a premium multiple; dividend cushions downside.",trip:""}
+  ]},
+ {t:'TTWO',name:'Take-Two Interactive',theme:'Video Games',style:'Quality Growth',color:'#ef4444',shares:.245236,cost:203.89,
+  thesis:"Video game publisher (Rockstar, 2K, Zynga). Grand Theft Auto VI is the biggest expected launch in gaming and should drive a step-change in revenue and cash flow.",
+  wrong:"GTA VI slips again or sells below expectations, and mobile (Zynga) keeps weakening.",
+  catalysts:["GTA VI launch timing and pre-orders","Quarterly bookings guidance"],
+  risks:[
+   {title:"Release delay",cat:"Event",l:3,i:4,status:"open",mit:"Delays have happened before; the stock usually drops 7–10% on each.",trip:"Another GTA VI delay."},
+   {title:"Mobile weakness",cat:"Competitive",l:3,i:2,status:"open",mit:"Zynga is a large but slower part of revenue.",trip:""}
+  ]},
+ {t:'UPRO',name:'ProShares UltraPro S&P 500 (3x)',theme:'Leveraged Index',style:'Trading',color:'#94a3b8',shares:.774542,cost:129.47,
+  thesis:"Held in the MCP account. A 3x daily-leveraged S&P 500 fund: a short-term trading vehicle, not a long-term hold.",
+  wrong:"The market chops sideways or falls; daily resets erode value even when the index ends flat.",
+  catalysts:["S&P 500 direction","Fed / macro data"],
+  risks:[
+   {title:"Leverage decay",cat:"Structural",l:4,i:4,status:"open",mit:"Hold for days to weeks, not months. Set an exit plan.",trip:"Down more than 15% from cost."}
   ]},
 ];
 
@@ -542,8 +565,7 @@ const SNAP = {
  'TER':[249.5,263.75],'CGNX':[50.21,50.77],'SYM':[37.755,37.62],'FLNC':[5.265,4.91],'EOSE':[1.75,1.88],'NRGV':[3.935,3.53],'GLPI':[39.36,39.1],
  'RIO':[83.42,84.97],
  'PFE':[28.785,28.83],
- 'AQST':[3.895,3.57],
- 'APMD':[17.13,16.63],
+ 'AQST':[3.685,3.76],'HD':[340.435,347.51],'TTWO':[204.675,213.47],'UPRO':[126.151,130.68],'APMD':[17.375,16.28],
  'UUP':[29.145,28.92],'FXE':[102.79,103.50],'FXY':[57.79,58.05],
  'PONY':[4.41,4.43],
  'FCX':[59.28,60.45],
@@ -580,7 +602,7 @@ Object.assign(EARN,{
  'PONY':[['Q1 25','2025-05-20','am',null,-.10,1],['Q2 25','2025-08-12','am',null,-.13,1],['Q3 25','2025-11-25','am',null,-.14,1],['Q4 25','2026-03-26','am',.22,-.12,1],['Q1 26','2026-05-26','am',-.13,-.09,1],['Q2 26','2026-08-18','am',-.17,-.10,1],['Q3 26','2026-11-18','am',-.18,null,1],['Q4 26','2027-03-25','am',-.21,null,0]],
  'PFE':[['Q1 25','2025-04-29','am',.67,.92,1],['Q2 25','2025-08-05','am',.58,.78,1],['Q3 25','2025-11-04','am',.65,.87,1],['Q4 25','2026-02-03','am',.56,.66,1],['Q1 26','2026-05-05','am',.72,.75,1],['Q2 26','2026-08-04','am',.68,.77,1],['Q3 26','2026-11-03','am',.73,.87,1],['Q4 26','2027-02-02','am',.69,null,0]],
  'AQST':[['Q1 25','2025-05-12','pm',-.16,-.24,1],['Q2 25','2025-08-11','pm',-.18,-.14,1],['Q3 25','2025-11-05','pm',-.12,-.14,1],['Q4 25','2026-03-04','pm',-.12,-.15,1],['Q1 26','2026-05-13','pm',-.13,-.07,1],['Q2 26','2026-08-11','pm',-.12,-.18,1],['Q3 26','2026-11-03','pm',-.13,-.13,1],['Q4 26','2027-03-03','pm',-.10,null,0]],
- 'APMD':[['Q3 26','2026-11-24','pm',-.60,null,0],['Q4 26','2027-02-03','pm',-.72,null,0]],
+ 'APMD':[['Q3 26','2026-11-16','pm',-.60,null,0],['Q4 26','2027-02-03','pm',-.72,null,0]],
  'TER':[['Q1 25','2025-04-28','pm',.62,.75,1],['Q2 25','2025-07-29','pm',.54,.57,1],['Q3 25','2025-10-28','pm',.79,.85,1],['Q4 25','2026-02-02','pm',1.36,1.80,1],['Q1 26','2026-04-28','pm',2.11,2.56,1],['Q2 26','2026-07-28','pm',2.05,2.47,1],['Q3 26','2026-10-27','pm',2.05,2.29,1],['Q4 26','2027-02-01','pm',2.12,null,0]],
  'CGNX':[['Q1 25','2025-04-30','pm',.13,.16,1],['Q2 25','2025-07-30','pm',.21,.25,1],['Q3 25','2025-10-29','pm',.26,.33,1],['Q4 25','2026-02-11','pm',.20,.27,1],['Q1 26','2026-05-06','pm',.24,.34,1],['Q2 26','2026-08-05','pm',.42,.45,1],['Q3 26','2026-11-04','pm',.52,.53,1],['Q4 26','2027-02-10','pm',.39,null,0]],
  'SYM':[['FQ2 25','2025-05-07','pm',.05,-.04,1],['FQ3 25','2025-08-06','pm',.02,-.05,1],['FQ4 25','2025-11-24','pm',.03,-.03,1],['FQ1 26','2026-02-04','pm',.05,.02,1],['FQ2 26','2026-05-06','pm',.11,.01,1],['FQ3 26','2026-08-05','pm',.12,.09,1],['FQ4 26','2026-11-23','pm',.15,null,1],['FQ1 27','2027-02-03','pm',.14,null,0]],
