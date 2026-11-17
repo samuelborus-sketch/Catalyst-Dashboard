@@ -258,16 +258,20 @@
       "asof": "2026-11-06",
       "note": "20%/vol capped at 100%; applies only while above the 200-day average"
     },
-    "position": null,
-    "pending_change": null,
-    "next_signal": {
-      "date": "2026-11-17",
+    "position": {
+      "symbol": "UPRO",
+      "qty": 0.774542,
+      "avg": 129.4699,
+      "cost": 100.28,
+      "opened": "2026-11-17T14:30:22Z",
+      "order_id": "6afc64fe-0683-49fe-a70b-51c91ac0415b",
       "signal": "dip_bounce",
-      "fund": "UPRO",
-      "size": "99% of unleveraged buying power (cash, below SMA200 so full size)",
-      "gap_rule": "skip if SPY opens > 0.3% above 740.04 (i.e. > 742.26)",
-      "why": "SPY down 3 closes: 757.12, 754.37, 740.04"
+      "stop5": 123.0,
+      "stop8": 119.11,
+      "exit": "15:59 ET"
     },
+    "pending_change": null,
+    "next_signal": null,
     "upcoming": [
       "2026-11-20 options-expiry fade (SQQQ, gap check)",
       "2026-11-25 pre-holiday (UPRO)",
