@@ -247,9 +247,9 @@
     "start_equity": 105.35,
     "halted": false,
     "trend": {
-      "qqq_close": 661.82,
+      "qqq_close": 657.0,
       "sma200": 682.5,
-      "asof": "2026-11-16",
+      "asof": "2026-11-17",
       "state": "cash"
     },
     "size": {
@@ -258,20 +258,16 @@
       "asof": "2026-11-06",
       "note": "20%/vol capped at 100%; applies only while above the 200-day average"
     },
-    "position": {
-      "symbol": "UPRO",
-      "qty": 0.774542,
-      "avg": 129.4699,
-      "cost": 100.28,
-      "opened": "2026-11-17T14:30:22Z",
-      "order_id": "6afc64fe-0683-49fe-a70b-51c91ac0415b",
-      "signal": "dip_bounce",
-      "stop5": 123.0,
-      "stop8": 119.11,
-      "exit": "15:59 ET"
-    },
+    "position": null,
     "pending_change": null,
-    "next_signal": null,
+    "next_signal": {
+      "date": "2026-11-18",
+      "signal": "dip_bounce",
+      "fund": "UPRO",
+      "size": "99% of unleveraged buying power (cash only, no margin)",
+      "gap_rule": "skip if SPY opens > 0.3% above 732.38 (i.e. > 734.58)",
+      "why": "SPY down 4 closes: 757.12, 754.37, 739.95, 732.38"
+    },
     "upcoming": [
       "2026-11-20 options-expiry fade (SQQQ, gap check)",
       "2026-11-25 pre-holiday (UPRO)",
@@ -285,7 +281,15 @@
     "loss_limit_rule": "50% below H7's high-water mark (Zach's proposal); limit = 0.5 x h7.equity_hwm, updated after each close",
     "loss_limit_usd_now": 52.68,
     "week_pnl_pct": 0.0,
-    "note": "Sam 11/14: H7 only from Mon 11/16, permanent. Breakout and options off. Account $101.30 cash."
+    "note": "Sam 11/14: H7 only from Mon 11/16, permanent. Breakout and options off. Account $101.30 cash.",
+    "last_trade": {
+      "date": "2026-11-17",
+      "fund": "UPRO",
+      "buy": 129.4699,
+      "sell": 126.01,
+      "qty": 0.774542,
+      "pnl": -2.68
+    }
   },
   "breakout_pnl": {
     "note": "Breakout circuit breakers count only breakout trades from 2026-11-09",
